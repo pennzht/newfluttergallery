@@ -16,6 +16,7 @@ import 'src/web/bench_dynamic_clip_on_static_picture.dart';
 import 'src/web/bench_simple_lazy_text_scroll.dart';
 import 'src/web/bench_text_out_of_picture_bounds.dart';
 import 'src/web/bench_experimental.dart';
+import 'src/web/bench_gallery.dart';
 import 'src/web/recorder.dart';
 
 typedef RecorderFactory = Recorder Function();
@@ -35,6 +36,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
   BenchDynamicClipOnStaticPicture.benchmarkName: () => BenchDynamicClipOnStaticPicture(),
 
   'experimental': () => Experimental(),
+  'galleries': () => Galleries(),
 
   // Benchmarks that we don't want to run using CanvasKit.
   if (!isCanvasKit) ...<String, RecorderFactory>{
@@ -78,7 +80,7 @@ Future<void> main() async {
 
    */
 
-  final String benchmarkName = 'experimental';
+  final String benchmarkName = 'galleries';
 
 
   print('running benchmark $benchmarkName');

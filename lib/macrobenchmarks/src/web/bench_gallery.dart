@@ -12,12 +12,12 @@ import 'recorder.dart';
 import 'test_data.dart';
 
 /// Creates an infinite list of Material cards and scrolls it.
-class Experimental extends WidgetRecorder {
+class Galleries extends WidgetRecorder {
   // WidgetRecorder.
 
-  Experimental() : super(name: benchmarkName);
+  Galleries() : super(name: benchmarkName);
 
-  static const String benchmarkName = 'experimental';
+  static const String benchmarkName = 'galleries';
 
   @override
   Widget createWidget() => GalleryApp();
