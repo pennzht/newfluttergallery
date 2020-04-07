@@ -6,6 +6,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:gallery/main.dart';
+
 import 'recorder.dart';
 import 'test_data.dart';
 
@@ -13,7 +15,7 @@ import 'test_data.dart';
 class Directed extends WidgetRecorder {
   Directed() : super(name: benchmarkName);
 
-  static const String benchmarkName = 'bench_card_infinite_scroll';
+  static const String benchmarkName = 'directed';
 
   @override
   Widget createWidget() => const MaterialApp(
@@ -58,20 +60,6 @@ class _DirectedCardsState extends State<_DirectedCards> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: scrollController,
-      itemBuilder: (BuildContext context, int index) {
-        return SizedBox(
-          height: 100.0,
-          child: Card(
-            elevation: 16.0,
-            child: Text(
-              lipsum[index % lipsum.length],
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      },
-    );
+    return GalleryApp();
   }
 }
