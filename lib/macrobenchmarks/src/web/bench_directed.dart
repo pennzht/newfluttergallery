@@ -15,7 +15,7 @@ import 'test_data.dart';
 class Directed extends WidgetRecorder {
   Directed() : super(name: benchmarkName);
 
-  static const String benchmarkName = 'directed';
+  static const String benchmarkName = 'bench_card_infinite_scroll';
 
   @override
   Widget createWidget() => const MaterialApp(
@@ -60,6 +60,29 @@ class _DirectedCardsState extends State<_DirectedCards> {
 
   @override
   Widget build(BuildContext context) {
-    return GalleryApp();
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Container(
+        height: 1000,
+        width: 1000,
+        child: GalleryApp(),
+      ),
+    );
+
+    return ListView.builder(
+      controller: scrollController,
+      itemBuilder: (BuildContext context, int index) {
+        return SizedBox(
+          height: 100.0,
+          child: Card(
+            elevation: 16.0,
+            child: Text(
+              lipsum[index % lipsum.length],
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      },
+    );
   }
 }

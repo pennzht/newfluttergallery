@@ -82,7 +82,7 @@ Future<void> main() async {
 
    */
 
-  final String benchmarkName = 'directed';
+  final String benchmarkName = 'bench_card_infinite_scroll';
 
 
   print('running benchmark $benchmarkName');
