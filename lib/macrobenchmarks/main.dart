@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:macrobenchmarks/src/color_filter_and_fade.dart';
-import 'package:macrobenchmarks/src/large_images.dart';
-import 'package:macrobenchmarks/src/picture_cache.dart';
+import 'src/color_filter_and_fade.dart';
+import 'src/large_images.dart';
+import 'src/picture_cache.dart';
 
 import 'common.dart';
 import 'src/animated_placeholder.dart';

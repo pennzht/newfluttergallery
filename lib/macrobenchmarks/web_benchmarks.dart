@@ -6,8 +6,8 @@ import 'dart:async';
 import 'dart:convert' show json;
 import 'dart:html' as html;
 
-import 'package:macrobenchmarks/src/web/bench_text_layout.dart';
-import 'package:macrobenchmarks/src/web/bench_text_out_of_picture_bounds.dart';
+import 'src/web/bench_text_layout.dart';
+import 'src/web/bench_text_out_of_picture_bounds.dart';
 
 import 'src/web/bench_build_material_checkbox.dart';
 import 'src/web/bench_card_infinite_scroll.dart';
