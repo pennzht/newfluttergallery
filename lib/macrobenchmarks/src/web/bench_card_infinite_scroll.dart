@@ -33,7 +33,7 @@ class _InfiniteScrollCardsState extends State<_InfiniteScrollCards> {
   ScrollController scrollController;
 
   double offset;
-  static const double distance = 1000;
+  static const double distance = 300;
   static const Duration stepDuration = Duration(seconds: 1);
 
   @override
