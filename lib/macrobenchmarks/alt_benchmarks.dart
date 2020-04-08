@@ -27,32 +27,7 @@ typedef RecorderFactory = Recorder Function();
 
 const bool isCanvasKit = bool.fromEnvironment('FLUTTER_WEB_USE_SKIA', defaultValue: false);
 
-/// List of all benchmarks that run in the devicelab.
-///
-/// When adding a new benchmark, add it to this map. Make sure that the name
-/// of your benchmark is unique.
-final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
-  BenchCardInfiniteScroll.benchmarkName: () => BenchCardInfiniteScroll(),
-  BenchDrawRect.benchmarkName: () => BenchDrawRect(),
-  BenchTextOutOfPictureBounds.benchmarkName: () => BenchTextOutOfPictureBounds(),
-  BenchSimpleLazyTextScroll.benchmarkName: () => BenchSimpleLazyTextScroll(),
-  BenchBuildMaterialCheckbox.benchmarkName: () => BenchBuildMaterialCheckbox(),
-  BenchDynamicClipOnStaticPicture.benchmarkName: () => BenchDynamicClipOnStaticPicture(),
-
-  'experimental': () => Experimental(),
-  'galleries': () => Galleries(),
-  'directed': () => Directed(),
-
-  // Benchmarks that we don't want to run using CanvasKit.
-  if (!isCanvasKit) ...<String, RecorderFactory>{
-    BenchTextLayout.domBenchmarkName: () => BenchTextLayout(useCanvas: false),
-    BenchTextLayout.canvasBenchmarkName: () => BenchTextLayout(useCanvas: true),
-    BenchTextCachedLayout.domBenchmarkName: () => BenchTextCachedLayout(useCanvas: false),
-    BenchTextCachedLayout.canvasBenchmarkName: () => BenchTextCachedLayout(useCanvas: true),
-    BenchBuildColorsGrid.domBenchmarkName: () => BenchBuildColorsGrid(useCanvas: false),
-    BenchBuildColorsGrid.canvasBenchmarkName: () => BenchBuildColorsGrid(useCanvas: true),
-  }
-};
+final RecorderFactory benchmark = () => Galleries();
 
 /// Whether we fell back to manual mode.
 ///
