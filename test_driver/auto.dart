@@ -10,7 +10,7 @@ import 'package:gallery/data/demos.dart';
 import 'package:gallery/l10n/gallery_localizations.dart';
 import 'package:gallery/main.dart' as gallery;
 
-import 'package:gallery/macrobenchmarks/web_benchmarks.dart' as web_benchmarks;
+import 'package:gallery/macrobenchmarks/alt_benchmarks.dart' as alt_benchmarks;
 
 Future<String> _handleMessages(String message) async {
   assert(message == 'demoDescriptions');
@@ -23,5 +23,5 @@ Future<String> _handleMessages(String message) async {
 
 void main() {
   enableFlutterDriverExtension(handler: _handleMessages);
-  web_benchmarks.main();
+  alt_benchmarks.main();
 }

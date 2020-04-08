@@ -150,6 +150,11 @@ void main([List<String> args = const <String>[]]) {
 
     test('all demos', () async {
       print('Debug: All Demos');
+
+      await Future.delayed(Duration(minutes:2),
+          () {print('Debug: Future resolved!');}
+      );
+
       return;
 
       // Scroll to and expand all categories.
