@@ -662,8 +662,8 @@ abstract class RecordingWidgetsBindingListener {
 class _RecordingWidgetsBinding extends BindingBase
     with
         GestureBinding,
-        ServicesBinding,
         SchedulerBinding,
+        ServicesBinding,
         PaintingBinding,
         SemanticsBinding,
         RendererBinding,

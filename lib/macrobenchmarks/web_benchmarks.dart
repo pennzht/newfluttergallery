@@ -82,7 +82,7 @@ Future<void> main() async {
 
    */
 
-  final String benchmarkName = 'bench_card_infinite_scroll';
+  final String benchmarkName = 'galleries';
 
 
   print('running benchmark $benchmarkName');
