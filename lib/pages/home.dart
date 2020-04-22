@@ -417,6 +417,11 @@ class _DesktopCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Debugging
+    if (useController) {
+      print('My controller is: ${GlobalControllers.of(context).controller}');
+    }
+
     final colorScheme = Theme.of(context).colorScheme;
     return Material(
       borderRadius: BorderRadius.circular(10),
