@@ -12,6 +12,7 @@ import 'package:flutter/semantics.dart';
 import 'package:gallery/constants.dart';
 import 'package:gallery/data/demos.dart';
 import 'package:gallery/data/gallery_options.dart';
+import 'package:gallery/globalcontrollers.dart';
 import 'package:gallery/l10n/gallery_localizations.dart';
 import 'package:gallery/layout/adaptive.dart';
 import 'package:gallery/layout/image_placeholder.dart';
@@ -96,6 +97,7 @@ class HomePage extends StatelessWidget {
           category: GalleryDemoCategory.material,
           asset: const AssetImage('assets/icons/material/material.png'),
           demos: materialDemos(localizations),
+          useController: true,
         ),
         _DesktopCategoryItem(
           category: GalleryDemoCategory.cupertino,
@@ -404,11 +406,14 @@ class _DesktopCategoryItem extends StatelessWidget {
     this.category,
     this.asset,
     this.demos,
+    this.useController = false,
   });
 
   final GalleryDemoCategory category;
   final ImageProvider asset;
   final List<GalleryDemo> demos;
+
+  final bool useController;
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +443,9 @@ class _DesktopCategoryItem extends StatelessWidget {
                   removeTop: true,
                   context: context,
                   child: ListView(
-                    /// TODO: add controller.
+                    controller: useController
+                        ? GlobalControllers.of(context).controller
+                        : ScrollController(),
                     // Makes integration tests possible.
                     key: ValueKey('${category.name}DemoList'),
                     children: [
