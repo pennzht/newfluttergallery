@@ -706,7 +706,9 @@ class _RecordingWidgetsBinding extends BindingBase
     if (_hasErrored) {
       return;
     }
-    _benchmarkStopped = !_listener.profile.shouldContinue();
+    _benchmarkStopped = (_listener.profile != null)
+        ? !_listener.profile.shouldContinue()
+        : true;
     super.handleBeginFrame(rawTimeStamp);
   }
 

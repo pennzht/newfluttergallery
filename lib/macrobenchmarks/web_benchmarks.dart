@@ -132,21 +132,12 @@ Future<void> _runBenchmark(String benchmarkName) async {
     }
 
      */
+    print('everything printed normally.');
   } catch (error, stackTrace) {
     print('error: $error, stackTrace: $stackTrace');
-    if (isInManualMode) {
-      rethrow;
-    }
-    await html.HttpRequest.request(
-      '/on-error',
-      method: 'POST',
-      mimeType: 'application/json',
-      sendData: json.encode(<String, dynamic>{
-        'error': '$error',
-        'stackTrace': '$stackTrace',
-      }),
-    );
+    rethrow;
   }
+  print('140');
 }
 
 void _fallbackToManual(String error) {
