@@ -20,5 +20,5 @@ class Galleries extends WidgetRecorder {
   static const String benchmarkName = 'galleries';
 
   @override
-  Widget createWidget() => GalleryApp(controller: ScrollController());
+  Widget createWidget() => GalleryApp(controller: ScrollController(debugLabel: 'controller from globalcontrollers'));
 }
