@@ -11,8 +11,6 @@ import 'package:gallery/main.dart';
 import 'recorder.dart';
 import 'test_data.dart';
 
-import 'package:gallery/globalcontrollers.dart';
-
 /// Creates an infinite list of Material cards and scrolls it.
 class Galleries extends WidgetRecorder {
   // WidgetRecorder.
