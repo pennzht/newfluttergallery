@@ -438,6 +438,7 @@ class _DesktopCategoryItem extends StatelessWidget {
                   removeTop: true,
                   context: context,
                   child: ListView(
+                    /// TODO: add controller.
                     // Makes integration tests possible.
                     key: ValueKey('${category.name}DemoList'),
                     children: [
