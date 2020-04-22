@@ -11,6 +11,8 @@ import 'package:gallery/main.dart';
 import 'recorder.dart';
 import 'test_data.dart';
 
+import 'package:gallery/globalcontrollers.dart';
+
 /// Creates an infinite list of Material cards and scrolls it.
 class Galleries extends WidgetRecorder {
   // WidgetRecorder.
@@ -20,5 +22,5 @@ class Galleries extends WidgetRecorder {
   static const String benchmarkName = 'galleries';
 
   @override
-  Widget createWidget() => GalleryApp();
+  Widget createWidget() => GalleryApp(controller: ScrollController());
 }

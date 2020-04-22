@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:gallery/globalcontrollers.dart';
 import 'package:gallery/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gallery/constants.dart';
@@ -21,6 +22,10 @@ void main() {
 }
 
 class GalleryApp extends StatelessWidget {
+  GalleryApp({@required this.controller});
+
+  final ScrollController controller;
+
   @override
   Widget build(BuildContext context) {
     return ModelBinding(
@@ -34,27 +39,30 @@ class GalleryApp extends StatelessWidget {
       ),
       child: Builder(
         builder: (context) {
-          return MaterialApp(
-            title: 'Gallery',
-            debugShowCheckedModeBanner: false,
-            themeMode: GalleryOptions.of(context).themeMode,
-            theme: GalleryThemeData.lightThemeData.copyWith(
-              platform: GalleryOptions.of(context).platform,
-            ),
-            darkTheme: GalleryThemeData.darkThemeData.copyWith(
-              platform: GalleryOptions.of(context).platform,
-            ),
-            localizationsDelegates: const [
-              ...GalleryLocalizations.localizationsDelegates,
-              LocaleNamesLocalizationsDelegate()
-            ],
-            supportedLocales: GalleryLocalizations.supportedLocales,
-            locale: GalleryOptions.of(context).locale,
-            localeResolutionCallback: (locale, supportedLocales) {
-              deviceLocale = locale;
-              return locale;
-            },
-            onGenerateRoute: RouteConfiguration.onGenerateRoute,
+          return GlobalControllers(
+            controller: controller,
+            child: MaterialApp(
+              title: 'Gallery',
+              debugShowCheckedModeBanner: false,
+              themeMode: GalleryOptions.of(context).themeMode,
+              theme: GalleryThemeData.lightThemeData.copyWith(
+                platform: GalleryOptions.of(context).platform,
+              ),
+              darkTheme: GalleryThemeData.darkThemeData.copyWith(
+                platform: GalleryOptions.of(context).platform,
+              ),
+              localizationsDelegates: const [
+                ...GalleryLocalizations.localizationsDelegates,
+                LocaleNamesLocalizationsDelegate()
+              ],
+              supportedLocales: GalleryLocalizations.supportedLocales,
+              locale: GalleryOptions.of(context).locale,
+              localeResolutionCallback: (locale, supportedLocales) {
+                deviceLocale = locale;
+                return locale;
+              },
+              onGenerateRoute: RouteConfiguration.onGenerateRoute,
+            )
           );
         },
       ),
