@@ -18,7 +18,10 @@ import 'package:gallery/themes/gallery_theme_data.dart';
 
 void main() {
   GoogleFonts.config.allowHttp = false;
-  runApp(GalleryApp(controller: ScrollController(debugLabel: 'controller from main')));
+  runApp(GalleryApp(
+    controller: ScrollController(debugLabel: 'controller from main'),
+    openStudy: [],
+  ));
 }
 
 class GalleryApp extends StatelessWidget {
