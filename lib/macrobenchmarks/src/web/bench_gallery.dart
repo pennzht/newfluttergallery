@@ -15,10 +15,11 @@ import 'test_data.dart';
 class Galleries extends WidgetRecorder {
   // WidgetRecorder.
 
-  Galleries() : super(name: benchmarkName);
+  Galleries({@required this.controller}) : super(name: benchmarkName);
 
   static const String benchmarkName = 'galleries';
+  final ScrollController controller;
 
   @override
-  Widget createWidget() => GalleryApp(controller: ScrollController(debugLabel: 'controller from globalcontrollers'));
+  Widget createWidget() => GalleryApp(controller: controller);
 }

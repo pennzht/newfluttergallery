@@ -6,6 +6,8 @@ import 'dart:async';
 import 'dart:convert' show json;
 import 'dart:html' as html;
 
+import 'package:flutter/cupertino.dart';
+
 import 'src/web/bench_text_layout.dart';
 import 'src/web/bench_text_out_of_picture_bounds.dart';
 
@@ -24,6 +26,10 @@ typedef RecorderFactory = Recorder Function();
 
 const bool isCanvasKit = bool.fromEnvironment('FLUTTER_WEB_USE_SKIA', defaultValue: false);
 
+final ScrollController controller = ScrollController(
+  debugLabel: 'controller from web_benchmarks'
+);
+
 /// List of all benchmarks that run in the devicelab.
 ///
 /// When adding a new benchmark, add it to this map. Make sure that the name
@@ -37,7 +43,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
   BenchDynamicClipOnStaticPicture.benchmarkName: () => BenchDynamicClipOnStaticPicture(),
 
   'experimental': () => Experimental(),
-  'galleries': () => Galleries(),
+  'galleries': () => Galleries(controller: controller),
   'directed': () => Directed(),
 
   // Benchmarks that we don't want to run using CanvasKit.
@@ -86,6 +92,17 @@ Future<void> main() async {
 
 
   print('running benchmark $benchmarkName');
+
+  Future<void>.delayed(
+    const Duration(seconds: 5),
+    () {
+      controller.animateTo(
+        200,
+        duration: const Duration(seconds: 1),
+        curve: Curves.elasticInOut,
+      );
+    }
+  );
 
   await _runBenchmark(benchmarkName);
   // html.window.location.reload();
