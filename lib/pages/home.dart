@@ -983,6 +983,12 @@ class _CarouselCard extends StatelessWidget {
     final assetColor = isDark ? assetDarkColor : this.assetColor;
     final textColor = isDark ? Colors.white.withOpacity(0.87) : this.textColor;
 
+    GlobalControllers.of(context).openStudy.add(
+      () {
+        Navigator.of(context).pushNamed(studyRoute);
+      }
+    );
+
     return Container(
       // Makes integration tests possible.
       key: ValueKey(demo.describe),

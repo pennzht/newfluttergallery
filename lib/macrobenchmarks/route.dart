@@ -98,11 +98,8 @@ Future<void> main() async {
   Future<void>.delayed(
       const Duration(seconds: 5),
           () {
-        controller.animateTo(
-          200,
-          duration: const Duration(seconds: 1),
-          curve: Curves.elasticInOut,
-        );
+        print('My openStudy is ... $openStudy');
+        openStudy[0]();
       }
   );
 
