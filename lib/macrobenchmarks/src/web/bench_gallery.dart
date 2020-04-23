@@ -15,11 +15,12 @@ import 'test_data.dart';
 class Galleries extends WidgetRecorder {
   // WidgetRecorder.
 
-  Galleries({@required this.controller}) : super(name: benchmarkName);
+  Galleries({@required this.controller, @required this.openStudy}) : super(name: benchmarkName);
 
   static const String benchmarkName = 'galleries';
   final ScrollController controller;
+  final List<void Function()> openStudy;
 
   @override
-  Widget createWidget() => GalleryApp(controller: controller);
+  Widget createWidget() => GalleryApp(controller: controller, openStudy: openStudy);
 }

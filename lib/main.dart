@@ -22,9 +22,10 @@ void main() {
 }
 
 class GalleryApp extends StatelessWidget {
-  GalleryApp({@required this.controller});
+  GalleryApp({@required this.controller, @required this.openStudy});
 
   final ScrollController controller;
+  final List<void Function()> openStudy;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class GalleryApp extends StatelessWidget {
         builder: (context) {
           return GlobalControllers(
             controller: controller,
+            openStudy: openStudy,
             child: MaterialApp(
               title: 'Gallery',
               debugShowCheckedModeBanner: false,

@@ -30,6 +30,8 @@ final ScrollController controller = ScrollController(
   debugLabel: 'controller from web_benchmarks'
 );
 
+final List<void Function()> openStudy = [];
+
 /// List of all benchmarks that run in the devicelab.
 ///
 /// When adding a new benchmark, add it to this map. Make sure that the name
@@ -43,7 +45,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
   BenchDynamicClipOnStaticPicture.benchmarkName: () => BenchDynamicClipOnStaticPicture(),
 
   'experimental': () => Experimental(),
-  'galleries': () => Galleries(controller: controller),
+  'galleries': () => Galleries(controller: controller, openStudy: openStudy),
   'directed': () => Directed(),
 
   // Benchmarks that we don't want to run using CanvasKit.

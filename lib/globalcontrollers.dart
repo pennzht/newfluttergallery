@@ -7,9 +7,11 @@ class GlobalControllers extends InheritedWidget {
     Key key,
     @required this.controller,
     @required this.child,
+    @required this.openStudy,
   }): super(key: key, child: child);
 
   final ScrollController controller;
+  final List<void Function()> openStudy;
   final Widget child;
 
   static GlobalControllers of(BuildContext context) {
