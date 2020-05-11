@@ -7,7 +7,6 @@
 import 'dart:async';
 import 'dart:convert' show json;
 import 'dart:html' as html;
-import 'dart:math' as math;
 
 import 'gallery_recorder.dart';
 import 'recorder.dart';
@@ -80,12 +79,9 @@ Future<void> _runBenchmark(String benchmarkName) async {
           )
         : Runner(recorder: recorder);
 
-    final Profile profile = await runner.run();
+    await runner.run();
     if (!_client.isInManualMode) {
-      await _client.sendProfileData(profile);
-    } else {
-      _printResultsToScreen(profile);
-      print(profile);
+      await _client.sendProfileData();
     }
   } catch (error, stackTrace) {
     if (_client.isInManualMode) {
@@ -120,123 +116,6 @@ void _fallbackToManual(String error) {
       manualPanel?.remove();
       _runBenchmark(benchmarkName);
     });
-  }
-}
-
-/// Visualizes results on the Web page for manual inspection.
-void _printResultsToScreen(Profile profile) {
-  html.document.body.remove();
-  html.document.body = html.BodyElement();
-  html.document.body.appendHtml('<h2>${profile.name}</h2>');
-
-  profile.scoreData.forEach((String scoreKey, Timeseries timeseries) {
-    html.document.body.appendHtml('<h2>$scoreKey</h2>');
-    html.document.body.appendHtml('<pre>${timeseries.computeStats()}</pre>');
-    html.document.body.append(TimeseriesVisualization(timeseries).render());
-  });
-}
-
-/// Draws timeseries data and statistics on a canvas.
-class TimeseriesVisualization {
-  TimeseriesVisualization(this._timeseries) {
-    _stats = _timeseries.computeStats();
-    _canvas = html.CanvasElement();
-    _screenWidth = html.window.screen.width;
-    _canvas.width = _screenWidth;
-    _canvas.height = (_kCanvasHeight * html.window.devicePixelRatio).round();
-    _canvas.style
-      ..width = '100%'
-      ..height = '${_kCanvasHeight}px'
-      ..outline = '1px solid green';
-    _ctx = _canvas.context2D;
-
-    // The amount of vertical space available on the chart. Because some
-    // outliers can be huge they can dwarf all the useful values. So we
-    // limit it to 1.5 x the biggest non-outlier.
-    _maxValueChartRange = 1.5 *
-        _stats.samples
-            .where((AnnotatedSample sample) => !sample.isOutlier)
-            .map<double>((AnnotatedSample sample) => sample.magnitude)
-            .fold<double>(0, math.max);
-  }
-
-  static const double _kCanvasHeight = 200;
-
-  final Timeseries _timeseries;
-  TimeseriesStats _stats;
-  html.CanvasElement _canvas;
-  html.CanvasRenderingContext2D _ctx;
-  int _screenWidth;
-
-  // Used to normalize benchmark values to chart height.
-  double _maxValueChartRange;
-
-  /// Converts a sample value to vertical canvas coordinates.
-  ///
-  /// This does not work for horizontal coordinates.
-  double _normalized(double value) {
-    return _kCanvasHeight * value / _maxValueChartRange;
-  }
-
-  /// A utility for drawing lines.
-  void drawLine(num x1, num y1, num x2, num y2) {
-    _ctx.beginPath();
-    _ctx.moveTo(x1, y1);
-    _ctx.lineTo(x2, y2);
-    _ctx.stroke();
-  }
-
-  /// Renders the timeseries into a `<canvas>` and returns the canvas element.
-  html.CanvasElement render() {
-    _ctx.translate(0, _kCanvasHeight * html.window.devicePixelRatio);
-    _ctx.scale(1, -html.window.devicePixelRatio);
-
-    final double barWidth = _screenWidth / _stats.samples.length;
-    double xOffset = 0;
-    for (int i = 0; i < _stats.samples.length; i++) {
-      final AnnotatedSample sample = _stats.samples[i];
-
-      if (sample.isWarmUpValue) {
-        // Put gray background behing warm-up samples.
-        _ctx.fillStyle = 'rgba(200,200,200,1)';
-        _ctx.fillRect(xOffset, 0, barWidth, _normalized(_maxValueChartRange));
-      }
-
-      if (sample.magnitude > _maxValueChartRange) {
-        // The sample value is so big it doesn't fit on the chart. Paint it purple.
-        _ctx.fillStyle = 'rgba(100,50,100,0.8)';
-      } else if (sample.isOutlier) {
-        // The sample is an outlier, color it light red.
-        _ctx.fillStyle = 'rgba(255,50,50,0.6)';
-      } else {
-        // A non-outlier sample, color it light blue.
-        _ctx.fillStyle = 'rgba(50,50,255,0.6)';
-      }
-
-      _ctx.fillRect(xOffset, 0, barWidth - 1, _normalized(sample.magnitude));
-      xOffset += barWidth;
-    }
-
-    // Draw a horizontal solid line corresponding to the average.
-    _ctx.lineWidth = 1;
-    drawLine(0, _normalized(_stats.average), _screenWidth,
-        _normalized(_stats.average));
-
-    // Draw a horizontal dashed line corresponding to the outlier cut off.
-    _ctx.setLineDash(<num>[5, 5]);
-    drawLine(0, _normalized(_stats.outlierCutOff), _screenWidth,
-        _normalized(_stats.outlierCutOff));
-
-    // Draw a light red band that shows the noise (1 stddev in each direction).
-    _ctx.fillStyle = 'rgba(255,50,50,0.3)';
-    _ctx.fillRect(
-      0,
-      _normalized(_stats.average * (1 - _stats.noise)),
-      _screenWidth,
-      _normalized(2 * _stats.average * _stats.noise),
-    );
-
-    return _canvas;
   }
 }
 
@@ -312,13 +191,13 @@ class LocalBenchmarkServerClient {
 
   /// Sends the profile data collected by the benchmark to the local benchmark
   /// server.
-  Future<void> sendProfileData(Profile profile) async {
+  Future<void> sendProfileData() async {
     _checkNotManualMode();
     final html.HttpRequest request = await html.HttpRequest.request(
       '/profile-data',
       method: 'POST',
       mimeType: 'application/json',
-      sendData: json.encode(profile.toJson()),
+      sendData: json.encode(<String, dynamic>{}),
     );
     if (request.status != 200) {
       throw Exception('Failed to report profile data to benchmark server. '
