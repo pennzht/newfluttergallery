@@ -173,8 +173,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
 
   Completer<void> _runCompleter;
 
-  Stopwatch _drawFrameStopwatch;
-
   /// Tells whether the recorder should continue. Can be different from
   /// [profile.shouldContinue()].
   bool shouldContinue();
@@ -183,7 +181,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
   @mustCallSuper
   void frameWillDraw() {
     startMeasureFrame();
-    _drawFrameStopwatch = Stopwatch()..start();
   }
 
   @override
@@ -219,31 +216,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
       _runCompleter = null;
     }
   }
-}
-
-/// Annotates a single measurement with statistical information.
-@sealed
-class AnnotatedSample {
-  const AnnotatedSample({
-    @required this.magnitude,
-    @required this.isOutlier,
-    @required this.isWarmUpValue,
-  });
-
-  /// The non-negative raw result of the measurement.
-  final double magnitude;
-
-  /// Whether this sample was considered an outlier.
-  final bool isOutlier;
-
-  /// Whether this sample was taken during the warm-up phase.
-  ///
-  /// If this value is `true`, this sample does not participate in
-  /// statistical computations. However, the sample would still be
-  /// shown in the visualization of results so that the benchmark
-  /// can be inspected manually to make sure there's a predictable
-  /// warm-up regression slope.
-  final bool isWarmUpValue;
 }
 
 /// Implemented by recorders that use [_RecordingWidgetsBinding] to receive
