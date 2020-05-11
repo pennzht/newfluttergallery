@@ -4,7 +4,6 @@
 
 import 'dart:async';
 import 'dart:html' as html;
-import 'dart:js_util' as js_util;
 import 'dart:ui';
 
 import 'package:meta/meta.dart';
