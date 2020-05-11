@@ -16,14 +16,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-/// Measures the amount of time [action] takes.
-Duration timeAction(VoidCallback action) {
-  final Stopwatch stopwatch = Stopwatch()..start();
-  action();
-  stopwatch.stop();
-  return stopwatch.elapsed;
-}
-
 /// A function that performs asynchronous work.
 typedef AsyncVoidCallback = Future<void> Function();
 
