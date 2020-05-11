@@ -81,7 +81,10 @@ Future<void> _runBenchmark(String benchmarkName) async {
 
     await runner.run();
     if (!_client.isInManualMode) {
-      await _client.sendProfileData();
+      await _client.sendProfileData(<String, dynamic>{
+        'name': benchmarkName,
+        'scoreKeys': <String>[],
+      });
     }
   } catch (error, stackTrace) {
     if (_client.isInManualMode) {
@@ -191,13 +194,13 @@ class LocalBenchmarkServerClient {
 
   /// Sends the profile data collected by the benchmark to the local benchmark
   /// server.
-  Future<void> sendProfileData() async {
+  Future<void> sendProfileData(dynamic data) async {
     _checkNotManualMode();
     final html.HttpRequest request = await html.HttpRequest.request(
       '/profile-data',
       method: 'POST',
       mimeType: 'application/json',
-      sendData: json.encode(<String, dynamic>{}),
+      sendData: json.encode(data),
     );
     if (request.status != 200) {
       throw Exception('Failed to report profile data to benchmark server. '
