@@ -115,49 +115,6 @@ abstract class Recorder {
   Future<void> tearDownAll() async {}
 }
 
-/// A recorder for benchmarking raw execution of Dart code.
-///
-/// This is useful for benchmarks that don't need frames or widgets.
-///
-/// Example:
-///
-/// ```
-/// class BenchForLoop extends RawRecorder {
-///   BenchForLoop() : super(name: benchmarkName);
-///
-///   static const String benchmarkName = 'for_loop';
-///
-///   @override
-///   void body(Profile profile) {
-///     profile.record('loop', () {
-///       double x = 0;
-///       for (int i = 0; i < 10000000; i++) {
-///         x *= 1.5;
-///       }
-///     });
-///   }
-/// }
-/// ```
-abstract class RawRecorder extends Recorder {
-  RawRecorder({@required String name}) : super._(name, false);
-
-  /// The body of the benchmark.
-  ///
-  /// This is the part that records measurements of the benchmark.
-  void body(Profile profile);
-
-  @override
-  @nonVirtual
-  Future<Profile> run() async {
-    final Profile profile = Profile(name: name);
-    do {
-      await Future<void>.delayed(Duration.zero);
-      body(profile);
-    } while (profile.shouldContinue());
-    return profile;
-  }
-}
-
 /// A (modified) recorder for benchmarking interactions with the framework by creating
 /// widgets.
 ///
