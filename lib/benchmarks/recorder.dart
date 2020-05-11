@@ -73,13 +73,12 @@ class Runner {
   final AsyncVoidCallback tearDownAllWillRun;
 
   /// Runs the benchmark and reports the results.
-  Future<Profile> run() async {
+  Future<void> run() async {
     await recorder.setUpAll();
     await setUpAllDidRun();
-    final Profile profile = await recorder.run();
+    await recorder.run();
     await tearDownAllWillRun();
     await recorder.tearDownAll();
-    return profile;
   }
 }
 
@@ -106,7 +105,7 @@ abstract class Recorder {
   Future<void> setUpAll() async {}
 
   /// The implementation of the benchmark that will produce a [Profile].
-  Future<Profile> run();
+  Future<void> run();
 
   /// Called once after all runs of this benchmark recorder.
   ///
@@ -190,7 +189,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
   @override
   VoidCallback didStop;
 
-  Profile profile;
   Completer<void> _runCompleter;
 
   Stopwatch _drawFrameStopwatch;
@@ -210,8 +208,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
   @mustCallSuper
   void frameDidDraw() {
     endMeasureFrame();
-    profile.addDataPoint('drawFrameDuration', _drawFrameStopwatch.elapsed,
-        reported: true);
 
     if (shouldContinue()) {
       window.scheduleFrame();
@@ -227,9 +223,8 @@ abstract class CustomizedWidgetRecorder extends Recorder
   }
 
   @override
-  Future<Profile> run() async {
+  Future<void> run() async {
     _runCompleter = Completer<void>();
-    final Profile localProfile = profile = Profile(name: name);
     final _RecordingWidgetsBinding binding =
         _RecordingWidgetsBinding.ensureInitialized();
     final Widget widget = createWidget();
@@ -253,12 +248,10 @@ abstract class CustomizedWidgetRecorder extends Recorder
 
     try {
       await _runCompleter.future;
-      return localProfile;
     } finally {
       stopListeningToEngineBenchmarkValues(kProfilePrerollFrame);
       stopListeningToEngineBenchmarkValues(kProfileApplyFrame);
       _runCompleter = null;
-      profile = null;
     }
   }
 }
