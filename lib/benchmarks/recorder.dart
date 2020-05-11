@@ -16,20 +16,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-/// The number of samples from warm-up iterations.
-///
-/// We warm-up the benchmark prior to measuring to allow JIT and caches to settle.
-/// For the Flutter Gallery, which consists of many different demos, we lower this
-/// number in order to reliably measure all demos.
-const int _kWarmUpSampleCount = 5;
-
-/// The number of samples we use to collect statistics from.
-const int _kMinimumMeasuredSampleCount = 100;
-
-/// The total number of samples collected by a benchmark.
-const int _kTotalSampleCount =
-    _kWarmUpSampleCount + _kMinimumMeasuredSampleCount;
-
 /// A benchmark metric that includes frame-related computations prior to
 /// submitting layer and picture operations to the underlying renderer, such as
 /// HTML and CanvasKit. During this phase we compute transforms, clips, and
