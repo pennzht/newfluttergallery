@@ -234,8 +234,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
     try {
       await _runCompleter.future;
     } finally {
-      stopListeningToEngineBenchmarkValues(kProfilePrerollFrame);
-      stopListeningToEngineBenchmarkValues(kProfileApplyFrame);
       _runCompleter = null;
     }
   }
@@ -411,57 +409,4 @@ void endMeasureFrame() {
     'measured_frame_end#$_currentFrameNumber',
   );
   _currentFrameNumber += 1;
-}
-
-/// A function that receives a benchmark value from the framework.
-typedef EngineBenchmarkValueListener = void Function(num value);
-
-// Maps from a value label name to a listener.
-final Map<String, EngineBenchmarkValueListener> _engineBenchmarkListeners =
-    <String, EngineBenchmarkValueListener>{};
-
-/// Registers a [listener] for engine benchmark values labeled by [name].
-///
-/// If another listener is already registered, overrides it.
-void registerEngineBenchmarkValueListener(
-    String name, EngineBenchmarkValueListener listener) {
-  if (listener == null) {
-    throw ArgumentError(
-      'Listener must not be null. To stop listening to engine benchmark values '
-      'under label "$name", call stopListeningToEngineBenchmarkValues(\'$name\').',
-    );
-  }
-
-  if (_engineBenchmarkListeners.containsKey(name)) {
-    throw StateError('A listener for "$name" is already registered.\n'
-        'Call `stopListeningToEngineBenchmarkValues` to unregister the previous '
-        'listener before registering a new one.');
-  }
-
-  if (_engineBenchmarkListeners.isEmpty) {
-    // The first listener is being registered. Register the global listener.
-    js_util.setProperty(html.window, '_flutter_internal_on_benchmark',
-        _dispatchEngineBenchmarkValue);
-  }
-
-  _engineBenchmarkListeners[name] = listener;
-}
-
-/// Stops listening to engine benchmark values under labeled by [name].
-void stopListeningToEngineBenchmarkValues(String name) {
-  _engineBenchmarkListeners.remove(name);
-  if (_engineBenchmarkListeners.isEmpty) {
-    // The last listener unregistered. Remove the global listener.
-    js_util.setProperty(html.window, '_flutter_internal_on_benchmark', null);
-  }
-}
-
-// Dispatches a benchmark value reported by the engine to the relevant listener.
-//
-// If there are no listeners registered for [name], ignores the value.
-void _dispatchEngineBenchmarkValue(String name, double value) {
-  final EngineBenchmarkValueListener listener = _engineBenchmarkListeners[name];
-  if (listener != null) {
-    listener(value);
-  }
 }
