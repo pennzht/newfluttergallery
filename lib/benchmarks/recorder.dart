@@ -229,21 +229,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
         _RecordingWidgetsBinding.ensureInitialized();
     final Widget widget = createWidget();
 
-    registerEngineBenchmarkValueListener(kProfilePrerollFrame, (num value) {
-      localProfile.addDataPoint(
-        kProfilePrerollFrame,
-        Duration(microseconds: value.toInt()),
-        reported: false,
-      );
-    });
-    registerEngineBenchmarkValueListener(kProfileApplyFrame, (num value) {
-      localProfile.addDataPoint(
-        kProfileApplyFrame,
-        Duration(microseconds: value.toInt()),
-        reported: false,
-      );
-    });
-
     binding._beginRecording(this, widget);
 
     try {
