@@ -146,6 +146,9 @@ abstract class RawRecorder extends Recorder {
   /// This is the part that records measurements of the benchmark.
   void body(Profile profile);
 
+  /// A boolean function telling whether we should continue running the test.
+  bool shouldContinue();
+
   @override
   @nonVirtual
   Future<Profile> run() async {
@@ -237,10 +240,6 @@ abstract class CustomizedWidgetRecorder extends Recorder
   Completer<void> _runCompleter;
 
   Stopwatch _drawFrameStopwatch;
-
-  /// Tells whether the recorder should continue. Can be different from
-  /// [profile.shouldContinue()].
-  bool shouldContinue();
 
   @override
   @mustCallSuper
