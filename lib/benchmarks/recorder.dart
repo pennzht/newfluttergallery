@@ -346,42 +346,6 @@ class AnnotatedSample {
   final bool isWarmUpValue;
 }
 
-/// Computes the arithmetic mean (or average) of given [values].
-double _computeAverage(String label, Iterable<double> values) {
-  if (values.isEmpty) {
-    throw StateError(
-        '$label: attempted to compute an average of an empty value list.');
-  }
-
-  final double sum = values.reduce((double a, double b) => a + b);
-  return sum / values.length;
-}
-
-/// Computes population standard deviation.
-///
-/// Unlike sample standard deviation, which divides by N - 1, this divides by N.
-///
-/// See also:
-///
-/// * https://en.wikipedia.org/wiki/Standard_deviation
-double _computeStandardDeviationForPopulation(
-    String label, Iterable<double> population) {
-  if (population.isEmpty) {
-    throw StateError(
-        '$label: attempted to compute the standard deviation of empty population.');
-  }
-  final double mean = _computeAverage(label, population);
-  final double sumOfSquaredDeltas = population.fold<double>(
-    0.0,
-    (double previous, double value) => previous += math.pow(value - mean, 2),
-  );
-  return math.sqrt(sumOfSquaredDeltas / population.length);
-}
-
-String _ratioToPercent(double value) {
-  return '${(value * 100).toStringAsFixed(2)}%';
-}
-
 /// Implemented by recorders that use [_RecordingWidgetsBinding] to receive
 /// frame life-cycle calls.
 abstract class FrameRecorder {
