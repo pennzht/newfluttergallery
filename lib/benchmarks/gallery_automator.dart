@@ -70,6 +70,8 @@ class GalleryAutomator {
 
   /// Opens and quits demos that are specified by [runCriterion], twice.
   Future<void> automateDemoGestures() async {
+    print('throw.1 channel!');
+
     await animationStops();
 
     controller = LiveWidgetController(WidgetsBinding.instance);
