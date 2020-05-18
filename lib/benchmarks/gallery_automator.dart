@@ -84,6 +84,8 @@ class GalleryAutomator {
     var finishedStudyDemos = false;
 
     for (final demo in demoNames) {
+      print('$demo : Scrolling to demo');
+
       if (!finishedStudyDemos && typeOfDemo(demo) != DemoType.study) {
         finishedStudyDemos = true;
 
@@ -92,12 +94,18 @@ class GalleryAutomator {
           strict: true,
           animated: false,
         );
+
+        print('$demo : Scrolled down');
       }
 
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
 
+      print('$demo : found button as $demoButton');
+
       await scrollUntilVisible(element: demoButton, animated: false);
+
+      print('$demo : scrolled to $demoButton');
 
       // Skip demo if it does not pass `runCriterion`.
       // This continue statement is placed here because we need to scroll
