@@ -102,8 +102,14 @@ class GalleryAutomator {
         );
       }
 
+      reporter('Awaiting ...');
+
+      await Future<void>.delayed(const Duration(seconds: 2));
+
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
+
+      reporter('Found!');
 
       await scrollUntilVisible(
         element: demoButton,
