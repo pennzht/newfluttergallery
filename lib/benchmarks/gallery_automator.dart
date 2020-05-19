@@ -96,6 +96,12 @@ class GalleryAutomator {
         );
       }
 
+      reporter('Finding impossible element');
+      final impossibleElement = find.byKey(
+        const ValueKey('impossible_element')
+      ).evaluate().single;
+      reporter('Impossible element found');
+
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
 
