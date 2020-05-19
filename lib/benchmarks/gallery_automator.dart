@@ -100,6 +100,14 @@ class GalleryAutomator {
         print('$demo : Scrolled down');
       }
 
+      // ERROR.
+
+      reporter('Finding impossible element.');
+
+      final impossibleElement = find.byKey(const ValueKey('impossibleElement')).evaluate().single;
+
+      reporter('Found impossible element.');
+
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
 
