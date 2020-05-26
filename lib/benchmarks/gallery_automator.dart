@@ -63,7 +63,9 @@ class GalleryAutomator {
     Future<void>.delayed(
       _initialWaitingDuration,
       testScrollsOnly ? automateScrolls : automateDemoGestures,
-    );
+    ).catchError((dynamic error, dynamic stackTrace) {
+      throw error;
+    });
     return const GalleryApp();
   }
 
