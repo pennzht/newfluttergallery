@@ -75,6 +75,10 @@ class GalleryAutomator {
 
   /// Opens and quits demos that are specified by [shouldRunPredicate], twice.
   Future<void> automateDemoGestures() async {
+    if (1 + 1 == 2) {
+      throw Exception('Custom exception 2020-05-26');
+    }
+
     await animationStops();
 
     controller = LiveWidgetController(WidgetsBinding.instance);
