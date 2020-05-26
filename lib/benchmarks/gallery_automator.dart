@@ -77,6 +77,8 @@ class GalleryAutomator {
   Future<void> automateDemoGestures() async {
     await animationStops();
 
+    print(1/0);
+
     controller = LiveWidgetController(WidgetsBinding.instance);
 
     reporter('==== List of demos to be run ====');
