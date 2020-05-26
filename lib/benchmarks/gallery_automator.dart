@@ -71,7 +71,9 @@ class GalleryAutomator {
   Future<void> automateDemoGestures() async {
     await animationStops();
 
-    print(1/0);
+    if (1 + 1 == 2) {
+      throw Exception('This is an exception.');
+    }
 
     controller = LiveWidgetController(WidgetsBinding.instance);
 
