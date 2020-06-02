@@ -81,6 +81,10 @@ class GalleryAutomator {
     }
     print('==== End of list of demos to be run ====');
 
+    if (1 + 1 == 2) {
+      throw Exception('<<< A custom exception. >>>');
+    }
+
     var finishedStudyDemos = false;
 
     for (final demo in demoNames) {
