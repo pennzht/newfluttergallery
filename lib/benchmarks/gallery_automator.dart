@@ -83,7 +83,9 @@ class GalleryAutomator {
 
   /// Opens and quits demos that are specified by [shouldRunPredicate], twice.
   Future<void> automateDemoGestures() async {
+    print('warmUp in progress');
     await warmUp();
+    print('warmUp finished');
 
     print('==== List of demos to be run ====');
     for (final demo in demoNames) {
@@ -96,6 +98,8 @@ class GalleryAutomator {
     var finishedStudyDemos = false;
 
     for (final demo in demoNames) {
+      print('Checking demo "$demo"');
+
       if (!finishedStudyDemos && typeOfDemo(demo) != DemoType.study) {
         finishedStudyDemos = true;
 
@@ -106,13 +110,19 @@ class GalleryAutomator {
         );
       }
 
+      print('scrollUntilVisible#1 done');
+
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
+
+      print('demoButton found');
 
       await scrollUntilVisible(
         element: demoButton,
         animated: false,
       );
+
+      print('scrollUntilVisible#2 done');
 
       // Run demo if it passes `runCriterion`.
       // Note that the above scrolling is required even for demos *not*
@@ -122,18 +132,27 @@ class GalleryAutomator {
         print('Running demo "$demo"');
 
         for (var i = 0; i < 2; ++i) {
+          print('run $i');
           await controller.tap(find.byKey(ValueKey(demo)));
+          print('tapped demo');
 
           if (typeOfDemo(demo) == DemoType.animatedWidget) {
+            print('is animated widget.');
             await Future<void>.delayed(_defaultWaitingDuration);
           } else {
+            print('is non-animated widget.');
             await animationStops();
           }
+          print('animation stopped.');
 
           await controller.tap(find.byKey(const ValueKey('Back')));
+          print('tapped back');
 
           await animationStops();
+          print('animation stopped');
         }
+
+        print('Demo "$demo" finished');
       }
     }
 
@@ -145,28 +164,38 @@ class GalleryAutomator {
 
   /// Scrolls various parts of the gallery.
   Future<void> automateScrolls() async {
+    print('warmUp in progress');
     await warmUp();
+    print('warmUp finished');
 
     print('Running scrolling test.');
 
     final selectedDemos = firstDemosOfCategories(demoNames);
 
+    print('demos selected: ${selectedDemos.length}');
+
     var scrolled = false;
 
     // For each category
     for (final demo in selectedDemos) {
+      print('scrolling to category $demo');
+
       // Scroll to that category
       if (!scrolled && categoryOf(demo) != 'study') {
         scrolled = true;
+        print('scrolling...');
         await scrollUntilVisible(
           element: find.text('Categories').evaluate().single,
           strict: true,
         );
+        print('scrolled!');
       } else if (scrolled && categoryOf(demo) == 'study') {
         scrolled = false;
         final pageScrollable =
             Scrollable.of(find.text('Categories').evaluate().single);
+        print('scrolling... #2');
         await scrollToExtreme(scrollable: pageScrollable, toEnd: false);
+        print('scrolled! #2');
       }
 
       // Scroll that scrollable
@@ -174,9 +203,14 @@ class GalleryAutomator {
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
       final scrollable = Scrollable.of(demoButton);
 
+      print('scrollable found');
+
       for (var i = 0; i < 2; ++i) {
+        print('scroll #3');
         await scrollToExtreme(scrollable: scrollable, toEnd: true);
+        print('scroll #4');
         await scrollToExtreme(scrollable: scrollable, toEnd: false);
+        print('scroll #5');
       }
     }
 
@@ -191,11 +225,15 @@ class GalleryAutomator {
     // Let animation stop.
     await animationStops();
 
+    print('stopped #100');
+
     // Set controller.
     controller = LiveWidgetController(WidgetsBinding.instance);
 
     // Find first demo of each category.
     final candidateDemos = firstDemosOfCategories(demoNames);
+
+    print('first demos found #100');
 
     // Find first demo that is not being tested here.
     // We open this demo as a way to warm up the engine, so we need to use an
@@ -209,19 +247,28 @@ class GalleryAutomator {
     }
     assert(firstUntestedDemo != null);
 
+    print('first untested demo found #100');
+
     // Open and close the demo twice to warm up.
     for (var i = 0; i < 2; ++i) {
+      print('run $i ... #100');
       await controller.tap(find.byKey(ValueKey(firstUntestedDemo)));
+      print('#101');
 
       if (typeOfDemo(firstUntestedDemo) == DemoType.animatedWidget) {
+        print('#102');
         await Future<void>.delayed(_defaultWaitingDuration);
       } else {
+        print('#103');
         await animationStops();
       }
+      print('#104');
 
       await controller.tap(find.byKey(const ValueKey('Back')));
+      print('#105');
 
       await animationStops();
+      print('run $i finished ... #100');
     }
 
     // When warm-up finishes, inform the recorder.
