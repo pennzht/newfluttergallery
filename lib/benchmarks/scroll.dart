@@ -127,11 +127,15 @@ Future<void> scrollUntilVisible({
       )
       .toDouble();
 
+  print('    > scroll computation success');
+
   await scrollToPosition(
     scrollable: scrollable,
     pixels: restrictedTargetPixels,
     animated: animated,
   );
+
+  print('    > scrolled');
 }
 
 Future<void> scrollToExtreme({
@@ -156,14 +160,20 @@ Future<void> scrollToPosition({
   bool animated = true,
 }) async {
   if (animated) {
+    print('    >> animated true');
     await scrollable.position.animateTo(
       pixels,
       duration: _scrollAnimationLength,
       curve: Curves.easeInOut,
     );
   } else {
+    print('    >> animated false');
     scrollable.position.jumpTo(pixels);
   }
 
+  print('    >> animation started');
+
   await animationStops();
+
+  print('    >> animation stopped');
 }
