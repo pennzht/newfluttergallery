@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const Duration _animationCheckingInterval = Duration(milliseconds: 50);
+const Duration _animationCheckingInterval = Duration(milliseconds: 200);
 
 const Duration _scrollAnimationLength = Duration(milliseconds: 300);
 
@@ -63,6 +63,12 @@ bool _hasSufficientFreeRoom({
 }
 
 Future<void> animationStops() async {
+  do {
+    await Future<void>.delayed(_animationCheckingInterval);
+  } while (WidgetsBinding.instance.hasScheduledFrame);
+
+  // original statement
+  /*
   if (!WidgetsBinding.instance.hasScheduledFrame) return;
 
   final Completer stopped = Completer<void>();
@@ -75,6 +81,7 @@ Future<void> animationStops() async {
   });
 
   await stopped.future;
+   */
 }
 
 Future<void> scrollUntilVisible({
