@@ -62,7 +62,7 @@ bool _hasSufficientFreeRoom({
   }
 }
 
-Future<void> animationStops() async {
+Future<void> previousAnimationStops() async {
   if (!WidgetsBinding.instance.hasScheduledFrame) return;
 
   final Completer stopped = Completer<void>();
@@ -75,6 +75,18 @@ Future<void> animationStops() async {
   });
 
   await stopped.future;
+}
+
+Future<void> animationStops() async {
+  var waitCount = 0;
+
+  while (WidgetsBinding.instance.hasScheduledFrame) {
+    await Future<void>.delayed(_animationCheckingInterval);
+
+    print('        waitCount = $waitCount');
+
+    waitCount ++;
+  }
 }
 
 Future<void> scrollUntilVisible({
