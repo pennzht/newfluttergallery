@@ -196,10 +196,4 @@ Future<void> scrollToPosition({
 
     print('[scrollToPosition] "not animated" done');
   }
-
-  print('[scrollToPosition] waiting for animation (if any) to stop');
-
-  await animationStops();
-
-  print('[scrollToPosition] animation (if any) stopped');
 }
