@@ -105,7 +105,7 @@ class GalleryAutomator {
         await scrollUntilVisible(
           element: find.text('Categories').evaluate().single,
           strict: true,
-          animated: false,
+          animated: true,
         );
 
         print('Scrolling... 11');
@@ -120,7 +120,7 @@ class GalleryAutomator {
 
       await scrollUntilVisible(
         element: demoButton,
-        animated: false,
+        animated: true,
       );
 
       print('Scrolled until visible!');
@@ -186,6 +186,7 @@ class GalleryAutomator {
         await scrollUntilVisible(
           element: find.text('Categories').evaluate().single,
           strict: true,
+          animated: true,
         );
         print('Scrolled!');
       } else if (scrolled && categoryOf(demo) == 'study') {
