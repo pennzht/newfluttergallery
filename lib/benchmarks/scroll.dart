@@ -106,10 +106,10 @@ Future<void> scrollUntilVisible({
 
   // (!!!) This exception is added in order to test if `web_benchmarks_html`
   // can catch an exception with correct stacktrace.
-
-  if (1 + 1 == 2) {
-    throw Exception('Custom Exception from Gallery.');
-  }
+  // Verified: shows stacktrace (js).
+  // if (1 + 1 == 2) {
+  //   throw Exception('Custom Exception from Gallery.');
+  // }
 
   // If there is free room between this demo button and the end of
   // the scrollable, the next demo button is visible and can be tapped.
