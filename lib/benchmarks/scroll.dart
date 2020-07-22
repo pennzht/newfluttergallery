@@ -62,7 +62,7 @@ bool _hasSufficientFreeRoom({
   }
 }
 
-Future<void> animationStops() async {
+Future<void> previousAnimationStops() async {
   if (!WidgetsBinding.instance.hasScheduledFrame) return;
 
   final Completer stopped = Completer<void>();
@@ -75,6 +75,18 @@ Future<void> animationStops() async {
   });
 
   await stopped.future;
+}
+
+Future<void> animationStops() async {
+  var waitCount = 0;
+
+  while (WidgetsBinding.instance.hasScheduledFrame) {
+    await Future<void>.delayed(_animationCheckingInterval);
+
+    print('        waitCount = $waitCount');
+
+    waitCount ++;
+  }
 }
 
 Future<void> scrollUntilVisible({
@@ -90,6 +102,15 @@ Future<void> scrollUntilVisible({
 
   final visibleWindow = _absoluteRect(viewport).intersect(_windowRect(element));
 
+  print('[scrollUntilVisible] computed window');
+
+  // (!!!) This exception is added in order to test if `web_benchmarks_html`
+  // can catch an exception with correct stacktrace.
+
+  if (1 + 1 == 2) {
+    throw Exception('Custom Exception from Gallery.');
+  }
+
   // If there is free room between this demo button and the end of
   // the scrollable, the next demo button is visible and can be tapped.
   if (!strict &&
@@ -100,6 +121,8 @@ Future<void> scrollUntilVisible({
       )) {
     return;
   }
+
+  print('[scrollUntilVisible] scrolling required');
 
   double pixelsToBeMoved;
   switch (scrollable.axisDirection) {
@@ -119,6 +142,8 @@ Future<void> scrollUntilVisible({
       break;
   }
 
+  print('[scrollUntilVisible] computed pixels to scroll');
+
   final targetPixels = scrollable.position.pixels + pixelsToBeMoved;
   final restrictedTargetPixels = targetPixels
       .clamp(
@@ -127,11 +152,15 @@ Future<void> scrollUntilVisible({
       )
       .toDouble();
 
+  print('[scrollUntilVisible] about to await scrollToPosition');
+
   await scrollToPosition(
     scrollable: scrollable,
     pixels: restrictedTargetPixels,
     animated: animated,
   );
+
+  print('[scrollUntilVisible] done');
 }
 
 Future<void> scrollToExtreme({
@@ -155,15 +184,23 @@ Future<void> scrollToPosition({
   @required double pixels,
   bool animated = true,
 }) async {
+  print('[scrollToPosition] about to start');
+
   if (animated) {
+    print('[scrollToPosition] "animated"');
+
     await scrollable.position.animateTo(
       pixels,
       duration: _scrollAnimationLength,
       curve: Curves.easeInOut,
     );
-  } else {
-    scrollable.position.jumpTo(pixels);
-  }
 
-  await animationStops();
+    print('[scrollToPosition] "animated" done');
+  } else {
+    print('[scrollToPosition] "not animated"');
+
+    scrollable.position.jumpTo(pixels);
+
+    print('[scrollToPosition] "not animated" done');
+  }
 }

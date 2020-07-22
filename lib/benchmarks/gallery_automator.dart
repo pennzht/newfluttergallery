@@ -96,23 +96,34 @@ class GalleryAutomator {
     var finishedStudyDemos = false;
 
     for (final demo in demoNames) {
+      print('Doing demo $demo');
       if (!finishedStudyDemos && typeOfDemo(demo) != DemoType.study) {
         finishedStudyDemos = true;
+
+        print('Scrolling... 10');
 
         await scrollUntilVisible(
           element: find.text('Categories').evaluate().single,
           strict: true,
-          animated: false,
+          animated: true,
         );
+
+        print('Scrolling... 11');
       }
+
+      print('Looking for demoButton...');
 
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
 
+      print('Scrolling until visible...');
+
       await scrollUntilVisible(
         element: demoButton,
-        animated: false,
+        animated: true,
       );
+
+      print('Scrolled until visible!');
 
       // Run demo if it passes `runCriterion`.
       // Note that the above scrolling is required even for demos *not*
@@ -122,17 +133,29 @@ class GalleryAutomator {
         print('Running demo "$demo"');
 
         for (var i = 0; i < 2; ++i) {
+          print('Waiting to tap... 1 ');
+
           await controller.tap(find.byKey(ValueKey(demo)));
 
+          print('Tapped! 1');
+
           if (typeOfDemo(demo) == DemoType.animatedWidget) {
+            print('Waiting for it to finish...');
             await Future<void>.delayed(_defaultWaitingDuration);
           } else {
+            print('Waiting for animation to stop...');
             await animationStops();
           }
 
+          print('Finished!');
+
           await controller.tap(find.byKey(const ValueKey('Back')));
 
+          print('Tapping back...');
+
           await animationStops();
+
+          print('Animation stopped!');
         }
       }
     }
@@ -155,28 +178,40 @@ class GalleryAutomator {
 
     // For each category
     for (final demo in selectedDemos) {
+      print('Doing demo: $demo');
       // Scroll to that category
       if (!scrolled && categoryOf(demo) != 'study') {
         scrolled = true;
+        print('Waiting to scroll... 1');
         await scrollUntilVisible(
           element: find.text('Categories').evaluate().single,
           strict: true,
+          animated: true,
         );
+        print('Scrolled!');
       } else if (scrolled && categoryOf(demo) == 'study') {
         scrolled = false;
         final pageScrollable =
             Scrollable.of(find.text('Categories').evaluate().single);
+        print('Waiting to scroll... 2');
         await scrollToExtreme(scrollable: pageScrollable, toEnd: false);
+        print('Scrolled!');
       }
 
+      print('Looking for demoButton');
       // Scroll that scrollable
       final demoButton =
           find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
+      print('Found demoButton!');
       final scrollable = Scrollable.of(demoButton);
+      print('Found scrollable!');
 
       for (var i = 0; i < 2; ++i) {
+        print('Scrolling to extreme... 1');
         await scrollToExtreme(scrollable: scrollable, toEnd: true);
+        print('Scrolling to extreme... 2');
         await scrollToExtreme(scrollable: scrollable, toEnd: false);
+        print('Scrolling to extreme... 3');
       }
     }
 
@@ -191,11 +226,17 @@ class GalleryAutomator {
     // Let animation stop.
     await animationStops();
 
+    print('Animation stopped.');
+
     // Set controller.
     controller = LiveWidgetController(WidgetsBinding.instance);
 
+    print('Found controller');
+
     // Find first demo of each category.
     final candidateDemos = firstDemosOfCategories(demoNames);
+
+    print('Found candidatedemo');
 
     // Find first demo that is not being tested here.
     // We open this demo as a way to warm up the engine, so we need to use an
