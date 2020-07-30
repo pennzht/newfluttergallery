@@ -85,7 +85,7 @@ class GalleryAutomator {
   Future<void> automateDemoGestures() async {
     await warmUp();
 
-    final demosToRun = ['shrine@study', 'rally@study', 'crane@study'];
+    final demosToRun = ['shrine@study', 'rally@study', 'crane@study', 'fortnightly@study'];
 
     print('==== List of demos to be run ====');
     for (final demo in demosToRun) {
@@ -97,42 +97,47 @@ class GalleryAutomator {
 
     var finishedStudyDemos = false;
 
-    for (final demo in demosToRun) {
-      print('Doing demo $demo');
+    for (var cycle = 0; cycle < 5; ++cycle) {
+      print('++++ Running cycle #$cycle ++++');
 
-      // Run demo if it passes `runCriterion`.
-      // Note that the above scrolling is required even for demos *not*
-      // satisfying `runCriterion`, because we need to scroll
-      // through every `Scrollable` to find the `demoButton`.
-      if (shouldRunPredicate(demo)) {
-        print('Running demo "$demo"');
+      for (final demo in demosToRun) {
+        print('Doing demo $demo');
 
-        for (var i = 0; i < 2; ++i) {
-          print('Waiting to tap... 1 ');
+        // Run demo if it passes `runCriterion`.
+        // Note that the above scrolling is required even for demos *not*
+        // satisfying `runCriterion`, because we need to scroll
+        // through every `Scrollable` to find the `demoButton`.
+        if (shouldRunPredicate(demo)) {
+          print('Running demo "$demo"');
 
-          await controller.tap(find.byKey(ValueKey(demo)));
+          for (var i = 0; i < 2; ++i) {
+            print('Waiting to tap... 1 ');
 
-          print('Tapped! 1');
+            await controller.tap(find.byKey(ValueKey(demo)));
 
-          if (typeOfDemo(demo) == DemoType.animatedWidget) {
-            print('Waiting for it to finish...');
-            await Future<void>.delayed(_defaultWaitingDuration);
-          } else {
-            print('Waiting for animation to stop...');
+            print('Tapped! 1');
+
+            if (typeOfDemo(demo) == DemoType.animatedWidget) {
+              print('Waiting for it to finish...');
+              await Future<void>.delayed(_defaultWaitingDuration);
+            } else {
+              print('Waiting for animation to stop...');
+              await animationStops();
+            }
+
+            print('Finished!');
+
+            await controller.tap(find.byKey(const ValueKey('Back')));
+
+            print('Tapping back...');
+
             await animationStops();
+
+            print('Animation stopped!');
           }
-
-          print('Finished!');
-
-          await controller.tap(find.byKey(const ValueKey('Back')));
-
-          print('Tapping back...');
-
-          await animationStops();
-
-          print('Animation stopped!');
         }
       }
+      print('++++ Cycle #$cycle finished ++++');
     }
 
     print('All demos finished.');
