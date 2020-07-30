@@ -85,8 +85,10 @@ class GalleryAutomator {
   Future<void> automateDemoGestures() async {
     await warmUp();
 
+    final demosToRun = ['shrine@study', 'rally@study', 'crane@study'];
+
     print('==== List of demos to be run ====');
-    for (final demo in demoNames) {
+    for (final demo in demosToRun) {
       if (shouldRunPredicate(demo)) {
         print(demo);
       }
@@ -95,35 +97,8 @@ class GalleryAutomator {
 
     var finishedStudyDemos = false;
 
-    for (final demo in demoNames) {
+    for (final demo in demosToRun) {
       print('Doing demo $demo');
-      if (!finishedStudyDemos && typeOfDemo(demo) != DemoType.study) {
-        finishedStudyDemos = true;
-
-        print('Scrolling... 10');
-
-        await scrollUntilVisible(
-          element: find.text('Categories').evaluate().single,
-          strict: true,
-          animated: true,
-        );
-
-        print('Scrolling... 11');
-      }
-
-      print('Looking for demoButton...');
-
-      final demoButton =
-          find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
-
-      print('Scrolling until visible...');
-
-      await scrollUntilVisible(
-        element: demoButton,
-        animated: true,
-      );
-
-      print('Scrolled until visible!');
 
       // Run demo if it passes `runCriterion`.
       // Note that the above scrolling is required even for demos *not*
