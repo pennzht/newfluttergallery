@@ -186,7 +186,9 @@ class GalleryAutomator {
       final scrollable = Scrollable.of(demoButton);
       print('Found scrollable!');
 
-      for (var i = 0; i < 2; ++i) {
+      // Repeat 15 times
+      for (var i = 0; i < 15; ++i) {
+        print('On round $i...');
         print('Scrolling to extreme... 1');
         await scrollToExtreme(scrollable: scrollable, toEnd: true);
         print('Scrolling to extreme... 2');
