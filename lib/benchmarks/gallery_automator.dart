@@ -85,10 +85,8 @@ class GalleryAutomator {
   Future<void> automateDemoGestures() async {
     await warmUp();
 
-    final demosToRun = ['shrine@study', 'rally@study', 'crane@study', 'fortnightly@study'];
-
     print('==== List of demos to be run ====');
-    for (final demo in demosToRun) {
+    for (final demo in demoNames) {
       if (shouldRunPredicate(demo)) {
         print(demo);
       }
@@ -97,47 +95,69 @@ class GalleryAutomator {
 
     var finishedStudyDemos = false;
 
-    for (var cycle = 0; cycle < 5; ++cycle) {
-      print('++++ Running cycle #$cycle ++++');
+    for (final demo in demoNames) {
+      print('Doing demo $demo');
+      if (!finishedStudyDemos && typeOfDemo(demo) != DemoType.study) {
+        finishedStudyDemos = true;
 
-      for (final demo in demosToRun) {
-        print('Doing demo $demo');
+        print('Scrolling... 10');
 
-        // Run demo if it passes `runCriterion`.
-        // Note that the above scrolling is required even for demos *not*
-        // satisfying `runCriterion`, because we need to scroll
-        // through every `Scrollable` to find the `demoButton`.
-        if (shouldRunPredicate(demo)) {
-          print('Running demo "$demo"');
+        await scrollUntilVisible(
+          element: find.text('Categories').evaluate().single,
+          strict: true,
+          animated: true,
+        );
 
-          for (var i = 0; i < 2; ++i) {
-            print('Waiting to tap... 1 ');
+        print('Scrolling... 11');
+      }
 
-            await controller.tap(find.byKey(ValueKey(demo)));
+      print('Looking for demoButton...');
 
-            print('Tapped! 1');
+      final demoButton =
+          find.byKey(ValueKey(demo), skipOffstage: false).evaluate().single;
 
-            if (typeOfDemo(demo) == DemoType.animatedWidget) {
-              print('Waiting for it to finish...');
-              await Future<void>.delayed(_defaultWaitingDuration);
-            } else {
-              print('Waiting for animation to stop...');
-              await animationStops();
-            }
+      print('Scrolling until visible...');
 
-            print('Finished!');
+      await scrollUntilVisible(
+        element: demoButton,
+        animated: true,
+      );
 
-            await controller.tap(find.byKey(const ValueKey('Back')));
+      print('Scrolled until visible!');
 
-            print('Tapping back...');
+      // Run demo if it passes `runCriterion`.
+      // Note that the above scrolling is required even for demos *not*
+      // satisfying `runCriterion`, because we need to scroll
+      // through every `Scrollable` to find the `demoButton`.
+      if (shouldRunPredicate(demo)) {
+        print('Running demo "$demo"');
 
+        for (var i = 0; i < 2; ++i) {
+          print('Waiting to tap... 1 ');
+
+          await controller.tap(find.byKey(ValueKey(demo)));
+
+          print('Tapped! 1');
+
+          if (typeOfDemo(demo) == DemoType.animatedWidget) {
+            print('Waiting for it to finish...');
+            await Future<void>.delayed(_defaultWaitingDuration);
+          } else {
+            print('Waiting for animation to stop...');
             await animationStops();
-
-            print('Animation stopped!');
           }
+
+          print('Finished!');
+
+          await controller.tap(find.byKey(const ValueKey('Back')));
+
+          print('Tapping back...');
+
+          await animationStops();
+
+          print('Animation stopped!');
         }
       }
-      print('++++ Cycle #$cycle finished ++++');
     }
 
     print('All demos finished.');
@@ -186,9 +206,7 @@ class GalleryAutomator {
       final scrollable = Scrollable.of(demoButton);
       print('Found scrollable!');
 
-      // Repeat 15 times
-      for (var i = 0; i < 15; ++i) {
-        print('On round $i...');
+      for (var i = 0; i < 2; ++i) {
         print('Scrolling to extreme... 1');
         await scrollToExtreme(scrollable: scrollable, toEnd: true);
         print('Scrolling to extreme... 2');
