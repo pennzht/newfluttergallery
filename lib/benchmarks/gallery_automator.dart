@@ -132,7 +132,8 @@ class GalleryAutomator {
       if (shouldRunPredicate(demo)) {
         print('Running demo "$demo"');
 
-        for (var i = 0; i < 2; ++i) {
+        // Increase open-and-close count.
+        for (var i = 0; i < 10; ++i) {
           print('Waiting to tap... 1 ');
 
           await controller.tap(find.byKey(ValueKey(demo)));
