@@ -2,7 +2,7 @@
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 
-const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/banner_demo.dart';
+const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
 
 Future<void> main () async {
   final collection = AnalysisContextCollection(
