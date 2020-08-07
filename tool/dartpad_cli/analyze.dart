@@ -1,6 +1,7 @@
 // Experimental.
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/dart/analysis/results.dart';
 
 Future<void> main () async {
   final collection = AnalysisContextCollection(
@@ -13,6 +14,7 @@ Future<void> main () async {
       '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/buttom_demo.dart',
     );
     print (result);
+    print (result.content.length);
   }
 }
 
