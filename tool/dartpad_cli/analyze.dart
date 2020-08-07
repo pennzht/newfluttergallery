@@ -22,19 +22,19 @@ Future<void> main () async {
     print (result.content.length);
     print (result.unit);
 
-    walkAst(result.unit);
+    result.unit.accept(PrintVisitor());
   }
 }
 
-void walkAst(AstNode ast, [int level = 0]) {
-  print('${indent * level}|${ast.offset} -> ${ast.end}');
-  ast.accept(PrintVisitor());
-}
-
 class PrintVisitor extends GeneralizingAstVisitor<void> {
+  PrintVisitor([this.level = 0]);
+
+  final int level;
+
   @override
   void visitNode(AstNode node) {
-    print('${node.offset} -> ${node.end}');
-    node.visitChildren(PrintVisitor());
+    final representation = node.length <= 32 ? node.toString() : '...';
+    print('${indent * level} | ${node.offset} -> ${node.end} $representation');
+    node.visitChildren(PrintVisitor(level + 1));
   }
 }
