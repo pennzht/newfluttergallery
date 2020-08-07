@@ -1,19 +1,21 @@
 // Experimental.
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/analysis/results.dart';
+
+const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/banner_demo.dart';
 
 Future<void> main () async {
   final collection = AnalysisContextCollection(
-    includedPaths: ['/Users/tianguang/Documents/dev/gallery2/gallery/tool/dartpad_cli/analyze.dart'],
+    includedPaths: [filePath],
   );
 
   for (final context in collection.contexts) {
     print (context);
     final result = await context.currentSession.getResolvedUnit(
-      '/Users/tianguang/Documents/dev/gallery2/gallery/tool/dartpad_cli/analyze.dart',
+      filePath,
     );
     print (result);
+    print (result.content);
     print (result.content.length);
   }
 }
