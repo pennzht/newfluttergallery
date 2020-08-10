@@ -34,7 +34,12 @@ class PrintVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
     final representation = node.length <= 32 ? node.toString() : '...';
-    print('${indent * level} | ${node.offset} -> ${node.end} $representation <${node.runtimeType}>');
+    print(
+      '${indent * level} | '
+      '${node.offset} -> ${node.end} '
+      '$representation '
+      '<${node.runtimeType}>'
+    );
     node.visitChildren(PrintVisitor(level + 1));
   }
 }
