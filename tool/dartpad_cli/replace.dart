@@ -21,16 +21,38 @@ Future<void> main () async {
     );
 
     result.unit.accept(ReplacementVisitor());
+    print ('=' * 80);
+    
+    result.unit.accept(PrintVisitor());
   }
 }
 
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
-    if (node is SimpleIdentifierImpl) {
+    if (node is SimpleIdentifierImpl && node.token.lexeme == 'type') {
       print(node.token.toString());
       node.token = StringToken(TokenType.IDENTIFIER, 'tyyyyype', 0);
     }
     node.visitChildren(ReplacementVisitor());
+  }
+}
+
+class PrintVisitor extends GeneralizingAstVisitor<void> {
+  PrintVisitor([this.level = 0]);
+
+  final int level;
+
+  @override
+  void visitNode(AstNode node) {
+    final representation = node.length <= 32 ? node.toString() : '...';
+    print(
+        '${indent * level} | '
+            '${node.offset} -> ${node.end} '
+            '$representation '
+            '<${node.runtimeType}> '
+            'of: <${node.parent.runtimeType}>'
+    );
+    node.visitChildren(PrintVisitor(level + 1));
   }
 }
