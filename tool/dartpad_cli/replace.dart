@@ -31,11 +31,11 @@ class PrintVisitor extends GeneralizingAstVisitor<void> {
   void visitNode(AstNode node) {
     final representation = node.length <= 32 ? node.toString() : '...';
     print(
-        '${indent * level} | '
-            '${node.offset} -> ${node.end} '
-            '$representation '
-            '<${node.runtimeType}> '
-            'of: <${node.parent.runtimeType}>'
+      '${indent * level} | '
+      '${node.offset} -> ${node.end} '
+      '$representation '
+      '<${node.runtimeType}> '
+      'of: <${node.parent.runtimeType}>'
     );
     node.visitChildren(PrintVisitor(level + 1));
   }
