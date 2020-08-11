@@ -38,7 +38,8 @@ class PrintVisitor extends GeneralizingAstVisitor<void> {
       '${indent * level} | '
       '${node.offset} -> ${node.end} '
       '$representation '
-      '<${node.runtimeType}>'
+      '<${node.runtimeType}> '
+      'of: <${node.parent.runtimeType}>'
     );
     node.visitChildren(PrintVisitor(level + 1));
   }
