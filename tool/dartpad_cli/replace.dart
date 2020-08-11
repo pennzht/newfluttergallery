@@ -24,6 +24,8 @@ Future<void> main () async {
     print ('=' * 80);
     
     result.unit.accept(PrintVisitor());
+
+    print (result.unit.toSource());
   }
 }
 
