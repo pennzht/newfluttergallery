@@ -22,7 +22,7 @@ Future<void> main () async {
 
     result.unit.accept(ReplacementVisitor());
     print ('=' * 80);
-    
+
     result.unit.accept(PrintVisitor());
 
     print (result.unit.toSource());
