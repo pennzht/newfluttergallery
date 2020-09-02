@@ -36,7 +36,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
       print(node.token.toString());
       node.token = StringToken(TokenType.IDENTIFIER, 'type2', 0);
     } else if (node is ...) {
-      
+      // add another block.
     }
     node.visitChildren(ReplacementVisitor());
   }
