@@ -56,6 +56,12 @@ Future<void> main () async {
 }
 
 Future<void> handleReplacements () async {
+  int comparator(ReplacementCommand a, ReplacementCommand b) {
+    return a.node.offset - b.node.offset;
+  }
+
+  replacements.sort(comparator);
+
   var myFile = io.File(filePath);
   var contents = await myFile.readAsString();
   for (var i = replacements.length - 1; i >= 0; i --) {
