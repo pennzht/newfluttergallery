@@ -41,11 +41,9 @@ Future<void> main () async {
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
-    if (node is SimpleIdentifierImpl && node.token.lexeme == 'type') {
-      print(node.token.toString());
-      node.token = StringToken(TokenType.IDENTIFIER, 'type2', 0);
-    } else if (false) {
-      print('...');
+    // replace "type" identifiers.
+    if (node is SimpleIdentifierImpl && node.token.lexeme == 'type' && node.parent is! FieldFormalParameterImpl) {
+      print ('node: $node\ntoken: ${node.token.toString()}');
     }
     node.visitChildren(ReplacementVisitor());
   }
