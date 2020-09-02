@@ -73,6 +73,14 @@ Future<void> handleReplacements () async {
 String replace(String original, int start, int stop, String substring)
   => '${original.substring(0, start)}$substring${original.substring(stop)}';
 
+ReturnType findAncestor<AncestorType, ReturnType>(AstNode node) {
+  var pointer = node;
+  while (pointer != null && pointer is! AncestorType) {
+    pointer = pointer.parent;
+  }
+  return pointer as ReturnType;
+}
+
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
@@ -91,10 +99,12 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is SimpleIdentifierImpl &&
         node.token.lexeme == 'type' &&
         node.parent is FieldFormalParameterImpl) {
-      print ((node.parent as FieldFormalParameterImpl).childEntities);
+      replacements.add(ReplacementCommand(node.parent, ''));
+      // print ((node.parent as FieldFormalParameterImpl).childEntities);
     } else if (node is SimpleIdentifierImpl &&
         node.token.lexeme == 'type' &&
         node.parent is VariableDeclarationImpl) {
+      replacements.add(ReplacementCommand(findAncestor<ClassMemberImpl, AstNode>(node), ''));
       print ((node.parent as VariableDeclarationImpl).childEntities);
     }
     node.visitChildren(ReplacementVisitor());
