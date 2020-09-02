@@ -51,7 +51,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
         (node.parent as EnumDeclarationImpl).name.name.endsWith('Type')
     ) {
-      print('name => ${(node.parent as EnumDeclarationImpl).name.name}');
+      enumRepresentations.add(node.name.name);
     }
     node.visitChildren(ReplacementVisitor());
   }
