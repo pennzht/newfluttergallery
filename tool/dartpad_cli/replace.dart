@@ -11,7 +11,14 @@ const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/mate
 //const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
 const indent = '  ';
 
-final replacements = <AstNode>[];
+class ReplacementCommand {
+  const ReplacementCommand(this.node, this.target);
+
+  final AstNode node;
+  final String target;
+}
+
+final replacements = <ReplacementCommand>[];
 final enumRepresentations = <String>[];
 String enumName;
 
@@ -55,9 +62,9 @@ Future<void> handleReplacements () async {
     var replacement = replacements[i];
     contents = replace(
       contents,
-      replacement.offset,
-      replacement.end,
-      '$enumName.${enumRepresentations[0]}',
+      replacement.node.offset,
+      replacement.node.end,
+      replacement.target,
     );
   }
   await io.File('lib/generated/gen.dart').writeAsString(contents);
@@ -75,12 +82,20 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
         node.parent is! FieldFormalParameterImpl &&
         node.parent is! VariableDeclarationImpl) {
       print ('node: $node\ntoken: ${node.token.toString()}\nrange: ${node.offset} -> ${node.end}');
-      replacements.add(node);
+      replacements.add(ReplacementCommand(node, '$enumName.${enumRepresentations[0]}'));
     } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
         (node.parent as EnumDeclarationImpl).name.name.endsWith('Type')
     ) {
       enumRepresentations.add(node.name.name);
       enumName = (node.parent as EnumDeclarationImpl).name.name;
+    } else if (node is SimpleIdentifierImpl &&
+        node.token.lexeme == 'type' &&
+        node.parent is FieldFormalParameterImpl) {
+      print ((node.parent as FieldFormalParameterImpl).childEntities);
+    } else if (node is SimpleIdentifierImpl &&
+        node.token.lexeme == 'type' &&
+        node.parent is VariableDeclarationImpl) {
+      print ((node.parent as VariableDeclarationImpl).childEntities);
     }
     node.visitChildren(ReplacementVisitor());
   }
