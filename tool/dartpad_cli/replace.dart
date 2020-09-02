@@ -47,6 +47,11 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     // replace "type" identifiers.
     if (node is SimpleIdentifierImpl && node.token.lexeme == 'type' && node.parent is! FieldFormalParameterImpl) {
       print ('node: $node\ntoken: ${node.token.toString()}\nrange: ${node.offset} -> ${node.end}');
+      replacements.add(node);
+    } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
+        (node.parent as EnumDeclarationImpl).name.name.endsWith('Type')
+    ) {
+      print('name => ${(node.parent as EnumDeclarationImpl).name.name}');
     }
     node.visitChildren(ReplacementVisitor());
   }
