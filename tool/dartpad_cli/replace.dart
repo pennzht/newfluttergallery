@@ -39,6 +39,15 @@ Future<void> main () async {
 
     print (result.unit.toSource());
   }
+
+  print(replacements);
+  print(enumRepresentations);
+
+  await handleReplacements ();
+}
+
+Future<void> handleReplacements () async {
+  // your code here.
 }
 
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
