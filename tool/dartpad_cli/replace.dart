@@ -60,7 +60,7 @@ Future<void> handleReplacements () async {
       '$enumName.${enumRepresentations[0]}',
     );
   }
-  print (contents);
+  await io.File('lib/generated/gen.dart').writeAsString(contents);
 }
 
 String replace(String original, int start, int stop, String substring)
@@ -70,7 +70,10 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
     // replace "type" identifiers.
-    if (node is SimpleIdentifierImpl && node.token.lexeme == 'type' && node.parent is! FieldFormalParameterImpl) {
+    if (node is SimpleIdentifierImpl &&
+        node.token.lexeme == 'type' &&
+        node.parent is! FieldFormalParameterImpl &&
+        node.parent is! VariableDeclarationImpl) {
       print ('node: $node\ntoken: ${node.token.toString()}\nrange: ${node.offset} -> ${node.end}');
       replacements.add(node);
     } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
