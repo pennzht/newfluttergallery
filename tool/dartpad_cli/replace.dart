@@ -34,7 +34,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   void visitNode(AstNode node) {
     if (node is SimpleIdentifierImpl && node.token.lexeme == 'type') {
       print(node.token.toString());
-      node.token = StringToken(TokenType.IDENTIFIER, 'tyyyyype', 0);
+      node.token = StringToken(TokenType.IDENTIFIER, 'type2', 0);
     }
     node.visitChildren(ReplacementVisitor());
   }
