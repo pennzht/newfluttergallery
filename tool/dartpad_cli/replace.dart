@@ -7,7 +7,16 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:_fe_analyzer_shared/src/scanner/token.dart';
 
 const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
+//const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
 const indent = '  ';
+
+// Keep any of the following:
+// SimpleIdentifierImpl of FieldFormalParameterImpl
+// DeclaredSimpleIdentifier of VariableDeclarationImpl
+
+// Replace any of the following:
+// SimpleIdentifierImpl of PrefixedIdentifierImpl
+// SimpleIdentifierImpl of SwitchStatementImpl
 
 Future<void> main () async {
   final collection = AnalysisContextCollection(
@@ -35,8 +44,8 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     if (node is SimpleIdentifierImpl && node.token.lexeme == 'type') {
       print(node.token.toString());
       node.token = StringToken(TokenType.IDENTIFIER, 'type2', 0);
-    } else if (node is ...) {
-      // add another block.
+    } else if (false) {
+      print('...');
     }
     node.visitChildren(ReplacementVisitor());
   }
