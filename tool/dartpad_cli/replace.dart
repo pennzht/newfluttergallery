@@ -10,6 +10,9 @@ const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/mate
 //const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
 const indent = '  ';
 
+final replacements = <AstNode>[];
+final enumRepresentations = <String>[];
+
 // Keep any of the following:
 // SimpleIdentifierImpl of FieldFormalParameterImpl
 // DeclaredSimpleIdentifier of VariableDeclarationImpl
@@ -43,7 +46,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   void visitNode(AstNode node) {
     // replace "type" identifiers.
     if (node is SimpleIdentifierImpl && node.token.lexeme == 'type' && node.parent is! FieldFormalParameterImpl) {
-      print ('node: $node\ntoken: ${node.token.toString()}');
+      print ('node: $node\ntoken: ${node.token.toString()}\nrange: ${node.offset} -> ${node.end}');
     }
     node.visitChildren(ReplacementVisitor());
   }
