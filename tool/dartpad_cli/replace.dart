@@ -7,8 +7,8 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 
-const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
-//const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
+//const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
+const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
 const indent = '  ';
 
 class ReplacementCommand {
@@ -95,8 +95,14 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
         node.token.lexeme == 'type' &&
         node.parent is! FieldFormalParameterImpl &&
         node.parent is! VariableDeclarationImpl) {
-      print ('node: $node\ntoken: ${node.token.toString()}\nrange: ${node.offset} -> ${node.end}');
-      replacements.add(ReplacementCommand(node, '$enumName.${enumRepresentations[0]}'));
+      AstNode replacingNode;
+      if (node.parent is PrefixedIdentifierImpl) {
+        replacingNode = node.parent;
+      } else {
+        replacingNode = node;
+      }
+      print ('node: $replacingNode\ntoken: ${replacingNode.toString()}\nrange: ${replacingNode.offset} -> ${replacingNode.end}');
+      replacements.add(ReplacementCommand(replacingNode, '$enumName.${enumRepresentations[0]}'));
     } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
         (node.parent as EnumDeclarationImpl).name.name.endsWith('Type')
     ) {
