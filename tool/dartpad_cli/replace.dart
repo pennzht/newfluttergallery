@@ -120,6 +120,8 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
         node.parent is VariableDeclaration) {
       replacements.add(ReplacementCommand(findAncestor<ClassMember, AstNode>(node), ''));
       print ((node.parent as VariableDeclaration).childEntities);
+    } else if (node is SwitchStatement) {
+      print(node);
     }
     node.visitChildren(ReplacementVisitor());
   }
