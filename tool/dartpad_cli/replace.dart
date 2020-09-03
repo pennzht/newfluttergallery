@@ -93,31 +93,31 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     // replace "type" identifiers.
     if (node is SimpleIdentifierImpl &&
         node.token.lexeme == 'type' &&
-        node.parent is! FieldFormalParameterImpl &&
-        node.parent is! VariableDeclarationImpl) {
+        node.parent is! FieldFormalParameter &&
+        node.parent is! VariableDeclaration) {
       AstNode replacingNode;
-      if (node.parent is PrefixedIdentifierImpl) {
+      if (node.parent is PrefixedIdentifier) {
         replacingNode = node.parent;
       } else {
         replacingNode = node;
       }
       print ('node: $replacingNode\ntoken: ${replacingNode.toString()}\nrange: ${replacingNode.offset} -> ${replacingNode.end}');
       replacements.add(ReplacementCommand(replacingNode, '$enumName.${enumRepresentations[0]}'));
-    } else if (node is EnumConstantDeclarationImpl && node.parent is EnumDeclarationImpl &&
-        (node.parent as EnumDeclarationImpl).name.name.endsWith('Type')
+    } else if (node is EnumConstantDeclaration && node.parent is EnumDeclaration &&
+        (node.parent as EnumDeclaration).name.name.endsWith('Type')
     ) {
       enumRepresentations.add(node.name.name);
-      enumName = (node.parent as EnumDeclarationImpl).name.name;
-    } else if (node is SimpleIdentifierImpl &&
+      enumName = (node.parent as EnumDeclaration).name.name;
+    } else if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
-        node.parent is FieldFormalParameterImpl) {
+        node.parent is FieldFormalParameter) {
       replacements.add(ReplacementCommand(node.parent, ''));
-      // print ((node.parent as FieldFormalParameterImpl).childEntities);
-    } else if (node is SimpleIdentifierImpl &&
+      // print ((node.parent as FieldFormalParameter).childEntities);
+    } else if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
-        node.parent is VariableDeclarationImpl) {
-      replacements.add(ReplacementCommand(findAncestor<ClassMemberImpl, AstNode>(node), ''));
-      print ((node.parent as VariableDeclarationImpl).childEntities);
+        node.parent is VariableDeclaration) {
+      replacements.add(ReplacementCommand(findAncestor<ClassMember, AstNode>(node), ''));
+      print ((node.parent as VariableDeclaration).childEntities);
     }
     node.visitChildren(ReplacementVisitor());
   }
