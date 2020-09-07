@@ -48,7 +48,7 @@ Future<void> main () async {
 
     print (result.unit.toSource());
     await io.File('lib/generated/genraw.dart').writeAsString(result.unit.toString());
-    await io.File('lib/generated/gensource.dart').writeAsString(result.unit.toSource());
+    // await io.File('lib/generated/gensource.dart').writeAsString(result.unit.toSource());
   }
 
   print(replacements);
