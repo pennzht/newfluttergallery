@@ -132,8 +132,16 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
 class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitSwitchStatement(SwitchStatement statement) {
-    if (statement.expression.toString() == '$enumName.${enumRepresentations[0]}') {
-      print('found!!!');
+    final acceptingEnum = '$enumName.${enumRepresentations[0]}';
+
+    if (statement.expression.toString() == acceptingEnum) {
+      for (var subStatement in statement.members) {
+        if (subStatement.childEntities.toList()[1].toString() == acceptingEnum) {
+          print('Statements -> ${subStatement.statements}');
+
+          // TODO: add replacements.
+        }
+      }
     }
   }
 }
