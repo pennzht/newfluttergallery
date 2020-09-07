@@ -30,7 +30,6 @@ String enumName;
 
 Future<void> replacePass ({String sourcePath, String outputPath, AstVisitor<void> visitor}) async {
   replacements.clear();
-  enumRepresentations.clear();
 
   final sourceContents = await io.File(sourcePath).readAsString();
 
@@ -127,6 +126,15 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
       print(node);
     }
     node.visitChildren(this);
+  }
+}
+
+class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
+  @override
+  void visitSwitchStatement(SwitchStatement statement) {
+    if (statement.expression.toString() == '$enumName.${enumRepresentations[0]}') {
+      print('found!!!');
+    }
   }
 }
 
