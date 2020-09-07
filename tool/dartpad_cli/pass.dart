@@ -28,7 +28,7 @@ String enumName;
 // SimpleIdentifierImpl of PrefixedIdentifierImpl
 // SimpleIdentifierImpl of SwitchStatementImpl
 
-Future<void> replacePass (String sourcePath, String outputPath) async {
+Future<void> replacePass ({String sourcePath, String outputPath, AstVisitor<void> visitor}) async {
   replacements.clear();
   enumRepresentations.clear();
 
@@ -44,7 +44,7 @@ Future<void> replacePass (String sourcePath, String outputPath) async {
       sourcePath,
     );
 
-    result.unit.accept(ReplacementVisitor());
+    result.unit.accept(visitor);
     print ('=' * 80);
 
     result.unit.accept(PrintVisitor());

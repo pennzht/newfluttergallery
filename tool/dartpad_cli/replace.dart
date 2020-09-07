@@ -6,5 +6,9 @@ import 'pass.dart' as pass;
 const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
 
 Future<void> main () async {
-  await pass.replacePass(filePath, 'lib/generated/gen.dart');
+  await pass.replacePass(
+    sourcePath: filePath,
+    outputPath: 'lib/generated/gen.dart',
+    visitor: pass.ReplacementVisitor(),
+  );
 }
