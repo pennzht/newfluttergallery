@@ -92,6 +92,7 @@ ReturnType findAncestor<AncestorType, ReturnType>(AstNode node) {
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
+    node.visitChildren(ReplacementVisitor());
     // replace "type" identifiers.
     if (node is SimpleIdentifierImpl &&
         node.token.lexeme == 'type' &&
@@ -123,7 +124,6 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is SwitchStatement) {
       print(node);
     }
-    node.visitChildren(ReplacementVisitor());
   }
 }
 
