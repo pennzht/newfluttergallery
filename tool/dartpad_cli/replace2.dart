@@ -41,7 +41,7 @@ Future<void> main () async {
       filePath,
     );
 
-    result.unit.accept(ReplacementVisitor());
+    // result.unit.accept(ReplacementVisitor());
     print ('=' * 80);
 
     result.unit.accept(PrintVisitor());
@@ -89,6 +89,7 @@ ReturnType findAncestor<AncestorType, ReturnType>(AstNode node) {
   return pointer as ReturnType;
 }
 
+/* More work on the way.
 class ReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitSwitchStatement(SwitchStatement statement) {
@@ -100,7 +101,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
       );
     }
   }
-}
+} */
 
 class PrintVisitor extends GeneralizingAstVisitor<void> {
   PrintVisitor([this.level = 0]);
