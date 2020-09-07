@@ -126,7 +126,7 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is SwitchStatement) {
       print(node);
     }
-    node.visitChildren(WidgetTypeReplacementVisitor());
+    node.visitChildren(this);
   }
 }
 
