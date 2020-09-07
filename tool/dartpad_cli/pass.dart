@@ -92,7 +92,7 @@ ReturnType findAncestor<AncestorType, ReturnType>(AstNode node) {
   return pointer as ReturnType;
 }
 
-class ReplacementVisitor extends GeneralizingAstVisitor<void> {
+class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
     // replace "type" identifiers.
@@ -126,7 +126,7 @@ class ReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is SwitchStatement) {
       print(node);
     }
-    node.visitChildren(ReplacementVisitor());
+    node.visitChildren(WidgetTypeReplacementVisitor());
   }
 }
 

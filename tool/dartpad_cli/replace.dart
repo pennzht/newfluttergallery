@@ -9,6 +9,6 @@ Future<void> main () async {
   await pass.replacePass(
     sourcePath: filePath,
     outputPath: 'lib/generated/gen.dart',
-    visitor: pass.ReplacementVisitor(),
+    visitor: pass.WidgetTypeReplacementVisitor(),
   );
 }
