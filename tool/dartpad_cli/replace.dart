@@ -55,6 +55,30 @@ Future<void> main () async {
   print(enumRepresentations);
 
   await handleReplacements ();
+
+  // 2nd pass
+
+  final collection2 = AnalysisContextCollection(
+    includedPaths: ['lib/generated/gen.dart'],
+  );
+
+  for (final context in collection.contexts) {
+    print (context);
+    final result = await context.currentSession.getResolvedUnit(
+      filePath,
+    );
+
+    result.unit.accept(ReplacementVisitor());
+    print ('=' * 80);
+
+    result.unit.accept(PrintVisitor());
+  }
+
+  print(replacements);
+  print(enumRepresentations);
+
+  await handleReplacements ();
+
 }
 
 Future<void> handleReplacements () async {
