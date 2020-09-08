@@ -167,27 +167,12 @@ class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
   // TODO: edit.
 
   @override
-  void visitSwitchStatement(SwitchStatement statement) {
-    for (var subStatement in statement.members) {
-      if (subStatement.childEntities.toList()[1].toString() == statement.expression.toString()) {
-        print('Statements -> ${subStatement.statements}');
+  void visitPropertyAccess(PropertyAccess node) {
+    if (node.realTarget.toString() == 'GalleryLocalizations.of(context)') {
+      //print('PropertyAccess => target: ${node.realTarget}, property: ${node
+      //    .propertyName}');
 
-        final effectiveCode = <String>[];
-
-        for (final statement in subStatement.statements) {
-          if (statement is BreakStatement) {
-            break;
-          }
-
-          effectiveCode.add(statement.toString());
-        }
-
-        print(effectiveCode);
-
-        replacements.add(
-          ReplacementCommand(statement, effectiveCode.join(' ')),
-        );
-      }
+      
     }
   }
 }

@@ -20,4 +20,10 @@ Future<void> main () async {
     outputPath: '$galleryPath/lib/generated/gen2.dart',
     visitor: pass.SwitchStatementReplacementVisitor(),
   );
+
+  await pass.replacePass(
+    sourcePath: '$galleryPath/lib/generated/gen2.dart',
+    outputPath: '$galleryPath/lib/generated/gen3.dart',
+    visitor: pass.LocalizationsReplacementVisitor(),
+  );
 }
