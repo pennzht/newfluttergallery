@@ -8,7 +8,7 @@ const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
 
 Future<void> main () async {
   await pass.replacePass(
-    sourcePath: menuDemoPath,
+    sourcePath: buttonDemoPath,
     outputPath: '$galleryPath/lib/generated/gen.dart',
     visitor: pass.WidgetTypeReplacementVisitor(),
     printTree: true,

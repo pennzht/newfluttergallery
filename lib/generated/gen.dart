@@ -6,118 +6,84 @@ import 'package:flutter/material.dart';
 
 import 'package:gallery/l10n/gallery_localizations.dart';
 
-enum MenuDemoType {
-  contextMenu,
-  sectionedMenu,
-  simpleMenu,
-  checklistMenu,
+enum ButtonDemoType {
+  flat,
+  raised,
+  outline,
+  toggle,
+  floating,
 }
 
-enum SimpleValue {
-  one,
-  two,
-  three,
-}
-
-enum CheckedValue {
-  one,
-  two,
-  three,
-  four,
-}
-
-class MenuDemo extends StatefulWidget {
-  const MenuDemo({Key key, }) : super(key: key);
+class ButtonDemo extends StatelessWidget {
+  const ButtonDemo({Key key, }) : super(key: key);
 
   
 
-  @override
-  _MenuDemoState createState() => _MenuDemoState();
-}
-
-class _MenuDemoState extends State<MenuDemo> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  void showInSnackBar(String value) {
-    _scaffoldKey.currentState.hideCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(value),
-    ));
+  String _title(BuildContext context) {
+    switch (ButtonDemoType.flat) {
+      case ButtonDemoType.flat:
+        return GalleryLocalizations.of(context).demoFlatButtonTitle;
+      case ButtonDemoType.raised:
+        return GalleryLocalizations.of(context).demoRaisedButtonTitle;
+      case ButtonDemoType.outline:
+        return GalleryLocalizations.of(context).demoOutlineButtonTitle;
+      case ButtonDemoType.toggle:
+        return GalleryLocalizations.of(context).demoToggleButtonTitle;
+      case ButtonDemoType.floating:
+        return GalleryLocalizations.of(context).demoFloatingButtonTitle;
+    }
+    return '';
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget demo;
-    switch (MenuDemoType.contextMenu) {
-      case MenuDemoType.contextMenu:
-        demo = _ContextMenuDemo(showInSnackBar: showInSnackBar);
+    Widget buttons;
+    switch (ButtonDemoType.flat) {
+      case ButtonDemoType.flat:
+        buttons = _FlatButtonDemo();
         break;
-      case MenuDemoType.sectionedMenu:
-        demo = _SectionedMenuDemo(showInSnackBar: showInSnackBar);
+      case ButtonDemoType.raised:
+        buttons = _RaisedButtonDemo();
         break;
-      case MenuDemoType.simpleMenu:
-        demo = _SimpleMenuDemo(showInSnackBar: showInSnackBar);
+      case ButtonDemoType.outline:
+        buttons = _OutlineButtonDemo();
         break;
-      case MenuDemoType.checklistMenu:
-        demo = _ChecklistMenuDemo(showInSnackBar: showInSnackBar);
+      case ButtonDemoType.toggle:
+        buttons = _ToggleButtonsDemo();
+        break;
+      case ButtonDemoType.floating:
+        buttons = _FloatingActionButtonDemo();
         break;
     }
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context).demoMenuTitle),
         automaticallyImplyLeading: false,
+        title: Text(_title(context)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Center(
-          child: demo,
-        ),
-      ),
+      body: buttons,
     );
   }
 }
 
-// BEGIN menuDemoContext
+// BEGIN buttonDemoFlat
 
-// Pressing the PopupMenuButton on the right of this item shows
-// a simple menu with one disabled item. Typically the contents
-// of this "contextual menu" would reflect the app's state.
-class _ContextMenuDemo extends StatelessWidget {
-  const _ContextMenuDemo({Key key, this.showInSnackBar}) : super(key: key);
-
-  final void Function(String value) showInSnackBar;
-
+class _FlatButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(GalleryLocalizations.of(context)
-          .demoMenuAnItemWithAContextMenuButton),
-      trailing: PopupMenuButton<String>(
-        padding: EdgeInsets.zero,
-        onSelected: (value) => showInSnackBar(
-          GalleryLocalizations.of(context).demoMenuSelected(value),
-        ),
-        itemBuilder: (context) => <PopupMenuItem<String>>[
-          PopupMenuItem<String>(
-            value: GalleryLocalizations.of(context).demoMenuContextMenuItemOne,
-            child: Text(
-              GalleryLocalizations.of(context).demoMenuContextMenuItemOne,
-            ),
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FlatButton(
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
-          PopupMenuItem<String>(
-            enabled: false,
-            child: Text(
-              GalleryLocalizations.of(context).demoMenuADisabledMenuItem,
-            ),
-          ),
-          PopupMenuItem<String>(
-            value:
-                GalleryLocalizations.of(context).demoMenuContextMenuItemThree,
-            child: Text(
-              GalleryLocalizations.of(context).demoMenuContextMenuItemThree,
-            ),
+          const SizedBox(height: 12),
+          FlatButton.icon(
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
         ],
       ),
@@ -127,62 +93,24 @@ class _ContextMenuDemo extends StatelessWidget {
 
 // END
 
-// BEGIN menuDemoSectioned
+// BEGIN buttonDemoRaised
 
-// Pressing the PopupMenuButton on the right of this item shows
-// a menu whose items have text labels and icons and a divider
-// That separates the first three items from the last one.
-class _SectionedMenuDemo extends StatelessWidget {
-  const _SectionedMenuDemo({Key key, this.showInSnackBar}) : super(key: key);
-
-  final void Function(String value) showInSnackBar;
-
+class _RaisedButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-          GalleryLocalizations.of(context).demoMenuAnItemWithASectionedMenu),
-      trailing: PopupMenuButton<String>(
-        padding: EdgeInsets.zero,
-        onSelected: (value) => showInSnackBar(
-            GalleryLocalizations.of(context).demoMenuSelected(value)),
-        itemBuilder: (context) => <PopupMenuEntry<String>>[
-          PopupMenuItem<String>(
-            value: GalleryLocalizations.of(context).demoMenuPreview,
-            child: ListTile(
-              leading: const Icon(Icons.visibility),
-              title: Text(
-                GalleryLocalizations.of(context).demoMenuPreview,
-              ),
-            ),
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          RaisedButton(
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
-          PopupMenuItem<String>(
-            value: GalleryLocalizations.of(context).demoMenuShare,
-            child: ListTile(
-              leading: const Icon(Icons.person_add),
-              title: Text(
-                GalleryLocalizations.of(context).demoMenuShare,
-              ),
-            ),
-          ),
-          PopupMenuItem<String>(
-            value: GalleryLocalizations.of(context).demoMenuGetLink,
-            child: ListTile(
-              leading: const Icon(Icons.link),
-              title: Text(
-                GalleryLocalizations.of(context).demoMenuGetLink,
-              ),
-            ),
-          ),
-          const PopupMenuDivider(),
-          PopupMenuItem<String>(
-            value: GalleryLocalizations.of(context).demoMenuRemove,
-            child: ListTile(
-              leading: const Icon(Icons.delete),
-              title: Text(
-                GalleryLocalizations.of(context).demoMenuRemove,
-              ),
-            ),
+          const SizedBox(height: 12),
+          RaisedButton.icon(
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
         ],
       ),
@@ -192,172 +120,90 @@ class _SectionedMenuDemo extends StatelessWidget {
 
 // END
 
-// BEGIN menuDemoSimple
+// BEGIN buttonDemoOutline
 
-// This entire list item is a PopupMenuButton. Tapping anywhere shows
-// a menu whose current value is highlighted and aligned over the
-// list item's center line.
-class _SimpleMenuDemo extends StatefulWidget {
-  const _SimpleMenuDemo({Key key, this.showInSnackBar}) : super(key: key);
-
-  final void Function(String value) showInSnackBar;
-
-  @override
-  _SimpleMenuDemoState createState() => _SimpleMenuDemoState();
-}
-
-class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
-  SimpleValue _simpleValue;
-
-  void showAndSetMenuSelection(BuildContext context, SimpleValue value) {
-    setState(() {
-      _simpleValue = value;
-    });
-    widget.showInSnackBar(
-      GalleryLocalizations.of(context)
-          .demoMenuSelected(simpleValueToString(context, value)),
-    );
-  }
-
-  String simpleValueToString(BuildContext context, SimpleValue value) => {
-        SimpleValue.one: GalleryLocalizations.of(context).demoMenuItemValueOne,
-        SimpleValue.two: GalleryLocalizations.of(context).demoMenuItemValueTwo,
-        SimpleValue.three:
-            GalleryLocalizations.of(context).demoMenuItemValueThree,
-      }[value];
-
-  @override
-  void initState() {
-    super.initState();
-    _simpleValue = SimpleValue.two;
-  }
-
+class _OutlineButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<SimpleValue>(
-      padding: EdgeInsets.zero,
-      initialValue: _simpleValue,
-      onSelected: (value) => showAndSetMenuSelection(context, value),
-      child: ListTile(
-        title: Text(
-            GalleryLocalizations.of(context).demoMenuAnItemWithASimpleMenu),
-        subtitle: Text(simpleValueToString(context, _simpleValue)),
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          OutlineButton(
+            // TODO: Should update to OutlineButton follow material spec.
+            highlightedBorderColor:
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
+          const SizedBox(height: 12),
+          OutlineButton.icon(
+            // TODO: Should update to OutlineButton follow material spec.
+            highlightedBorderColor:
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
+        ],
       ),
-      itemBuilder: (context) => <PopupMenuItem<SimpleValue>>[
-        PopupMenuItem<SimpleValue>(
-          value: SimpleValue.one,
-          child: Text(simpleValueToString(
-            context,
-            SimpleValue.one,
-          )),
-        ),
-        PopupMenuItem<SimpleValue>(
-          value: SimpleValue.two,
-          child: Text(simpleValueToString(
-            context,
-            SimpleValue.two,
-          )),
-        ),
-        PopupMenuItem<SimpleValue>(
-          value: SimpleValue.three,
-          child: Text(simpleValueToString(
-            context,
-            SimpleValue.three,
-          )),
-        ),
-      ],
     );
   }
 }
 
 // END
 
-// BEGIN menuDemoChecklist
+// BEGIN buttonDemoToggle
 
-// Pressing the PopupMenuButton on the right of this item shows a menu
-// whose items have checked icons that reflect this app's state.
-class _ChecklistMenuDemo extends StatefulWidget {
-  const _ChecklistMenuDemo({Key key, this.showInSnackBar}) : super(key: key);
-
-  final void Function(String value) showInSnackBar;
-
+class _ToggleButtonsDemo extends StatefulWidget {
   @override
-  _ChecklistMenuDemoState createState() => _ChecklistMenuDemoState();
+  _ToggleButtonsDemoState createState() => _ToggleButtonsDemoState();
 }
 
-class _ChecklistMenuDemoState extends State<_ChecklistMenuDemo> {
-  List<CheckedValue> _checkedValues;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkedValues = [CheckedValue.three];
-  }
-
-  void showCheckedMenuSelections(BuildContext context, CheckedValue value) {
-    if (_checkedValues.contains(value)) {
-      setState(() {
-        _checkedValues.remove(value);
-      });
-    } else {
-      setState(() {
-        _checkedValues.add(value);
-      });
-    }
-
-    widget.showInSnackBar(
-      GalleryLocalizations.of(context).demoMenuChecked(
-        _checkedValues.map((value) => checkedValueToString(context, value)),
-      ),
-    );
-  }
-
-  String checkedValueToString(BuildContext context, CheckedValue value) => {
-        CheckedValue.one: GalleryLocalizations.of(context).demoMenuOne,
-        CheckedValue.two: GalleryLocalizations.of(context).demoMenuTwo,
-        CheckedValue.three: GalleryLocalizations.of(context).demoMenuThree,
-        CheckedValue.four: GalleryLocalizations.of(context).demoMenuFour,
-      }[value];
-
-  bool isChecked(CheckedValue value) => _checkedValues.contains(value);
+class _ToggleButtonsDemoState extends State<_ToggleButtonsDemo> {
+  final isSelected = <bool>[false, false, false];
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-          GalleryLocalizations.of(context).demoMenuAnItemWithAChecklistMenu),
-      trailing: PopupMenuButton<CheckedValue>(
-        padding: EdgeInsets.zero,
-        onSelected: (value) => showCheckedMenuSelections(context, value),
-        itemBuilder: (context) => <PopupMenuItem<CheckedValue>>[
-          CheckedPopupMenuItem<CheckedValue>(
-            value: CheckedValue.one,
-            checked: isChecked(CheckedValue.one),
-            child: Text(
-              checkedValueToString(context, CheckedValue.one),
-            ),
+    return Center(
+      child: ToggleButtons(
+        children: const [
+          Icon(Icons.ac_unit),
+          Icon(Icons.call),
+          Icon(Icons.cake),
+        ],
+        onPressed: (index) {
+          setState(() {
+            isSelected[index] = !isSelected[index];
+          });
+        },
+        isSelected: isSelected,
+      ),
+    );
+  }
+}
+
+// END
+
+// BEGIN buttonDemoFloating
+
+class _FloatingActionButtonDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {},
+            tooltip: GalleryLocalizations.of(context).buttonTextCreate,
           ),
-          CheckedPopupMenuItem<CheckedValue>(
-            value: CheckedValue.two,
-            enabled: false,
-            checked: isChecked(CheckedValue.two),
-            child: Text(
-              checkedValueToString(context, CheckedValue.two),
-            ),
-          ),
-          CheckedPopupMenuItem<CheckedValue>(
-            value: CheckedValue.three,
-            checked: isChecked(CheckedValue.three),
-            child: Text(
-              checkedValueToString(context, CheckedValue.three),
-            ),
-          ),
-          CheckedPopupMenuItem<CheckedValue>(
-            value: CheckedValue.four,
-            checked: isChecked(CheckedValue.four),
-            child: Text(
-              checkedValueToString(context, CheckedValue.four),
-            ),
+          const SizedBox(height: 20),
+          FloatingActionButton.extended(
+            icon: const Icon(Icons.add),
+            label: Text(GalleryLocalizations.of(context).buttonTextCreate),
+            onPressed: () {},
           ),
         ],
       ),
