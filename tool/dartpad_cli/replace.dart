@@ -2,13 +2,13 @@
 
 import 'pass.dart' as pass;
 
-//const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
 const galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
-const filePath = '$galleryPath/lib/demos/material/menu_demo.dart';
+const menuDemoPath = '$galleryPath/lib/demos/material/menu_demo.dart';
+const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
 
 Future<void> main () async {
   await pass.replacePass(
-    sourcePath: filePath,
+    sourcePath: menuDemoPath,
     outputPath: '$galleryPath/lib/generated/gen.dart',
     visitor: pass.WidgetTypeReplacementVisitor(),
     printTree: true,
