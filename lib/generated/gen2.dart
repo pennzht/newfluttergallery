@@ -48,20 +48,7 @@ class _MenuDemoState extends State<MenuDemo> {
   @override
   Widget build(BuildContext context) {
     Widget demo;
-    switch (MenuDemoType.contextMenu) {
-      case MenuDemoType.contextMenu:
-        demo = _ContextMenuDemo(showInSnackBar: showInSnackBar);
-        break;
-      case MenuDemoType.sectionedMenu:
-        demo = _SectionedMenuDemo(showInSnackBar: showInSnackBar);
-        break;
-      case MenuDemoType.simpleMenu:
-        demo = _SimpleMenuDemo(showInSnackBar: showInSnackBar);
-        break;
-      case MenuDemoType.checklistMenu:
-        demo = _ChecklistMenuDemo(showInSnackBar: showInSnackBar);
-        break;
-    }
+    demo = _ContextMenuDemo(showInSnackBar: showInSnackBar);
 
     return Scaffold(
       key: _scaffoldKey,
