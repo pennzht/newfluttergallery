@@ -143,7 +143,21 @@ class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
       if (subStatement.childEntities.toList()[1].toString() == statement.expression.toString()) {
         print('Statements -> ${subStatement.statements}');
 
-        // TODO: add replacements.
+        final effectiveCode = <String>[];
+        
+        for (final statement in subStatement.statements) {
+          if (statement is BreakStatement) {
+            break;
+          }
+          
+          effectiveCode.add(statement.toString());
+        }
+
+        print(effectiveCode);
+
+        replacements.add(
+          ReplacementCommand(statement, effectiveCode.join(' ')),
+        );
       }
     }
   }
