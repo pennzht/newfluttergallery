@@ -10,13 +10,13 @@ const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
 Future<void> main () async {
   await pass.replacePass(
     sourcePath: chipDemoPath,
-    outputPath: '$galleryPath/lib/generated/gen.dart',
+    outputPath: '$galleryPath/lib/generated/gen1.dart',
     visitor: pass.WidgetTypeReplacementVisitor(),
     printTree: true,
   );
 
   await pass.replacePass(
-    sourcePath: '$galleryPath/lib/generated/gen.dart',
+    sourcePath: '$galleryPath/lib/generated/gen1.dart',
     outputPath: '$galleryPath/lib/generated/gen2.dart',
     visitor: pass.SwitchStatementReplacementVisitor(),
   );

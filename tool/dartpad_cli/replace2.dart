@@ -75,7 +75,7 @@ Future<void> handleReplacements () async {
       replacement.target,
     );
   }
-  await io.File('lib/generated/gen.dart').writeAsString(contents);
+  // await io.File('lib/generated/gen1.dart').writeAsString(contents);
 }
 
 String replace(String original, int start, int stop, String substring)
