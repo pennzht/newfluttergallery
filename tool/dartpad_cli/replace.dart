@@ -11,6 +11,7 @@ Future<void> main () async {
     sourcePath: filePath,
     outputPath: '$galleryPath/lib/generated/gen.dart',
     visitor: pass.WidgetTypeReplacementVisitor(),
+    printTree: true,
   );
 
   await pass.replacePass(

@@ -28,7 +28,12 @@ String enumName;
 // SimpleIdentifierImpl of PrefixedIdentifierImpl
 // SimpleIdentifierImpl of SwitchStatementImpl
 
-Future<void> replacePass ({String sourcePath, String outputPath, AstVisitor<void> visitor}) async {
+Future<void> replacePass ({
+  String sourcePath,
+  String outputPath,
+  AstVisitor<void> visitor,
+  bool printTree = false,
+}) async {
   replacements.clear();
 
   final sourceContents = await io.File(sourcePath).readAsString();
@@ -46,7 +51,9 @@ Future<void> replacePass ({String sourcePath, String outputPath, AstVisitor<void
     result.unit.accept(visitor);
     print ('=' * 80);
 
-    result.unit.accept(PrintVisitor());
+    if (printTree) {
+      result.unit.accept(PrintVisitor());
+    }
 
     print (result.unit.toSource());
   }
