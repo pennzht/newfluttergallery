@@ -3,29 +3,31 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+
 import 'package:gallery/l10n/gallery_localizations.dart';
 
-enum ChipDemoType {
-  action,
-  choice,
-  filter,
-  input,
+enum ButtonDemoType {
+  flat,
+  raised,
+  outline,
+  toggle,
+  floating,
 }
 
-class ChipDemo extends StatelessWidget {
-  const ChipDemo({Key key, }) : super(key: key);
+class ButtonDemo extends StatelessWidget {
+  const ButtonDemo({Key key, }) : super(key: key);
 
   
 
   String _title(BuildContext context) {
-    return GalleryLocalizations.of(context).demoActionChipTitle;
+    return GalleryLocalizations.of(context).demoFlatButtonTitle;
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
     Widget buttons;
-    buttons = _ActionChipDemo();
+    buttons = _FlatButtonDemo();
 
     return Scaffold(
       appBar: AppBar(
@@ -37,69 +39,24 @@ class ChipDemo extends StatelessWidget {
   }
 }
 
-// BEGIN chipDemoAction
+// BEGIN buttonDemoFlat
 
-class _ActionChipDemo extends StatelessWidget {
+class _FlatButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ActionChip(
-        onPressed: () {},
-        avatar: const Icon(
-          Icons.brightness_5,
-          color: Colors.black54,
-        ),
-        label: Text(GalleryLocalizations.of(context).chipTurnOnLights),
-      ),
-    );
-  }
-}
-
-// END
-
-// BEGIN chipDemoChoice
-
-class _ChoiceChipDemo extends StatefulWidget {
-  @override
-  _ChoiceChipDemoState createState() => _ChoiceChipDemoState();
-}
-
-class _ChoiceChipDemoState extends State<_ChoiceChipDemo> {
-  int indexSelected = -1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Wrap(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipSmall),
-            selected: indexSelected == 0,
-            onSelected: (value) {
-              setState(() {
-                indexSelected = value ? 0 : -1;
-              });
-            },
+          FlatButton(
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
-          const SizedBox(width: 8),
-          ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipMedium),
-            selected: indexSelected == 1,
-            onSelected: (value) {
-              setState(() {
-                indexSelected = value ? 1 : -1;
-              });
-            },
-          ),
-          const SizedBox(width: 8),
-          ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipLarge),
-            selected: indexSelected == 2,
-            onSelected: (value) {
-              setState(() {
-                indexSelected = value ? 2 : -1;
-              });
-            },
+          const SizedBox(height: 12),
+          FlatButton.icon(
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
           ),
         ],
       ),
@@ -109,58 +66,25 @@ class _ChoiceChipDemoState extends State<_ChoiceChipDemo> {
 
 // END
 
-// BEGIN chipDemoFilter
+// BEGIN buttonDemoRaised
 
-class _FilterChipDemo extends StatefulWidget {
-  @override
-  _FilterChipDemoState createState() => _FilterChipDemoState();
-}
-
-class _FilterChipDemoState extends State<_FilterChipDemo> {
-  bool isSelectedElevator = false;
-  bool isSelectedWasher = false;
-  bool isSelectedFireplace = false;
-
+class _RaisedButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final chips = [
-      FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipElevator),
-        selected: isSelectedElevator,
-        onSelected: (value) {
-          setState(() {
-            isSelectedElevator = !isSelectedElevator;
-          });
-        },
-      ),
-      FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipWasher),
-        selected: isSelectedWasher,
-        onSelected: (value) {
-          setState(() {
-            isSelectedWasher = !isSelectedWasher;
-          });
-        },
-      ),
-      FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipFireplace),
-        selected: isSelectedFireplace,
-        onSelected: (value) {
-          setState(() {
-            isSelectedFireplace = !isSelectedFireplace;
-          });
-        },
-      ),
-    ];
-
     return Center(
-      child: Wrap(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          for (final chip in chips)
-            Padding(
-              padding: const EdgeInsets.all(4),
-              child: chip,
-            )
+          RaisedButton(
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
+          const SizedBox(height: 12),
+          RaisedButton.icon(
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -169,22 +93,92 @@ class _FilterChipDemoState extends State<_FilterChipDemo> {
 
 // END
 
-// BEGIN chipDemoInput
+// BEGIN buttonDemoOutline
 
-class _InputChipDemo extends StatelessWidget {
+class _OutlineButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: InputChip(
-        onPressed: () {},
-        onDeleted: () {},
-        avatar: const Icon(
-          Icons.directions_bike,
-          size: 20,
-          color: Colors.black54,
-        ),
-        deleteIconColor: Colors.black54,
-        label: Text(GalleryLocalizations.of(context).chipBiking),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          OutlineButton(
+            // TODO: Should update to OutlineButton follow material spec.
+            highlightedBorderColor:
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+            child: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
+          const SizedBox(height: 12),
+          OutlineButton.icon(
+            // TODO: Should update to OutlineButton follow material spec.
+            highlightedBorderColor:
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(GalleryLocalizations.of(context).buttonText),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// END
+
+// BEGIN buttonDemoToggle
+
+class _ToggleButtonsDemo extends StatefulWidget {
+  @override
+  _ToggleButtonsDemoState createState() => _ToggleButtonsDemoState();
+}
+
+class _ToggleButtonsDemoState extends State<_ToggleButtonsDemo> {
+  final isSelected = <bool>[false, false, false];
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ToggleButtons(
+        children: const [
+          Icon(Icons.ac_unit),
+          Icon(Icons.call),
+          Icon(Icons.cake),
+        ],
+        onPressed: (index) {
+          setState(() {
+            isSelected[index] = !isSelected[index];
+          });
+        },
+        isSelected: isSelected,
+      ),
+    );
+  }
+}
+
+// END
+
+// BEGIN buttonDemoFloating
+
+class _FloatingActionButtonDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {},
+            tooltip: GalleryLocalizations.of(context).buttonTextCreate,
+          ),
+          const SizedBox(height: 20),
+          FloatingActionButton.extended(
+            icon: const Icon(Icons.add),
+            label: Text(GalleryLocalizations.of(context).buttonTextCreate),
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
