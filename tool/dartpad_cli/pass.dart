@@ -172,7 +172,9 @@ class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
       //print('PropertyAccess => target: ${node.realTarget}, property: ${node
       //    .propertyName}');
 
-      
+      replacements.add(
+        ReplacementCommand(node, "'" + node.propertyName.toString() + "'"),
+      );
     }
   }
 }
