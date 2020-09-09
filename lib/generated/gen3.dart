@@ -18,7 +18,7 @@ class ChipDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    return GalleryLocalizations.of(context).demoActionChipTitle;
+    return 'demoActionChipTitle';
     return '';
   }
 
@@ -49,7 +49,7 @@ class _ActionChipDemo extends StatelessWidget {
           Icons.brightness_5,
           color: Colors.black54,
         ),
-        label: Text(GalleryLocalizations.of(context).chipTurnOnLights),
+        label: Text('chipTurnOnLights'),
       ),
     );
   }
@@ -73,7 +73,7 @@ class _ChoiceChipDemoState extends State<_ChoiceChipDemo> {
       child: Wrap(
         children: [
           ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipSmall),
+            label: Text('chipSmall'),
             selected: indexSelected == 0,
             onSelected: (value) {
               setState(() {
@@ -83,7 +83,7 @@ class _ChoiceChipDemoState extends State<_ChoiceChipDemo> {
           ),
           const SizedBox(width: 8),
           ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipMedium),
+            label: Text('chipMedium'),
             selected: indexSelected == 1,
             onSelected: (value) {
               setState(() {
@@ -93,7 +93,7 @@ class _ChoiceChipDemoState extends State<_ChoiceChipDemo> {
           ),
           const SizedBox(width: 8),
           ChoiceChip(
-            label: Text(GalleryLocalizations.of(context).chipLarge),
+            label: Text('chipLarge'),
             selected: indexSelected == 2,
             onSelected: (value) {
               setState(() {
@@ -125,7 +125,7 @@ class _FilterChipDemoState extends State<_FilterChipDemo> {
   Widget build(BuildContext context) {
     final chips = [
       FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipElevator),
+        label: Text('chipElevator'),
         selected: isSelectedElevator,
         onSelected: (value) {
           setState(() {
@@ -134,7 +134,7 @@ class _FilterChipDemoState extends State<_FilterChipDemo> {
         },
       ),
       FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipWasher),
+        label: Text('chipWasher'),
         selected: isSelectedWasher,
         onSelected: (value) {
           setState(() {
@@ -143,7 +143,7 @@ class _FilterChipDemoState extends State<_FilterChipDemo> {
         },
       ),
       FilterChip(
-        label: Text(GalleryLocalizations.of(context).chipFireplace),
+        label: Text('chipFireplace'),
         selected: isSelectedFireplace,
         onSelected: (value) {
           setState(() {
@@ -184,7 +184,7 @@ class _InputChipDemo extends StatelessWidget {
           color: Colors.black54,
         ),
         deleteIconColor: Colors.black54,
-        label: Text(GalleryLocalizations.of(context).chipBiking),
+        label: Text('chipBiking'),
       ),
     );
   }
