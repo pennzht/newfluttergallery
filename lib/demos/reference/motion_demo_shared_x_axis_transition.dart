@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 // BEGIN sharedXAxisTransitionDemo
 
@@ -32,7 +32,18 @@ class _SharedXAxisTransitionDemoState extends State<SharedXAxisTransitionDemo> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(localizations.demoSharedXAxisTitle),
+        title: Column(
+          children: [
+            Text(localizations.demoSharedXAxisTitle),
+            Text(
+              '(${localizations.demoSharedXAxisDemoInstructions})',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  .copyWith(color: Colors.white),
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Column(

@@ -9,7 +9,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:animations/animations.dart';
 import 'package:gallery/data/gallery_options.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'package:gallery/layout/adaptive.dart';
 import 'package:gallery/layout/text_scale.dart';
 import 'package:gallery/studies/rally/charts/line_chart.dart';
@@ -108,12 +108,12 @@ class FinancialEntityCategoryView extends StatelessWidget {
       ),
       excludeSemantics: true,
       child: OpenContainer(
-        transitionDuration: const Duration(milliseconds: 800),
+        transitionDuration: const Duration(milliseconds: 350),
         transitionType: ContainerTransitionType.fade,
         openBuilder: (context, openContainer) =>
             FinancialEntityCategoryDetailsPage(),
         openColor: RallyColors.primaryBackground,
-        closedColor: Colors.transparent,
+        closedColor: RallyColors.primaryBackground,
         closedElevation: 0,
         closedBuilder: (context, openContainer) {
           return FlatButton(

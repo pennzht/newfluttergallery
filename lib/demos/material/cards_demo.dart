@@ -4,7 +4,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 const String _kGalleryAssetsPackage = 'flutter_gallery_assets';
 
@@ -85,7 +85,7 @@ class TravelDestinationItem extends StatelessWidget {
         super(key: key);
 
   // This height will allow for all the Card's content to fit comfortably within the card.
-  static const height = 338.0;
+  static const height = 360.0;
   final TravelDestination destination;
   final ShapeBorder shape;
 

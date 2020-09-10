@@ -1,5 +1,5 @@
 name: Flutter Gallery Unit Tests
-on: 
+on:
   push:
     branches:
       - master

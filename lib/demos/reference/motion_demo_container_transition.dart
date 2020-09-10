@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 // BEGIN openContainerTransformDemo
 
@@ -129,8 +129,19 @@ class _OpenContainerTransformDemoState
             key: _scaffoldKey,
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(
-                localizations.demoContainerTransformTitle,
+              title: Column(
+                children: [
+                  Text(
+                    localizations.demoContainerTransformTitle,
+                  ),
+                  Text(
+                    '(${localizations.demoContainerTransformDemoInstructions})',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
               ),
               actions: [
                 IconButton(
@@ -446,7 +457,7 @@ class _DetailsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    const height = 100.0;
+    const height = 120.0;
 
     return _InkWellOverlay(
       openContainer: openContainer,

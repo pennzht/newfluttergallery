@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 // BEGIN fadeThroughTransitionDemo
 
@@ -32,7 +32,18 @@ class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(localizations.demoFadeThroughTitle),
+        title: Column(
+          children: [
+            Text(localizations.demoFadeThroughTitle),
+            Text(
+              '(${localizations.demoFadeThroughDemoInstructions})',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  .copyWith(color: Colors.white),
+            ),
+          ],
+        ),
       ),
       body: PageTransitionSwitcher(
         transitionBuilder: (

@@ -135,6 +135,10 @@
   "@rallyDescription": {
     "description": "Study description for Rally."
   },
+  "replyDescription": "An efficient, focused email app",
+  "@replyDescription": {
+    "description": "Study description for Reply."
+  },
   "rallyAccountDataChecking": "Checking",
   "@rallyAccountDataChecking": {
     "description": "Name for account made up by user."
@@ -1302,6 +1306,30 @@
   "demoMotionSubtitle": "All of the predefined transition patterns",
   "@demoMotionSubtitle": {
     "description": "Subtitle for the motion demo."
+  },
+  "demoContainerTransformDemoInstructions": "Cards, Lists & FAB",
+  "@demoContainerTransformDemoInstructions": {
+    "description": "Instructions for the container transform demo located in the app bar."
+  },
+  "demoSharedXAxisDemoInstructions": "Next and Back Buttons",
+  "@demoSharedXAxisDemoInstructions": {
+    "description": "Instructions for the shared x axis demo located in the app bar."
+  },
+  "demoSharedYAxisDemoInstructions": "Sort by \"Recently Played\"",
+  "@demoSharedYAxisDemoInstructions": {
+    "description": "Instructions for the shared y axis demo located in the app bar."
+  },
+  "demoSharedZAxisDemoInstructions": "Settings icon button",
+  "@demoSharedZAxisDemoInstructions": {
+    "description": "Instructions for the shared z axis demo located in the app bar."
+  },
+  "demoFadeThroughDemoInstructions": "Bottom navigation",
+  "@demoFadeThroughDemoInstructions": {
+    "description": "Instructions for the fade through demo located in the app bar."
+  },
+  "demoFadeScaleDemoInstructions": "Modal and FAB",
+  "@demoFadeScaleDemoInstructions": {
+    "description": "Instructions for the fade scale demo located in the app bar."
   },
   "demoContainerTransformTitle": "Container Transform",
   "@demoContainerTransformTitle": {
@@ -3128,5 +3156,29 @@
   "fortnightlyHeadlineBees": "Farmland Bees In Short Supply",
   "@fortnightlyHeadlineBees": {
     "description": "Headline for a news article about bees."
+  },
+  "replyInboxLabel": "Inbox",
+  "@replyInboxLabel": {
+    "description": "Text label for Inbox destination."
+  },
+  "replyStarredLabel": "Starred",
+  "@replyStarredLabel": {
+    "description": "Text label for Starred destination."
+  },
+  "replySentLabel": "Sent",
+  "@replySentLabel": {
+    "description": "Text label for Sent destination."
+  },
+  "replyTrashLabel": "Trash",
+  "@replyTrashLabel": {
+    "description": "Text label for Trash destination."
+  },
+  "replySpamLabel": "Spam",
+  "@replySpamLabel": {
+    "description": "Text label for Spam destination."
+  },
+  "replyDraftsLabel": "Drafts",
+  "@replyDraftsLabel": {
+    "description": "Text label for Drafts destination."
   }
 }

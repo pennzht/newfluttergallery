@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:gallery/l10n/gallery_localizations.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 // BEGIN fadeScaleTransitionDemo
 
@@ -70,7 +70,18 @@ class _FadeScaleTransitionDemoState extends State<FadeScaleTransitionDemo>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(localizations.demoFadeScaleTitle),
+        title: Column(
+          children: [
+            Text(localizations.demoFadeScaleTitle),
+            Text(
+              '(${localizations.demoFadeScaleDemoInstructions})',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  .copyWith(color: Colors.white),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: AnimatedBuilder(
         animation: _controller,
