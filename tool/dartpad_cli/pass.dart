@@ -179,7 +179,7 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
 
     // result.unit.accept(visitor);
   }
-  
+
   // TODO: add processing.
 }
 
