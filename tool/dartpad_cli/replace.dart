@@ -10,7 +10,7 @@ const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
 const enL10nsPath = '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
 Future<void> main () async {
-  final l10ns = pass.collectL10ns(
+  final l10ns = await pass.collectL10ns(
     l10nsPath: enL10nsPath,
   );
 

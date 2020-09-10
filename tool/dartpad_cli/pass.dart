@@ -7,6 +7,8 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 
+import '../grind.dart';
+
 const indent = '  ';
 
 class ReplacementCommand {
@@ -163,7 +165,21 @@ class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
   }
 }
 
-Map<String, String> collectL10ns({String l10nsPath}) {
+Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
+  replacements.clear();
+
+  final collection = AnalysisContextCollection(
+    includedPaths: [l10nsPath],
+  );
+
+  for (final context in collection.contexts) {
+    final result = await context.currentSession.getResolvedUnit(
+      l10nsPath,
+    );
+
+    // result.unit.accept(visitor);
+  }
+  
   // TODO: add processing.
 }
 
