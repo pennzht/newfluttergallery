@@ -215,6 +215,13 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
     print ('parameters -> ${node.parameters}');
     print ('body -> ${node.body}');
 
+    if (node.body is ExpressionFunctionBody) {
+      print ((node.body as ExpressionFunctionBody).expression);
+    } else {
+      print (((node.body as BlockFunctionBody).block.statements.first
+          as ReturnStatement).expression);
+    }
+
     // TODO: add strings to collection.
   }
 }
