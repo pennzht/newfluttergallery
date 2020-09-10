@@ -179,7 +179,6 @@ class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
   }
 }
 
-
 class PrintVisitor extends GeneralizingAstVisitor<void> {
   PrintVisitor([this.level = 0]);
 
