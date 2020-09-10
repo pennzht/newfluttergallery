@@ -211,6 +211,10 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
 
     if (node.returnType.toString() != 'String') return;
 
+    print ('returnType -> ${node.returnType}');
+    print ('parameters -> ${node.parameters}');
+    print ('body -> ${node.body}');
+
     // TODO: add strings to collection.
   }
 }
