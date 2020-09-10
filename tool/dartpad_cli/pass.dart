@@ -163,7 +163,15 @@ class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
   }
 }
 
+Map<String, String> collectL10ns({String l10nsPath}) {
+  // TODO: add processing.
+}
+
 class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
+  const LocalizationsReplacementVisitor({this.l10ns});
+
+  final Map<String, String> l10ns;
+
   // TODO: edit.
 
   @override
