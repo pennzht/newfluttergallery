@@ -166,7 +166,7 @@ class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
 }
 
 Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
-  replacements.clear();
+  final answer = <String, String> {};
 
   final collection = AnalysisContextCollection(
     includedPaths: [l10nsPath],
@@ -177,10 +177,42 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
       l10nsPath,
     );
 
-    // result.unit.accept(visitor);
+    result.unit.accept(
+      L10nCollectorVisitor(
+        locale: 'GalleryLocalizationsEn',
+        collection: answer,
+      ),
+    );
+
+    result.unit.accept(PrintVisitor());
   }
 
   // TODO: add processing.
+}
+
+class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
+  const L10nCollectorVisitor({this.locale, this.collection, this.collectInside = false});
+
+  final String locale;
+  final Map<String, String> collection;
+
+  final bool collectInside;
+
+  @override
+  void visitClassDeclaration(ClassDeclaration node) {
+    node.visitChildren(
+      L10nCollectorVisitor(locale: locale, collection: collection, collectInside: true),
+    );
+  }
+
+  @override
+  void visitMethodDeclaration(MethodDeclaration node) {
+    if (!collectInside) return;
+
+    if (node.returnType.toString() != 'String') return;
+
+    // TODO: add strings to collection.
+  }
 }
 
 class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {

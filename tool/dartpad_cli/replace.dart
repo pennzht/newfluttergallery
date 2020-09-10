@@ -14,6 +14,8 @@ Future<void> main () async {
     l10nsPath: enL10nsPath,
   );
 
+  return;
+
   await pass.replacePass(
     sourcePath: buttonDemoPath,
     outputPath: '$galleryPath/lib/generated/gen1.dart',
