@@ -190,19 +190,40 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
   // TODO: add processing.
 }
 
-// TODO: Revise l10n pattern.
-
 class L10nPattern {
-  const L10nPattern(this.string, this.spaces);
+  const L10nPattern(this.string, this.segments);
 
   final String string;
-  final List<L10nSpace> spaces;
+  final List<L10nSegment> segments;
+
+  String replace(List<String> parameters) {
+    final substrings = segments.map((segment) => segment.replace(parameters));
+    return substrings.join();
+  }
+
+  // TODO: add generation method.
 }
 
-class L10nSpace {
-  const L10nSpace(this.parameterOrder, this.start, this.stop);
+abstract class L10nSegment {
+  String replace(List<String> parameters);
+}
 
-  final int parameterOrder, start, stop;
+class L10nStringSegment extends L10nSegment {
+  L10nStringSegment(this.string);
+
+  final String string;
+
+  @override
+  String replace(List<String> parameters) => string;
+}
+
+class L10nParameterSegment extends L10nSegment {
+  L10nParameterSegment(this.index);
+
+  final int index;
+
+  @override
+  String replace(List<String> parameters) => parameters[index];
 }
 
 class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
