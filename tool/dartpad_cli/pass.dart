@@ -189,7 +189,9 @@ Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
 
   print ('=' * 80);
   print ('# answer =');
-  print (answer);
+  for (final key in answer.keys) {
+    print ('$key => ${answer[key]}');
+  }
   print ('=' * 80);
 
   // TODO: add processing.
@@ -214,6 +216,11 @@ class L10nPattern {
   int get parameterCount => parameterIndices.length;
 
   final AstNode body; // must be either `StringLiteral` or `StringInterpolation`
+
+  @override
+  String toString (){
+    return 'L10nPattern._($parameterIndices, $body)';
+  }
 
   String replace(List<String> parameters) {
     assert (parameters.length == parameterCount);
