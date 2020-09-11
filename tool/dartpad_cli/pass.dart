@@ -187,7 +187,10 @@ Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
     result.unit.accept(PrintVisitor());
   }
 
-  print (collection);
+  print ('=' * 80);
+  print ('# answer =');
+  print (answer);
+  print ('=' * 80);
 
   // TODO: add processing.
 }
@@ -329,9 +332,9 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
     print (functionBody);
 
     final parameters = node
-        .parameters.parameters
-        .map((element) => element.identifier.toString())
-        .toList();
+        ?.parameters?.parameters
+        ?.map((element) => element.identifier.toString())
+        ?.toList() ?? <String>[];
 
     collection[name] = L10nPattern.generate(parameters, functionBody);
   }
