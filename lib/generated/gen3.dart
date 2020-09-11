@@ -200,7 +200,7 @@ class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
       _simpleValue = value;
     });
     widget.showInSnackBar(
-      'Selected: ${value}',
+      'Selected: ${simpleValueToString(context, value)}',
     );
   }
 
@@ -291,7 +291,7 @@ class _ChecklistMenuDemoState extends State<_ChecklistMenuDemo> {
     }
 
     widget.showInSnackBar(
-      'Checked: ${value}',
+      'Checked: ${_checkedValues.map((value) => checkedValueToString(context, value))}',
     );
   }
 
