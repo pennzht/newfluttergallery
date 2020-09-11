@@ -190,10 +190,10 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
   // TODO: add processing.
 }
 
-class L10nPattern {
-  const L10nPattern(this.string, this.segments);
+class L10nPatternPrev {
+  const L10nPatternPrev(this.string, this.segments);
 
-  factory L10nPattern.fromDefinition(AstNode definition, List<AstNode> slots) {
+  factory L10nPatternPrev.fromDefinition(AstNode definition, List<AstNode> slots) {
     // TODO: add definition.
   }
 
