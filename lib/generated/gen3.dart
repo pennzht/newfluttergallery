@@ -53,7 +53,7 @@ class _MenuDemoState extends State<MenuDemo> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('demoMenuTitle'),
+        title: Text('Menu'),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -79,30 +79,30 @@ class _ContextMenuDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('demoMenuAnItemWithAContextMenuButton'),
+      title: Text('An item with a context menu'),
       trailing: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
         onSelected: (value) => showInSnackBar(
-          GalleryLocalizations.of(context).demoMenuSelected(value),
+          'Selected: ${value}',
         ),
         itemBuilder: (context) => <PopupMenuItem<String>>[
           PopupMenuItem<String>(
-            value: 'demoMenuContextMenuItemOne',
+            value: 'Context menu item one',
             child: Text(
-              'demoMenuContextMenuItemOne',
+              'Context menu item one',
             ),
           ),
           PopupMenuItem<String>(
             enabled: false,
             child: Text(
-              'demoMenuADisabledMenuItem',
+              'Disabled menu item',
             ),
           ),
           PopupMenuItem<String>(
             value:
-                'demoMenuContextMenuItemThree',
+                'Context menu item three',
             child: Text(
-              'demoMenuContextMenuItemThree',
+              'Context menu item three',
             ),
           ),
         ],
@@ -127,46 +127,46 @@ class _SectionedMenuDemo extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-          'demoMenuAnItemWithASectionedMenu'),
+          'An item with a sectioned menu'),
       trailing: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
         onSelected: (value) => showInSnackBar(
-            GalleryLocalizations.of(context).demoMenuSelected(value)),
+            'Selected: ${value}'),
         itemBuilder: (context) => <PopupMenuEntry<String>>[
           PopupMenuItem<String>(
-            value: 'demoMenuPreview',
+            value: 'Preview',
             child: ListTile(
               leading: const Icon(Icons.visibility),
               title: Text(
-                'demoMenuPreview',
+                'Preview',
               ),
             ),
           ),
           PopupMenuItem<String>(
-            value: 'demoMenuShare',
+            value: 'Share',
             child: ListTile(
               leading: const Icon(Icons.person_add),
               title: Text(
-                'demoMenuShare',
+                'Share',
               ),
             ),
           ),
           PopupMenuItem<String>(
-            value: 'demoMenuGetLink',
+            value: 'Get link',
             child: ListTile(
               leading: const Icon(Icons.link),
               title: Text(
-                'demoMenuGetLink',
+                'Get link',
               ),
             ),
           ),
           const PopupMenuDivider(),
           PopupMenuItem<String>(
-            value: 'demoMenuRemove',
+            value: 'Remove',
             child: ListTile(
               leading: const Icon(Icons.delete),
               title: Text(
-                'demoMenuRemove',
+                'Remove',
               ),
             ),
           ),
@@ -200,16 +200,15 @@ class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
       _simpleValue = value;
     });
     widget.showInSnackBar(
-      GalleryLocalizations.of(context)
-          .demoMenuSelected(simpleValueToString(context, value)),
+      'Selected: ${value}',
     );
   }
 
   String simpleValueToString(BuildContext context, SimpleValue value) => {
-        SimpleValue.one: 'demoMenuItemValueOne',
-        SimpleValue.two: 'demoMenuItemValueTwo',
+        SimpleValue.one: 'Menu item one',
+        SimpleValue.two: 'Menu item two',
         SimpleValue.three:
-            'demoMenuItemValueThree',
+            'Menu item three',
       }[value];
 
   @override
@@ -226,7 +225,7 @@ class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
       onSelected: (value) => showAndSetMenuSelection(context, value),
       child: ListTile(
         title: Text(
-            'demoMenuAnItemWithASimpleMenu'),
+            'An item with a simple menu'),
         subtitle: Text(simpleValueToString(context, _simpleValue)),
       ),
       itemBuilder: (context) => <PopupMenuItem<SimpleValue>>[
@@ -292,17 +291,15 @@ class _ChecklistMenuDemoState extends State<_ChecklistMenuDemo> {
     }
 
     widget.showInSnackBar(
-      GalleryLocalizations.of(context).demoMenuChecked(
-        _checkedValues.map((value) => checkedValueToString(context, value)),
-      ),
+      'Checked: ${value}',
     );
   }
 
   String checkedValueToString(BuildContext context, CheckedValue value) => {
-        CheckedValue.one: 'demoMenuOne',
-        CheckedValue.two: 'demoMenuTwo',
-        CheckedValue.three: 'demoMenuThree',
-        CheckedValue.four: 'demoMenuFour',
+        CheckedValue.one: 'One',
+        CheckedValue.two: 'Two',
+        CheckedValue.three: 'Three',
+        CheckedValue.four: 'Four',
       }[value];
 
   bool isChecked(CheckedValue value) => _checkedValues.contains(value);
@@ -311,7 +308,7 @@ class _ChecklistMenuDemoState extends State<_ChecklistMenuDemo> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-          'demoMenuAnItemWithAChecklistMenu'),
+          'An item with a checklist menu'),
       trailing: PopupMenuButton<CheckedValue>(
         padding: EdgeInsets.zero,
         onSelected: (value) => showCheckedMenuSelections(context, value),

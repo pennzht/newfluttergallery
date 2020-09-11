@@ -194,6 +194,8 @@ Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
   }
   print ('=' * 80);
 
+  return answer;
+
   // TODO: add processing.
 }
 
