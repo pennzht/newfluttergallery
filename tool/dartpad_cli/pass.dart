@@ -187,6 +187,8 @@ Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
     result.unit.accept(PrintVisitor());
   }
 
+  print (collection);
+
   // TODO: add processing.
 }
 
@@ -309,14 +311,29 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
     print ('parameters -> ${node.parameters}');
     print ('body -> ${node.body}');
 
+    final name = node.name.toString();
+
+    AstNode functionBody;
+
     if (node.body is ExpressionFunctionBody) {
-      print ((node.body as ExpressionFunctionBody).expression);
+      functionBody = (node.body as ExpressionFunctionBody).expression;
+    } else if (node.body is BlockFunctionBody) {
+      functionBody = ((node.body as BlockFunctionBody).block.statements.first
+          as ReturnStatement).expression;
     } else {
-      print (((node.body as BlockFunctionBody).block.statements.first
-          as ReturnStatement).expression);
+      throw Exception('Unexpected function body: '
+          'Function body must be either an `ExpressionFunctionBody` or '
+          'an `BlockFunctionBody`');
     }
 
-    // TODO: add strings to collection.
+    print (functionBody);
+
+    final parameters = node
+        .parameters.parameters
+        .map((element) => element.identifier.toString())
+        .toList();
+
+    collection[name] = L10nPattern.generate(parameters, functionBody);
   }
 }
 
