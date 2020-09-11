@@ -360,8 +360,30 @@ class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
       //print('PropertyAccess => target: ${node.realTarget}, property: ${node
       //    .propertyName}');
 
+      final name = node.propertyName.toString();
+
       replacements.add(
-        ReplacementCommand(node, "'" + node.propertyName.toString() + "'"),
+        ReplacementCommand(
+          node,
+          l10ns[name].replace([]),
+        ),
+      );
+    }
+  }
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    if (node.realTarget.toString() == 'GalleryLocalizations.of(context)') {
+      final name = node.methodName.toString();
+      final arguments = node.argumentList.arguments.map(
+        (argument) => argument.toString(),
+      ).toList();
+      
+      replacements.add(
+        ReplacementCommand(
+          node,
+          l10ns[name].replace(arguments),
+        ),
       );
     }
   }
