@@ -193,6 +193,10 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
 class L10nPattern {
   const L10nPattern(this.string, this.segments);
 
+  factory L10nPattern.fromDefinition(AstNode definition, List<AstNode> slots) {
+    // TODO: add definition.
+  }
+
   final String string;
   final List<L10nSegment> segments;
 
