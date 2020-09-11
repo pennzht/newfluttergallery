@@ -190,6 +190,21 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
   // TODO: add processing.
 }
 
+// TODO: Revise l10n pattern.
+
+class L10nPattern {
+  const L10nPattern(this.string, this.spaces);
+
+  final String string;
+  final List<L10nSpace> spaces;
+}
+
+class L10nSpace {
+  const L10nSpace(this.parameterOrder, this.start, this.stop);
+
+  final int parameterOrder, start, stop;
+}
+
 class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
   const L10nCollectorVisitor({this.locale, this.collection, this.collectInside = false});
 
