@@ -190,6 +190,56 @@ Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
   // TODO: add processing.
 }
 
+class L10nPattern {
+  const L10nPattern._(this.parameterIndices, this.body);
+
+  factory L10nPattern.generate(List<String> parameters, AstNode body) {
+    assert (body is StringLiteral || body is StringInterpolation);
+
+    final parameterIndices = Map<String, int>.fromIterables(
+      parameters.asMap().values,
+      parameters.asMap().keys,
+    );
+
+    return L10nPattern._(parameterIndices, body);
+  }
+
+  final Map<String, int> parameterIndices;
+
+  int get parameterCount => parameterIndices.length;
+
+  final AstNode body; // must be either `StringLiteral` or `StringInterpolation`
+
+  String replace(List<String> parameters) {
+    assert (parameters.length == parameterCount);
+
+    if (body is StringLiteral) {
+      return body.toString();
+    } else {
+      final children = (body as StringInterpolation).elements;
+      final replaced = <String>[];
+
+      for (final child in children) {
+        if (child is InterpolationString) {
+          replaced.add(child.toString());
+        } else if (child is InterpolationExpression) {
+          final index = parameterIndices[child.expression.toString()];
+          final replacedString = parameters[index];
+          final codeForInterpolation =
+              '${child.leftBracket}$replacedString${child.rightBracket}';
+          replaced.add(codeForInterpolation);
+        } else {
+          throw Exception('Unexpected interpolation element; '
+              'every element should be either an `InterpolationString` or '
+              'an `InterpolationExpression`');
+        }
+      }
+
+      return replaced.join();
+    }
+  }
+}
+
 class L10nPatternPrev {
   const L10nPatternPrev(this.string, this.segments);
 
