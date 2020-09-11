@@ -165,8 +165,8 @@ class SwitchStatementReplacementVisitor extends GeneralizingAstVisitor<void> {
   }
 }
 
-Future<Map<String, String>> collectL10ns({String l10nsPath}) async {
-  final answer = <String, String> {};
+Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
+  final answer = <String, L10nPattern> {};
 
   final collection = AnalysisContextCollection(
     includedPaths: [l10nsPath],
@@ -288,7 +288,7 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
   const L10nCollectorVisitor({this.locale, this.collection, this.collectInside = false});
 
   final String locale;
-  final Map<String, String> collection;
+  final Map<String, L10nPattern> collection;
 
   final bool collectInside;
 
