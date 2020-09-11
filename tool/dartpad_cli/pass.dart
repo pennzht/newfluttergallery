@@ -217,7 +217,7 @@ class L10nPattern {
 
   int get parameterCount => parameterIndices.length;
 
-  final AstNode body; // must be either `StringLiteral` or `StringInterpolation`
+  final AstNode body; // must be either `SimpleStringLiteral` or `StringInterpolation`
 
   @override
   String toString (){
@@ -227,7 +227,7 @@ class L10nPattern {
   String replace(List<String> parameters) {
     assert (parameters.length == parameterCount);
 
-    if (body is StringLiteral) {
+    if (body is SimpleStringLiteral) {
       return body.toString();
     } else {
       final children = (body as StringInterpolation).elements;
