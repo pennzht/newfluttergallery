@@ -240,6 +240,7 @@ class L10nPattern {
   }
 }
 
+@Deprecated('Replaced by `L10nPattern`')
 class L10nPatternPrev {
   const L10nPatternPrev(this.string, this.segments);
 
@@ -258,10 +259,12 @@ class L10nPatternPrev {
   // TODO: add generation method.
 }
 
+@Deprecated('Replaced by `L10nPattern`')
 abstract class L10nSegment {
   String replace(List<String> parameters);
 }
 
+@Deprecated('Replaced by `L10nPattern`')
 class L10nStringSegment extends L10nSegment {
   L10nStringSegment(this.string);
 
@@ -271,6 +274,7 @@ class L10nStringSegment extends L10nSegment {
   String replace(List<String> parameters) => string;
 }
 
+@Deprecated('Replaced by `L10nPattern`')
 class L10nParameterSegment extends L10nSegment {
   L10nParameterSegment(this.index);
 
