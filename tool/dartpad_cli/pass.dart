@@ -9,6 +9,25 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 const indent = '  ';
 
+String boilerplate (String demoClassName) =>
+'''// The following code allows the demo to be run
+// as a standalone app.
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: $demoClassName(),
+    );
+  }
+}
+
+''';
+
 class ReplacementCommand {
   const ReplacementCommand(this.node, this.target);
 
@@ -64,6 +83,15 @@ Future<void> replacePass ({
   final outputContents = await handleReplacements (sourceContents);
 
   await io.File(outputPath).writeAsString(outputContents);
+}
+
+Future<void> appendPass({
+  String sourcePath,
+  String outputPath,
+  String demoClassName,
+}) async {
+  final sourceContents = await io.File(sourcePath).readAsString();
+  await io.File(outputPath).writeAsString(sourceContents + boilerplate(demoClassName));
 }
 
 Future<String> handleReplacements (String sourceContents) async {

@@ -32,4 +32,10 @@ Future<void> main () async {
     outputPath: '$galleryPath/lib/generated/gen3.dart',
     visitor: pass.L10nReplacementVisitor(l10ns: l10ns),
   );
+
+  await pass.appendPass(
+    sourcePath: '$galleryPath/lib/generated/gen3.dart',
+    outputPath: '$galleryPath/lib/generated/gen4.dart',
+    demoClassName: 'MenuDemo',
+  );
 }
