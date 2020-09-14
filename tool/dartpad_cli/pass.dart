@@ -3,6 +3,7 @@
 import 'dart:io' as io;
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
@@ -45,6 +46,19 @@ String enumName;
 // Replace any of the following:
 // SimpleIdentifierImpl of PrefixedIdentifierImpl
 // SimpleIdentifierImpl of SwitchStatementImpl
+
+Future<ResolvedUnitResult> getResolvedUnit(String sourcePath) async {
+
+  final collection = AnalysisContextCollection(
+    includedPaths: [sourcePath],
+  );
+
+  final context = collection.contexts.single;
+
+  final result = context.currentSession.getResolvedUnit(sourcePath);
+
+  return result;
+}
 
 Future<void> replacePass ({
   String sourcePath,
