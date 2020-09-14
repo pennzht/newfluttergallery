@@ -5,7 +5,6 @@ import 'dart:io' as io;
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
 
 const indent = '  ';
 
@@ -130,7 +129,7 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitNode(AstNode node) {
     // replace "type" identifiers.
-    if (node is SimpleIdentifierImpl &&
+    if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
         node.parent is! FieldFormalParameter &&
         node.parent is! VariableDeclaration) {
