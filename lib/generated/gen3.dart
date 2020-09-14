@@ -42,7 +42,7 @@ class _MenuDemoState extends State<MenuDemo> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Menu'),
+        title: const Text('Menu'),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -68,26 +68,26 @@ class _ContextMenuDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('An item with a context menu'),
+      title: const Text('An item with a context menu'),
       trailing: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
         onSelected: (value) => showInSnackBar(
           'Selected: ${value}',
         ),
         itemBuilder: (context) => <PopupMenuItem<String>>[
-          PopupMenuItem<String>(
+          const PopupMenuItem<String>(
             value: 'Context menu item one',
             child: Text(
               'Context menu item one',
             ),
           ),
-          PopupMenuItem<String>(
+          const PopupMenuItem<String>(
             enabled: false,
             child: Text(
               'Disabled menu item',
             ),
           ),
-          PopupMenuItem<String>(
+          const PopupMenuItem<String>(
             value:
                 'Context menu item three',
             child: Text(
