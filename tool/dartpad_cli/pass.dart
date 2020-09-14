@@ -303,8 +303,8 @@ class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
   }
 }
 
-class LocalizationsReplacementVisitor extends GeneralizingAstVisitor<void> {
-  const LocalizationsReplacementVisitor({this.l10ns});
+class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
+  const L10nReplacementVisitor({this.l10ns});
 
   final Map<String, L10nPattern> l10ns;
 

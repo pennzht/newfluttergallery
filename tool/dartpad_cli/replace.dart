@@ -30,6 +30,6 @@ Future<void> main () async {
   await pass.replacePass(
     sourcePath: '$galleryPath/lib/generated/gen2.dart',
     outputPath: '$galleryPath/lib/generated/gen3.dart',
-    visitor: pass.LocalizationsReplacementVisitor(l10ns: l10ns),
+    visitor: pass.L10nReplacementVisitor(l10ns: l10ns),
   );
 }
