@@ -343,6 +343,16 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       );
     }
   }
+
+  /// Removes the localization import directive.
+  @override
+  void visitImportDirective(ImportDirective node) {
+    if (node.selectedUriContent.contains('gallery_localizations')) {
+      replacements.add(
+        ReplacementCommand(node, ''),
+      );
+    }
+  }
 }
 
 class PrintVisitor extends GeneralizingAstVisitor<void> {
