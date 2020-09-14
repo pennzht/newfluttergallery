@@ -254,50 +254,6 @@ class L10nPattern {
   }
 }
 
-@Deprecated('Replaced by `L10nPattern`')
-class L10nPatternPrev {
-  const L10nPatternPrev(this.string, this.segments);
-
-  factory L10nPatternPrev.fromDefinition(AstNode definition, List<AstNode> slots) {
-    // TODO: add definition.
-  }
-
-  final String string;
-  final List<L10nSegment> segments;
-
-  String replace(List<String> parameters) {
-    final substrings = segments.map((segment) => segment.replace(parameters));
-    return substrings.join();
-  }
-
-  // TODO: add generation method.
-}
-
-@Deprecated('Replaced by `L10nPattern`')
-abstract class L10nSegment {
-  String replace(List<String> parameters);
-}
-
-@Deprecated('Replaced by `L10nPattern`')
-class L10nStringSegment extends L10nSegment {
-  L10nStringSegment(this.string);
-
-  final String string;
-
-  @override
-  String replace(List<String> parameters) => string;
-}
-
-@Deprecated('Replaced by `L10nPattern`')
-class L10nParameterSegment extends L10nSegment {
-  L10nParameterSegment(this.index);
-
-  final int index;
-
-  @override
-  String replace(List<String> parameters) => parameters[index];
-}
-
 class L10nCollectorVisitor extends GeneralizingAstVisitor<void> {
   const L10nCollectorVisitor({this.locale, this.collection, this.collectInside = false});
 
