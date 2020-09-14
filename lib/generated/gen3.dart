@@ -70,7 +70,7 @@ class _ContextMenuDemo extends StatelessWidget {
       trailing: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
         onSelected: (value) => showInSnackBar(
-          'Selected: ${value}',
+          'Selected: $value',
         ),
         itemBuilder: (context) => <PopupMenuItem<String>>[
           const PopupMenuItem<String>(
