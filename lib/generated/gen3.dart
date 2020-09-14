@@ -55,8 +55,6 @@ class _MenuDemoState extends State<MenuDemo> {
   }
 }
 
-// BEGIN menuDemoContext
-
 // Pressing the PopupMenuButton on the right of this item shows
 // a simple menu with one disabled item. Typically the contents
 // of this "contextual menu" would reflect the app's state.
