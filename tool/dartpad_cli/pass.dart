@@ -70,25 +70,16 @@ Future<void> replacePass ({
 
   final sourceContents = await io.File(sourcePath).readAsString();
 
-  final collection = AnalysisContextCollection(
-    includedPaths: [sourcePath],
-  );
+  final result = await getResolvedUnit(sourcePath);
 
-  for (final context in collection.contexts) {
-    print (context);
-    final result = await context.currentSession.getResolvedUnit(
-      sourcePath,
-    );
+  result.unit.accept(visitor);
+  print ('=' * 80);
 
-    result.unit.accept(visitor);
-    print ('=' * 80);
-
-    if (printTree) {
-      result.unit.accept(PrintVisitor());
-    }
-
-    print (result.unit.toSource());
+  if (printTree) {
+    result.unit.accept(PrintVisitor());
   }
+
+  print (result.unit.toSource());
 
   print(replacements);
   print(enumRepresentations);

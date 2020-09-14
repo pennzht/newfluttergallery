@@ -7,24 +7,16 @@ import 'pass.dart';
 Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
   final answer = <String, L10nPattern> {};
 
-  final collection = AnalysisContextCollection(
-    includedPaths: [l10nsPath],
+  final result = await getResolvedUnit(l10nsPath);
+
+  result.unit.accept(
+    L10nCollectorVisitor(
+      locale: 'GalleryLocalizationsEn',
+      collection: answer,
+    ),
   );
 
-  for (final context in collection.contexts) {
-    final result = await context.currentSession.getResolvedUnit(
-      l10nsPath,
-    );
-
-    result.unit.accept(
-      L10nCollectorVisitor(
-        locale: 'GalleryLocalizationsEn',
-        collection: answer,
-      ),
-    );
-
-    result.unit.accept(PrintVisitor());
-  }
+  result.unit.accept(PrintVisitor());
 
   print ('=' * 80);
   print ('# answer =');
