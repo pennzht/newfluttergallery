@@ -29,7 +29,7 @@ class _CupertinoSegmentedControlDemoState
 
   @override
   Widget build(BuildContext context) {
-    final ;
+    final localizations = GalleryLocalizations.of(context);
     final segmentedControlMaxWidth = 500.0;
     final children = <int, Widget>{
       0: Text(localizations.colorsIndigo),
@@ -41,7 +41,7 @@ class _CupertinoSegmentedControlDemoState
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
         middle: Text(
-          'Segmented control',
+          localizations.demoCupertinoSegmentedControlTitle,
         ),
       ),
       child: DefaultTextStyle(
@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MenuDemo(),
+      home: CupertinoSegmentedControlDemo(),
     );
   }
 }

@@ -11,6 +11,8 @@ const galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
 const menuDemoPath = '$galleryPath/lib/demos/material/menu_demo.dart';
 const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
 const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
+const cupertinoActivityDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_activity_indicator_demo.dart';
+const cupertinoSegmentedDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_segmented_control_demo.dart';
 
 const enL10nsPath = '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
@@ -20,7 +22,7 @@ Future<void> main () async {
   );
 
   await pass.replacePass(
-    sourcePath: menuDemoPath,
+    sourcePath: cupertinoSegmentedDemoPath,
     outputPath: '$galleryPath/lib/generated/gen1.dart',
     visitor: WidgetTypeReplacementVisitor(),
     printTree: true,

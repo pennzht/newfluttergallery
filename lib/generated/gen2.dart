@@ -4,80 +4,85 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
-// BEGIN cupertinoNavigationBarDemo
+// BEGIN cupertinoSegmentedControlDemo
 
-class CupertinoNavigationBarDemo extends StatelessWidget {
-  const CupertinoNavigationBarDemo();
+class CupertinoSegmentedControlDemo extends StatefulWidget {
+  const CupertinoSegmentedControlDemo();
+
+  @override
+  _CupertinoSegmentedControlDemoState createState() =>
+      _CupertinoSegmentedControlDemoState();
+}
+
+class _CupertinoSegmentedControlDemoState
+    extends State<CupertinoSegmentedControlDemo> {
+  int currentSegment = 0;
+
+  void onValueChanged(int newValue) {
+    setState(() {
+      currentSegment = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(onGenerateRoute: (settings) {
-      return _NoAnimationCupertinoPageRoute<void>(
-        title: GalleryLocalizations.of(context).demoCupertinoNavigationBarTitle,
-        builder: (context) => CupertinoPageScaffold(
-          child: CustomScrollView(
-            slivers: [
-              const CupertinoSliverNavigationBar(
-                automaticallyImplyLeading: false,
+    final localizations = GalleryLocalizations.of(context);
+    final segmentedControlMaxWidth = 500.0;
+    final children = <int, Widget>{
+      0: Text(localizations.colorsIndigo),
+      1: Text(localizations.colorsTeal),
+      2: Text(localizations.colorsCyan),
+    };
+
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        middle: Text(
+          localizations.demoCupertinoSegmentedControlTitle,
+        ),
+      ),
+      child: DefaultTextStyle(
+        style: CupertinoTheme.of(context)
+            .textTheme
+            .textStyle
+            .copyWith(fontSize: 13),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              const SizedBox(height: 16),
+              SizedBox(
+                width: segmentedControlMaxWidth,
+                child: CupertinoSegmentedControl<int>(
+                  children: children,
+                  onValueChanged: onValueChanged,
+                  groupValue: currentSegment,
+                ),
               ),
-              SliverPadding(
-                padding: MediaQuery.of(context)
-                    .removePadding(removeTop: true)
-                    .padding,
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final title = GalleryLocalizations.of(context)
-                          .starterAppDrawerItem(index + 1);
-                      return ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(CupertinoPageRoute<void>(
-                            title: title,
-                            builder: (context) => _SecondPage(),
-                          ));
-                        },
-                        title: Text(title),
-                      );
-                    },
-                    childCount: 20,
+              SizedBox(
+                width: segmentedControlMaxWidth,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: CupertinoSlidingSegmentedControl<int>(
+                    children: children,
+                    onValueChanged: onValueChanged,
+                    groupValue: currentSegment,
                   ),
                 ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(16),
+                height: 300,
+                alignment: Alignment.center,
+                child: children[currentSegment],
               ),
             ],
           ),
         ),
-      );
-    });
-  }
-}
-
-class _SecondPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(),
-      child: Container(),
+      ),
     );
-  }
-}
-
-/// A CupertinoPageRoute without any transition animations.
-class _NoAnimationCupertinoPageRoute<T> extends CupertinoPageRoute<T> {
-  _NoAnimationCupertinoPageRoute({
-    @required WidgetBuilder builder,
-    String title,
-  }) : super(builder: builder, title: title);
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return child;
   }
 }
 

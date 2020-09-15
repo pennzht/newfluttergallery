@@ -30,6 +30,25 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   }
 
   @override
+  void visitPrefixedIdentifier(PrefixedIdentifier node) {
+    print('prefix: ${node.prefix.toString()}');
+
+    if (l10nVariables.contains(node.prefix.toString())) {
+      //print('PropertyAccess => target: ${node.realTarget}, property: ${node
+      //    .propertyName}');
+
+      final name = node.identifier.toString();
+
+      replacements.add(
+        ReplacementCommand(
+          findAncestor<VariableDeclarationStatement, AstNode>(node),
+          l10ns[name].replace([]),
+        ),
+      );
+    }
+  }
+
+  @override
   void visitMethodInvocation(MethodInvocation node) {
     if (l10nVariables.contains(node.realTarget.toString())) {
       final name = node.methodName.toString();
@@ -49,6 +68,18 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitAssignmentExpression(AssignmentExpression node) {
     if (node.leftHandSide.toString() == 'localizations') {
+      replacements.add(
+        ReplacementCommand(
+          node,
+          '',
+        ),
+      );
+    }
+  }
+
+  @override
+  void visitVariableDeclaration(VariableDeclaration node) {
+    if (node.name.toString() == 'localizations') {
       replacements.add(
         ReplacementCommand(
           node,
