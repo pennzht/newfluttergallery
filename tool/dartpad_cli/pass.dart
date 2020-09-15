@@ -9,7 +9,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 
 const indent = '  ';
 
-String boilerplate (String demoClassName) =>
+String boilerplate (String appClassName, String demoClassName) =>
 '''// The following code allows the demo to be run
 // as a standalone app.
 
@@ -20,7 +20,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return $appClassName(
       home: $demoClassName(),
     );
   }
@@ -96,10 +96,11 @@ Future<void> replacePass ({
 Future<void> appendPass({
   String sourcePath,
   String outputPath,
+  String appClassName,
   String demoClassName,
 }) async {
   final sourceContents = await io.File(sourcePath).readAsString();
-  await io.File(outputPath).writeAsString(sourceContents + boilerplate(demoClassName));
+  await io.File(outputPath).writeAsString(sourceContents + boilerplate(appClassName, demoClassName));
 }
 
 Future<String> handleReplacements (String sourceContents) async {

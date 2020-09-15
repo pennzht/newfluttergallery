@@ -68,8 +68,19 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
   await pass.appendPass(
     sourcePath: '$galleryPath/lib/generated/gen3.dart',
     outputPath: targetPath,
+    appClassName: generateAppClassName(sourcePath),
     demoClassName: generateClassName(sourcePath),
   );
+}
+
+String generateAppClassName(String sourcePath) {
+  final parts = path.split(sourcePath);
+  final demoDirectory = parts[parts.length - 2];
+  if (demoDirectory == 'cupertino') {
+    return 'CupertinoApp';
+  } else {
+    return 'MaterialApp';
+  }
 }
 
 String generateClassName(String sourcePath) {

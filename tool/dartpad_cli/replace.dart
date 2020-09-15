@@ -43,6 +43,7 @@ Future<void> main () async {
   await pass.appendPass(
     sourcePath: '$galleryPath/lib/generated/gen3.dart',
     outputPath: '$galleryPath/lib/generated/gen4.dart',
+    appClassName: 'CupertinoApp',
     demoClassName: 'MenuDemo',
   );
 }
