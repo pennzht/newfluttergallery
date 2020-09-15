@@ -33,7 +33,10 @@ Future<void> main() async {
   }
 
   for (final file in files) {
-    final targetPath = '$galleryPath/lib/generated/demos/${path.dirname(file)}/${path.basename(file)}';
+    final parts = path.split(file);
+    final directoryName = parts[parts.length - 2];
+
+    final targetPath = '$galleryPath/lib/generated/demos/$directoryName/${path.basename(file)}';
     await replace(file, targetPath, l10ns);
   }
 }
