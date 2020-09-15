@@ -59,7 +59,7 @@ List<TravelDestination> destinations(BuildContext context) => [
         description: 'Silk spinners',
         city: 'Chettinad',
         location: 'Sivaganga, Tamil Nadu',
-        CardDemoType.standard: CardDemoType.tappable,
+        type: CardDemoType.tappable,
       ),
       TravelDestination(
         assetName: 'places/india_tanjore_thanjavur_temple.png',
@@ -69,7 +69,7 @@ List<TravelDestination> destinations(BuildContext context) => [
         description: 'Temples',
         city: 'Thanjavur',
         location: 'Thanjavur, Tamil Nadu',
-        CardDemoType.standard: CardDemoType.selectable,
+        type: CardDemoType.selectable,
       ),
     ];
 

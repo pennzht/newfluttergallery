@@ -107,7 +107,7 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> {
             BottomNavigationDemoType.withLabels == BottomNavigationDemoType.withLabels,
         items: bottomNavigationBarItems,
         currentIndex: _currentIndex,
-        BottomNavigationDemoType.withLabels: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         selectedFontSize: textTheme.caption.fontSize,
         unselectedFontSize: textTheme.caption.fontSize,
         onTap: (index) {
