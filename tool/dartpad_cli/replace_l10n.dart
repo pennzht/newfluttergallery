@@ -3,6 +3,8 @@ import 'package:analyzer/dart/ast/visitor.dart';
 
 import 'pass.dart';
 
+const l10nVariables = ['GalleryLocalizations.of(context)', 'localizations'];
+
 class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   const L10nReplacementVisitor({this.l10ns});
 
@@ -12,7 +14,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
 
   @override
   void visitPropertyAccess(PropertyAccess node) {
-    if (node.realTarget.toString() == 'GalleryLocalizations.of(context)') {
+    if (l10nVariables.contains(node.realTarget.toString())) {
       //print('PropertyAccess => target: ${node.realTarget}, property: ${node
       //    .propertyName}');
 
@@ -29,7 +31,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    if (node.realTarget.toString() == 'GalleryLocalizations.of(context)') {
+    if (l10nVariables.contains(node.realTarget.toString())) {
       final name = node.methodName.toString();
       final arguments = node.argumentList.arguments.map(
             (argument) => argument.toString(),
@@ -39,6 +41,18 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
         ReplacementCommand(
           node,
           l10ns[name].replace(arguments),
+        ),
+      );
+    }
+  }
+
+  @override
+  void visitAssignmentExpression(AssignmentExpression node) {
+    if (node.leftHandSide.toString() == 'localizations') {
+      replacements.add(
+        ReplacementCommand(
+          node,
+          '',
         ),
       );
     }
