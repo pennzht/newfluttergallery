@@ -10,7 +10,8 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
     if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
         node.parent is! FieldFormalParameter &&
-        node.parent is! VariableDeclaration) {
+        node.parent is! VariableDeclaration &&
+        node.parent is! Label) {
       AstNode replacingNode;
       if (node.parent is PrefixedIdentifier) {
         replacingNode = node.parent;

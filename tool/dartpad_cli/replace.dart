@@ -11,6 +11,7 @@ const galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
 const menuDemoPath = '$galleryPath/lib/demos/material/menu_demo.dart';
 const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
 const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
+const cardsDemoPath = '$galleryPath/lib/demos/material/cards_demo.dart';
 const cupertinoActivityDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_activity_indicator_demo.dart';
 const cupertinoSegmentedDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_segmented_control_demo.dart';
 
@@ -22,9 +23,10 @@ Future<void> main () async {
   );
 
   await pass.replacePass(
-    sourcePath: cupertinoSegmentedDemoPath,
+    sourcePath: cardsDemoPath,
     outputPath: '$galleryPath/lib/generated/gen1.dart',
     visitor: WidgetTypeReplacementVisitor(),
+    printTree: true,
   );
 
   await pass.replacePass(
@@ -37,13 +39,12 @@ Future<void> main () async {
     sourcePath: '$galleryPath/lib/generated/gen2.dart',
     outputPath: '$galleryPath/lib/generated/gen3.dart',
     visitor: L10nReplacementVisitor(l10ns: l10ns),
-    printTree: true,
   );
 
   await pass.appendPass(
     sourcePath: '$galleryPath/lib/generated/gen3.dart',
     outputPath: '$galleryPath/lib/generated/gen4.dart',
-    appClassName: 'CupertinoApp',
-    demoClassName: 'MenuDemo',
+    appClassName: 'MaterialApp',
+    demoClassName: 'CardsDemo',
   );
 }
