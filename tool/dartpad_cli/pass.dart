@@ -33,6 +33,11 @@ class ReplacementCommand {
 
   final AstNode node;
   final String target;
+
+  @override
+  String toString() {
+    return 'ReplacementCommand ($node, $target)';
+  }
 }
 
 final replacements = <ReplacementCommand>[];
@@ -98,6 +103,8 @@ Future<void> appendPass({
 }
 
 Future<String> handleReplacements (String sourceContents) async {
+  print(replacements);
+
   int comparator(ReplacementCommand a, ReplacementCommand b) {
     return a.node.offset - b.node.offset;
   }

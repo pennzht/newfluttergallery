@@ -25,7 +25,6 @@ Future<void> main () async {
     sourcePath: cupertinoSegmentedDemoPath,
     outputPath: '$galleryPath/lib/generated/gen1.dart',
     visitor: WidgetTypeReplacementVisitor(),
-    printTree: true,
   );
 
   await pass.replacePass(
@@ -38,6 +37,7 @@ Future<void> main () async {
     sourcePath: '$galleryPath/lib/generated/gen2.dart',
     outputPath: '$galleryPath/lib/generated/gen3.dart',
     visitor: L10nReplacementVisitor(l10ns: l10ns),
+    printTree: true,
   );
 
   await pass.appendPass(

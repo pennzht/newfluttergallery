@@ -27,6 +27,8 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
         ),
       );
     }
+
+    node.visitChildren(this);
   }
 
   @override
@@ -42,9 +44,11 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       replacements.add(
         ReplacementCommand(
           findAncestor<VariableDeclarationStatement, AstNode>(node),
-          l10ns[name].replace([]),
+          '',
         ),
       );
+    } else {
+      node.visitChildren(this);
     }
   }
 
@@ -63,6 +67,8 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
         ),
       );
     }
+
+    node.visitChildren(this);
   }
 
   @override
@@ -75,6 +81,8 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
         ),
       );
     }
+
+    node.visitChildren(this);
   }
 
   @override
@@ -87,6 +95,8 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
         ),
       );
     }
+
+    node.visitChildren(this);
   }
 
   /// Removes the localization import directive.

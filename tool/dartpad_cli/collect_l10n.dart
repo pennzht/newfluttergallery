@@ -16,7 +16,7 @@ Future<Map<String, L10nPattern>> collectL10ns({String l10nsPath}) async {
     ),
   );
 
-  result.unit.accept(PrintVisitor());
+  // result.unit.accept(PrintVisitor());
 
   print ('=' * 80);
   print ('# answer =');
