@@ -43,8 +43,8 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
 
       replacements.add(
         ReplacementCommand(
-          findAncestor<VariableDeclarationStatement, AstNode>(node),
-          '',
+          node,
+          l10ns[name].replace([]),
         ),
       );
     } else {
@@ -74,9 +74,12 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitAssignmentExpression(AssignmentExpression node) {
     if (node.leftHandSide.toString() == 'localizations') {
+      final statement = findAncestor<VariableDeclarationStatement, AstNode>(node);
+      assert (statement != null);
+
       replacements.add(
         ReplacementCommand(
-          node,
+          statement,
           '',
         ),
       );
@@ -88,9 +91,12 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitVariableDeclaration(VariableDeclaration node) {
     if (node.name.toString() == 'localizations') {
+      final statement = findAncestor<VariableDeclarationStatement, AstNode>(node);
+      assert (statement != null);
+
       replacements.add(
         ReplacementCommand(
-          node,
+          statement,
           '',
         ),
       );
