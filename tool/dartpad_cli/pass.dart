@@ -72,6 +72,7 @@ Future<void> replacePass ({
   bool printTree = false,
 }) async {
   replacements.clear();
+  enumRepresentations.clear();
 
   final sourceContents = await io.File(sourcePath).readAsString();
 
