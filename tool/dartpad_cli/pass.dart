@@ -73,16 +73,15 @@ Future<void> replacePass ({
   final result = await getResolvedUnit(sourcePath);
 
   result.unit.accept(visitor);
-  print ('=' * 80);
+  if (printTree) {print ('=' * 80);}
 
   if (printTree) {
     result.unit.accept(PrintVisitor());
+    print (result.unit.toSource());
   }
 
-  print (result.unit.toSource());
-
-  print(replacements);
-  print(enumRepresentations);
+  print (replacements);
+  print (enumRepresentations);
 
   final outputContents = await handleReplacements (sourceContents);
 
