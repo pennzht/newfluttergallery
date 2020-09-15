@@ -12,11 +12,11 @@ class CupertinoTextFieldDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
+    
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
-        middle: Text(localizations.demoCupertinoTextFieldTitle),
+        middle: Text('Text fields'),
       ),
       child: SafeArea(
         child: ListView(
@@ -25,7 +25,7 @@ class CupertinoTextFieldDemo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: CupertinoTextField(
-                placeholder: localizations.demoTextFieldEmail,
+                placeholder: 'Email',
                 keyboardType: TextInputType.emailAddress,
                 clearButtonMode: OverlayVisibilityMode.editing,
                 autocorrect: false,
@@ -34,7 +34,7 @@ class CupertinoTextFieldDemo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: CupertinoTextField(
-                placeholder: localizations.rallyLoginPassword,
+                placeholder: 'Password',
                 clearButtonMode: OverlayVisibilityMode.editing,
                 obscureText: true,
                 autocorrect: false,
@@ -56,7 +56,7 @@ class CupertinoTextFieldDemo extends StatelessWidget {
                   ),
                 ),
               ),
-              placeholder: localizations.demoCupertinoTextFieldPIN,
+              placeholder: 'PIN',
             ),
           ],
         ),
@@ -76,7 +76,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       home: CupertinoTextFieldDemo(),
     );
   }

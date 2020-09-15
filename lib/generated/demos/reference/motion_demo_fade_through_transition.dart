@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+
 
 // BEGIN fadeThroughTransitionDemo
 
@@ -27,16 +27,16 @@ class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
+    
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Column(
           children: [
-            Text(localizations.demoFadeThroughTitle),
+            Text('Fade through'),
             Text(
-              '(${localizations.demoFadeThroughDemoInstructions})',
+              '(${'Bottom navigation'})',
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
@@ -70,17 +70,17 @@ class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.photo_library),
             // ignore: deprecated_member_use
-            title: Text(localizations.demoFadeThroughAlbumsDestination),
+            title: Text('Albums'),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.photo),
             // ignore: deprecated_member_use
-            title: Text(localizations.demoFadeThroughPhotosDestination),
+            title: Text('Photos'),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.search),
             // ignore: deprecated_member_use
-            title: Text(localizations.demoFadeThroughSearchDestination),
+            title: Text('Search'),
           ),
         ],
       ),
@@ -91,7 +91,7 @@ class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
 class _ExampleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
+    
     final textTheme = Theme.of(context).textTheme;
 
     return Expanded(
@@ -121,11 +121,11 @@ class _ExampleCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        localizations.demoFadeThroughTextPlaceholder,
+                        '123 photos',
                         style: textTheme.bodyText1,
                       ),
                       Text(
-                        localizations.demoFadeThroughTextPlaceholder,
+                        '123 photos',
                         style: textTheme.caption,
                       ),
                     ],
@@ -181,7 +181,7 @@ class _PhotosPage extends StatelessWidget {
 class _SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
+    
 
     return ListView.builder(
       itemBuilder: (context, index) {
@@ -191,8 +191,8 @@ class _SearchPage extends StatelessWidget {
             package: 'flutter_gallery_assets',
             width: 40,
           ),
-          title: Text(localizations.demoMotionListTileTitle + ' ${index + 1}'),
-          subtitle: Text(localizations.demoMotionPlaceholderSubtitle),
+          title: Text('List item' + ' ${index + 1}'),
+          subtitle: Text('Secondary text'),
         );
       },
       itemCount: 10,
@@ -201,3 +201,19 @@ class _SearchPage extends StatelessWidget {
 }
 
 // END fadeThroughTransitionDemo
+// The following code allows the demo to be run
+// as a standalone app.
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MotionDemoFadeThroughTransition(),
+    );
+  }
+}
+

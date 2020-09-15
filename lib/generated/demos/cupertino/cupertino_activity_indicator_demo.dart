@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      home: CupertinoProgressIndicatorDemo(),
+      home: CupertinoActivityIndicatorDemo(),
     );
   }
 }

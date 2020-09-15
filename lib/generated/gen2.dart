@@ -1,89 +1,203 @@
-// Copyright 2019 The Flutter team. All rights reserved.
+// Copyright 2019 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:animations/animations.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
-// BEGIN cupertinoSegmentedControlDemo
+// BEGIN fadeThroughTransitionDemo
 
-class CupertinoSegmentedControlDemo extends StatefulWidget {
-  const CupertinoSegmentedControlDemo();
+class FadeThroughTransitionDemo extends StatefulWidget {
+  const FadeThroughTransitionDemo();
 
   @override
-  _CupertinoSegmentedControlDemoState createState() =>
-      _CupertinoSegmentedControlDemoState();
+  _FadeThroughTransitionDemoState createState() =>
+      _FadeThroughTransitionDemoState();
 }
 
-class _CupertinoSegmentedControlDemoState
-    extends State<CupertinoSegmentedControlDemo> {
-  int currentSegment = 0;
+class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
+  int _pageIndex = 0;
 
-  void onValueChanged(int newValue) {
-    setState(() {
-      currentSegment = newValue;
-    });
-  }
+  final _pageList = <Widget>[
+    _AlbumsPage(),
+    _PhotosPage(),
+    _SearchPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final localizations = GalleryLocalizations.of(context);
-    final segmentedControlMaxWidth = 500.0;
-    final children = <int, Widget>{
-      0: Text(localizations.colorsIndigo),
-      1: Text(localizations.colorsTeal),
-      2: Text(localizations.colorsCyan),
-    };
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+    return Scaffold(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
-        middle: Text(
-          localizations.demoCupertinoSegmentedControlTitle,
+        title: Column(
+          children: [
+            Text(localizations.demoFadeThroughTitle),
+            Text(
+              '(${localizations.demoFadeThroughDemoInstructions})',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  .copyWith(color: Colors.white),
+            ),
+          ],
         ),
       ),
-      child: DefaultTextStyle(
-        style: CupertinoTheme.of(context)
-            .textTheme
-            .textStyle
-            .copyWith(fontSize: 13),
-        child: SafeArea(
-          child: ListView(
-            children: [
-              const SizedBox(height: 16),
-              SizedBox(
-                width: segmentedControlMaxWidth,
-                child: CupertinoSegmentedControl<int>(
-                  children: children,
-                  onValueChanged: onValueChanged,
-                  groupValue: currentSegment,
-                ),
-              ),
-              SizedBox(
-                width: segmentedControlMaxWidth,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: CupertinoSlidingSegmentedControl<int>(
-                    children: children,
-                    onValueChanged: onValueChanged,
-                    groupValue: currentSegment,
+      body: PageTransitionSwitcher(
+        transitionBuilder: (
+          child,
+          animation,
+          secondaryAnimation,
+        ) {
+          return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: _pageList[_pageIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _pageIndex,
+        onTap: (selectedIndex) {
+          setState(() {
+            _pageIndex = selectedIndex;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.photo_library),
+            // ignore: deprecated_member_use
+            title: Text(localizations.demoFadeThroughAlbumsDestination),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.photo),
+            // ignore: deprecated_member_use
+            title: Text(localizations.demoFadeThroughPhotosDestination),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.search),
+            // ignore: deprecated_member_use
+            title: Text(localizations.demoFadeThroughSearchDestination),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExampleCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localizations = GalleryLocalizations.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
+    return Expanded(
+      child: Card(
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Container(
+                    color: Colors.black26,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Ink.image(
+                        image: const AssetImage(
+                          'placeholders/placeholder_image.png',
+                          package: 'flutter_gallery_assets',
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                height: 300,
-                alignment: Alignment.center,
-                child: children[currentSegment],
-              ),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        localizations.demoFadeThroughTextPlaceholder,
+                        style: textTheme.bodyText1,
+                      ),
+                      Text(
+                        localizations.demoFadeThroughTextPlaceholder,
+                        style: textTheme.caption,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            InkWell(
+              splashColor: Colors.black38,
+              onTap: () {},
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// END
+class _AlbumsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ...List.generate(
+          3,
+          (index) => Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ExampleCard(),
+                _ExampleCard(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PhotosPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _ExampleCard(),
+        _ExampleCard(),
+      ],
+    );
+  }
+}
+
+class _SearchPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localizations = GalleryLocalizations.of(context);
+
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Image.asset(
+            'placeholders/avatar_logo.png',
+            package: 'flutter_gallery_assets',
+            width: 40,
+          ),
+          title: Text(localizations.demoMotionListTileTitle + ' ${index + 1}'),
+          subtitle: Text(localizations.demoMotionPlaceholderSubtitle),
+        );
+      },
+      itemCount: 10,
+    );
+  }
+}
+
+// END fadeThroughTransitionDemo
