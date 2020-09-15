@@ -73,7 +73,7 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
 }
 
 String generateClassName(String sourcePath) {
-  final basename = path.basename(sourcePath);
+  final basename = path.basenameWithoutExtension(sourcePath);
   final parts = basename.split('_');
   final capitalizedParts = parts.map((word) => '${word[0].toUpperCase()}${word.substring(1)}').toList();
   final className = capitalizedParts.join();
