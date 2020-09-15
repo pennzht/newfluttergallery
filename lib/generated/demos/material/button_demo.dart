@@ -20,41 +20,14 @@ class ButtonDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    switch (ButtonDemoType.alert) {
-      case ButtonDemoType.flat:
-        return 'Flat Button';
-      case ButtonDemoType.raised:
-        return 'Raised Button';
-      case ButtonDemoType.outline:
-        return 'Outline Button';
-      case ButtonDemoType.toggle:
-        return 'Toggle Buttons';
-      case ButtonDemoType.floating:
-        return 'Floating Action Button';
-    }
+    return 'Flat Button';
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
     Widget buttons;
-    switch (ButtonDemoType.alert) {
-      case ButtonDemoType.flat:
-        buttons = _FlatButtonDemo();
-        break;
-      case ButtonDemoType.raised:
-        buttons = _RaisedButtonDemo();
-        break;
-      case ButtonDemoType.outline:
-        buttons = _OutlineButtonDemo();
-        break;
-      case ButtonDemoType.toggle:
-        buttons = _ToggleButtonsDemo();
-        break;
-      case ButtonDemoType.floating:
-        buttons = _FloatingActionButtonDemo();
-        break;
-    }
+    buttons = _FlatButtonDemo();
 
     return Scaffold(
       appBar: AppBar(

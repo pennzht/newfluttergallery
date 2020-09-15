@@ -18,31 +18,14 @@ class SelectionControlsDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    switch (SelectionControlsDemoType.alert) {
-      case SelectionControlsDemoType.checkbox:
-        return 'Tick box';
-      case SelectionControlsDemoType.radio:
-        return 'Radio';
-      case SelectionControlsDemoType.switches:
-        return 'Switch';
-    }
+    return 'Tick box';
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
     Widget controls;
-    switch (SelectionControlsDemoType.alert) {
-      case SelectionControlsDemoType.checkbox:
-        controls = _CheckboxDemo();
-        break;
-      case SelectionControlsDemoType.radio:
-        controls = _RadioDemo();
-        break;
-      case SelectionControlsDemoType.switches:
-        controls = _SwitchDemo();
-        break;
-    }
+    controls = _CheckboxDemo();
 
     return Scaffold(
       appBar: AppBar(

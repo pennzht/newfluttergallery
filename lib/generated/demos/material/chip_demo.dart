@@ -18,36 +18,14 @@ class ChipDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    switch (ChipDemoType.alert) {
-      case ChipDemoType.action:
-        return 'Action chip';
-      case ChipDemoType.choice:
-        return 'Choice chip';
-      case ChipDemoType.filter:
-        return 'Filter chip';
-      case ChipDemoType.input:
-        return 'Input chip';
-    }
+    return 'Action chip';
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
     Widget buttons;
-    switch (ChipDemoType.alert) {
-      case ChipDemoType.action:
-        buttons = _ActionChipDemo();
-        break;
-      case ChipDemoType.choice:
-        buttons = _ChoiceChipDemo();
-        break;
-      case ChipDemoType.filter:
-        buttons = _FilterChipDemo();
-        break;
-      case ChipDemoType.input:
-        buttons = _InputChipDemo();
-        break;
-    }
+    buttons = _ActionChipDemo();
 
     return Scaffold(
       appBar: AppBar(

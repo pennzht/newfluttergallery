@@ -37,7 +37,7 @@ class ListDemo extends StatelessWidget {
                 title: Text(
                   'Item ${index}',
                 ),
-                subtitle: ListDemoType.alert == ListDemoType.twoLine
+                subtitle: ListDemoType.oneLine == ListDemoType.twoLine
                     ? Text('Secondary text')
                     : null,
               ),

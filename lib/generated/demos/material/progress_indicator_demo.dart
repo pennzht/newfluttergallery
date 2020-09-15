@@ -55,36 +55,12 @@ class _ProgressIndicatorDemoState extends State<ProgressIndicatorDemo>
   }
 
   String get _title {
-    switch (ProgressIndicatorDemoType.alert) {
-      case ProgressIndicatorDemoType.circular:
-        return 'Circular progress indicator';
-      case ProgressIndicatorDemoType.linear:
-        return 'Linear progress indicator';
-    }
+    return 'Circular progress indicator';
     return '';
   }
 
   Widget _buildIndicators(BuildContext context, Widget child) {
-    switch (ProgressIndicatorDemoType.alert) {
-      case ProgressIndicatorDemoType.circular:
-        return Column(
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: 32),
-            CircularProgressIndicator(value: _animation.value),
-          ],
-        );
-      case ProgressIndicatorDemoType.linear:
-        return Column(
-          children: [
-            const LinearProgressIndicator(),
-            const SizedBox(height: 32),
-            LinearProgressIndicator(value: _animation.value),
-          ],
-        );
-      default:
-        return Container();
-    }
+    return Column(children: [const CircularProgressIndicator(), const SizedBox(height: 32), CircularProgressIndicator(value: _animation.value)]);
   }
 
   @override

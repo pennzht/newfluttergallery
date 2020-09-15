@@ -29,22 +29,12 @@ class _PickerDemoState extends State<PickerDemo> {
   TimeOfDay _fromTime = TimeOfDay.fromDateTime(DateTime.now());
 
   String get _title {
-    switch (PickerDemoType.alert) {
-      case PickerDemoType.date:
-        return 'Date picker';
-      case PickerDemoType.time:
-        return 'Time picker';
-    }
+    return 'Date picker';
     return '';
   }
 
   String get _labelText {
-    switch (PickerDemoType.alert) {
-      case PickerDemoType.date:
-        return DateFormat.yMMMd().format(_fromDate);
-      case PickerDemoType.time:
-        return _fromTime.format(context);
-    }
+    return DateFormat.yMMMd().format(_fromDate);
     return '';
   }
 
@@ -92,14 +82,7 @@ class _PickerDemoState extends State<PickerDemo> {
                 'SHOW PICKER',
               ),
               onPressed: () {
-                switch (PickerDemoType.alert) {
-                  case PickerDemoType.date:
-                    _showDatePicker();
-                    break;
-                  case PickerDemoType.time:
-                    _showTimePicker();
-                    break;
-                }
+                _showDatePicker();
               },
             )
           ],

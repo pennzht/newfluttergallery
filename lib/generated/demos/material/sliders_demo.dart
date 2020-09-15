@@ -19,30 +19,14 @@ class SlidersDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    switch (SlidersDemoType.alert) {
-      case SlidersDemoType.sliders:
-        return 'Sliders';
-      case SlidersDemoType.rangeSliders:
-        return 'Range sliders';
-      case SlidersDemoType.customSliders:
-        return 'Custom sliders';
-    }
+    return 'Sliders';
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
     Widget sliders;
-    switch (SlidersDemoType.alert) {
-      case SlidersDemoType.sliders:
-        sliders = _Sliders();
-        break;
-      case SlidersDemoType.rangeSliders:
-        sliders = _RangeSliders();
-        break;
-      case SlidersDemoType.customSliders:
-        sliders = _CustomSliders();
-    }
+    sliders = _Sliders();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

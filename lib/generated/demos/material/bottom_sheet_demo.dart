@@ -17,25 +17,12 @@ class BottomSheetDemo extends StatelessWidget {
   
 
   String _title(BuildContext context) {
-    switch (BottomSheetDemoType.alert) {
-      case BottomSheetDemoType.persistent:
-        return 'Persistent bottom sheet';
-      case BottomSheetDemoType.modal:
-        return 'Modal bottom sheet';
-    }
+    return 'Persistent bottom sheet';
     return '';
   }
 
   Widget _bottomSheetDemo(BuildContext context) {
-    switch (BottomSheetDemoType.alert) {
-      case BottomSheetDemoType.persistent:
-        return _PersistentBottomSheetDemo();
-        break;
-      case BottomSheetDemoType.modal:
-      default:
-        return _ModalBottomSheetDemo();
-        break;
-    }
+    return _PersistentBottomSheetDemo();
   }
 
   @override
@@ -45,7 +32,7 @@ class BottomSheetDemo extends StatelessWidget {
     return Navigator(
       // Adding [ValueKey] to make sure that the widget gets rebuilt when
       // changing type.
-      key: ValueKey(BottomSheetDemoType.alert),
+      key: ValueKey(BottomSheetDemoType.persistent),
       onGenerateRoute: (settings) {
         return MaterialPageRoute<void>(
           builder: (context) => Scaffold(

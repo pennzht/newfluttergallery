@@ -27,12 +27,7 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> {
   int _currentIndex = 0;
 
   String _title(BuildContext context) {
-    switch (BottomNavigationDemoType.alert) {
-      case BottomNavigationDemoType.withLabels:
-        return 'Persistent labels';
-      case BottomNavigationDemoType.withoutLabels:
-        return 'Selected label';
-    }
+    return 'Persistent labels';
     return '';
   }
 
@@ -79,7 +74,7 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> {
       ),
     ];
 
-    if (BottomNavigationDemoType.alert == BottomNavigationDemoType.withLabels) {
+    if (BottomNavigationDemoType.withLabels == BottomNavigationDemoType.withLabels) {
       bottomNavigationBarItems = bottomNavigationBarItems.sublist(
           0, bottomNavigationBarItems.length - 2);
       _currentIndex =
@@ -109,10 +104,10 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels:
-            BottomNavigationDemoType.alert == BottomNavigationDemoType.withLabels,
+            BottomNavigationDemoType.withLabels == BottomNavigationDemoType.withLabels,
         items: bottomNavigationBarItems,
         currentIndex: _currentIndex,
-        BottomNavigationDemoType.alert: BottomNavigationBarType.fixed,
+        BottomNavigationDemoType.withLabels: BottomNavigationBarType.fixed,
         selectedFontSize: textTheme.caption.fontSize,
         unselectedFontSize: textTheme.caption.fontSize,
         onTap: (index) {

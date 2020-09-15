@@ -99,7 +99,7 @@ class GridListDemo extends StatelessWidget {
         children: _photos(context).map<Widget>((photo) {
           return _GridDemoPhotoItem(
             photo: photo,
-            tileStyle: GridListDemoType.alert,
+            tileStyle: GridListDemoType.imageOnly,
           );
         }).toList(),
       ),

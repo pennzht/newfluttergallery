@@ -59,7 +59,7 @@ List<TravelDestination> destinations(BuildContext context) => [
         description: 'Silk spinners',
         city: 'Chettinad',
         location: 'Sivaganga, Tamil Nadu',
-        CardDemoType.alert: CardDemoType.tappable,
+        CardDemoType.standard: CardDemoType.tappable,
       ),
       TravelDestination(
         assetName: 'places/india_tanjore_thanjavur_temple.png',
@@ -69,7 +69,7 @@ List<TravelDestination> destinations(BuildContext context) => [
         description: 'Temples',
         city: 'Thanjavur',
         location: 'Thanjavur, Tamil Nadu',
-        CardDemoType.alert: CardDemoType.selectable,
+        CardDemoType.standard: CardDemoType.selectable,
       ),
     ];
 
@@ -338,7 +338,7 @@ class TravelDestinationContent extends StatelessWidget {
             ),
           ),
         ),
-        if (CardDemoType.alert == CardDemoType.standard)
+        if (CardDemoType.standard == CardDemoType.standard)
           // share, explore buttons
           ButtonBar(
             alignment: MainAxisAlignment.start,
@@ -388,9 +388,9 @@ class _CardsDemoState extends State<CardsDemo> {
             for (final destination in destinations(context))
               Container(
                 margin: const EdgeInsets.only(bottom: 8),
-                child: (CardDemoType.alert == CardDemoType.standard)
+                child: (CardDemoType.standard == CardDemoType.standard)
                     ? TravelDestinationItem(destination: destination)
-                    : CardDemoType.alert == CardDemoType.tappable
+                    : CardDemoType.standard == CardDemoType.tappable
                         ? TappableTravelDestinationItem(
                             destination: destination)
                         : SelectableTravelDestinationItem(
