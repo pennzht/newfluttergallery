@@ -12,7 +12,9 @@ import 'replace_l10n.dart' show L10nReplacementVisitor;
 String get galleryPath => Directory.current.absolute.path;
 String get enL10nsPath => '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
-Future<void> main() async {
+Future<void> main(List<String> arguments) async {
+  final testAll = arguments.isEmpty;
+
   // TODO: add filtering mechanism.
 
   final l10ns = await collectL10ns(
@@ -30,7 +32,19 @@ Future<void> main() async {
     }
   }
 
-  for (final file in files) {
+  List<String> filesToProcess;
+
+  if (! testAll) {
+    filesToProcess = files.where(
+      (element) => arguments.any((arg) => element.contains(arg))
+    ).toList();
+  } else {
+    filesToProcess = files;
+  }
+
+  print ('Files to process: $filesToProcess');
+
+  for (final file in filesToProcess) {
     final parts = path.split(file);
     final directoryName = parts[parts.length - 2];
 
