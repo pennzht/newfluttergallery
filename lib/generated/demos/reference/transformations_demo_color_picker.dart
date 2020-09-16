@@ -74,19 +74,3 @@ class _ColorPickerSwatch extends StatelessWidget {
     );
   }
 }
-// The following code allows the demo to be run
-// as a standalone app.
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: TransformationsDemoColorPicker(),
-    );
-  }
-}
-
