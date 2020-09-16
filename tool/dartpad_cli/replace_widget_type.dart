@@ -28,7 +28,7 @@ class WidgetTypeReplacementVisitor extends GeneralizingAstVisitor<void> {
     } else if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
         node.parent is FieldFormalParameter) {
-      replacements.add(ReplacementCommand(node.parent, ''));
+      replacements.add(ReplacementCommand(node.parent, '', removeTrailingComma: true));
       // print ((node.parent as FieldFormalParameter).childEntities);
     } else if (node is SimpleIdentifier &&
         node.token.lexeme == 'type' &&
