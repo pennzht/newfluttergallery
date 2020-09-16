@@ -33,7 +33,7 @@ Future<void> main() async {
   }
 
   for (final file in files) {
-    if (! file.contains('data_table_demo.dart')) {
+    if (! file.contains('cupertino_alert_demo.dart')) {
       continue;
     }
 
@@ -54,7 +54,7 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
     sourcePath: sourcePath,
     outputPath: '$galleryPath/lib/generated/gen1.dart',
     visitor: WidgetTypeReplacementVisitor(),
-    printTree: false,
+    printTree: true,
   );
 
   await pass.replacePass(
