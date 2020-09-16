@@ -29,8 +29,6 @@ Future<void> main() async {
   }
 
   for (final file in files) {
-    if (!file.contains('cupertino_alert_demo.dart')) continue;
-
     final parts = path.split(file);
     final directoryName = parts[parts.length - 2];
 
