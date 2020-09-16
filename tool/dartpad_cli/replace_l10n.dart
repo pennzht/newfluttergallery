@@ -40,30 +40,39 @@ class _RecursiveL10nReplacementVisitor extends GeneralizingAstVisitor<void> {
 
   @override
   void visitPropertyAccess(PropertyAccess node) {
-    final name = node.propertyName.toString();
+    if (l10nVariables.contains(node.realTarget.toString())) {
+      final name = node.propertyName.toString();
+      print('name: $name');
 
-    collection[node.toString()] = l10ns[name].replace([]);
+      collection[node.toString()] = l10ns[name].replace([]);
+    }
 
     node.visitChildren(this);
   }
 
   @override
   void visitPrefixedIdentifier(PrefixedIdentifier node) {
-    final name = node.identifier.toString();
+    if (l10nVariables.contains(node.prefix.toString())) {
+      final name = node.identifier.toString();
+      print('name: $name');
 
-    collection[node.toString()] = l10ns[name].replace([]);
+      collection[node.toString()] = l10ns[name].replace([]);
+    }
 
     node.visitChildren(this);
   }
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    final name = node.methodName.toString();
-    final arguments = node.argumentList.arguments.map(
-          (argument) => argument.toString(),
-    ).toList();
+    if (l10nVariables.contains(node.realTarget.toString())) {
+      final name = node.methodName.toString();
+      final arguments = node.argumentList.arguments.map(
+            (argument) => argument.toString(),
+      ).toList();
+      print('name: $name');
 
-    collection[node.toString()] = l10ns[name].replace(arguments);
+      collection[node.toString()] = l10ns[name].replace(arguments);
+    }
 
     node.visitChildren(this);
   }
