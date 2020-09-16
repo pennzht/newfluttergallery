@@ -29,10 +29,12 @@ class MyApp extends StatelessWidget {
 ''';
 
 class ReplacementCommand {
-  const ReplacementCommand(this.node, this.target);
+  const ReplacementCommand(this.node, this.target, [this.removeTrailingComma = false]);
 
   final AstNode node;
   final String target;
+
+  final bool removeTrailingComma;
 
   @override
   String toString() {
