@@ -21,7 +21,7 @@ Future<void> main() async {
     l10nsPath: enL10nsPath,
   );
 
-  final libPath = Directory('lib/demos/reference');
+  final libPath = Directory('lib/demos');
   final list = await libPath.list(recursive: true).toList();
 
   final files = <String>[];
