@@ -42,6 +42,7 @@ class ReplacementCommand {
 
 final replacements = <ReplacementCommand>[];
 final enumRepresentations = <String>[];
+final demoNames = <String>[];
 String enumName;
 
 // Keep any of the following:
@@ -73,6 +74,7 @@ Future<void> replacePass ({
 }) async {
   replacements.clear();
   enumRepresentations.clear();
+  demoNames.clear();
 
   final sourceContents = await io.File(sourcePath).readAsString();
 

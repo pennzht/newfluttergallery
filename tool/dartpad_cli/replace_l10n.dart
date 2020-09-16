@@ -114,4 +114,14 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       );
     }
   }
+
+  /// Collects demo names.
+  @override
+  void visitClassDeclaration(ClassDeclaration node) {
+    if (node.name.toString().endsWith('Demo')) {
+      demoNames.add(node.name.toString());
+    }
+
+    node.visitChildren(this);
+  }
 }

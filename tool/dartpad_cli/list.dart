@@ -69,7 +69,7 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
     sourcePath: '$galleryPath/lib/generated/gen3.dart',
     outputPath: targetPath,
     appClassName: generateAppClassName(sourcePath),
-    demoClassName: generateClassName(sourcePath),
+    demoClassName: generateClassName(sourcePath, pass.demoNames),
   );
 }
 
@@ -83,11 +83,19 @@ String generateAppClassName(String sourcePath) {
   }
 }
 
-String generateClassName(String sourcePath) {
+String generateClassName(String sourcePath, List<String> demoNames) {
+  final exactClassName = _exactClassName(sourcePath);
+  if (demoNames.contains(exactClassName)) {
+    return exactClassName;
+  } else {
+    return demoNames[0];
+  }
+}
+
+String _exactClassName(String sourcePath) {
   final basename = path.basenameWithoutExtension(sourcePath);
   final parts = basename.split('_');
   final capitalizedParts = parts.map((word) => '${word[0].toUpperCase()}${word.substring(1)}').toList();
   final className = capitalizedParts.join();
   return className;
 }
-
