@@ -9,7 +9,7 @@ import 'replace_widget_type.dart' show WidgetTypeReplacementVisitor;
 import 'replace_switch_statement.dart' show SwitchStatementReplacementVisitor;
 import 'replace_l10n.dart' show L10nReplacementVisitor;
 
-String galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
+String get galleryPath => Directory.current.absolute.path;
 String get enL10nsPath => '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
 Future<void> main() async {
