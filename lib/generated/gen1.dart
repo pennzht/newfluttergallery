@@ -1,200 +1,342 @@
-// Copyright 2019 The Flutter Authors. All rights reserved.
+// Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:gallery/data/gallery_options.dart';
 
-// BEGIN fadeThroughTransitionDemo
+// BEGIN cupertinoAlertDemo
 
-class FadeThroughTransitionDemo extends StatefulWidget {
-  const FadeThroughTransitionDemo();
-
-  @override
-  _FadeThroughTransitionDemoState createState() =>
-      _FadeThroughTransitionDemoState();
+enum AlertDemoType {
+  alert,
+  alertTitle,
+  alertButtons,
+  alertButtonsOnly,
+  actionSheet,
 }
 
-class _FadeThroughTransitionDemoState extends State<FadeThroughTransitionDemo> {
-  int _pageIndex = 0;
+class CupertinoAlertDemo extends StatefulWidget {
+  const CupertinoAlertDemo({
+    Key key,
+    
+  }) : super(key: key);
 
-  final _pageList = <Widget>[
-    _AlbumsPage(),
-    _PhotosPage(),
-    _SearchPage(),
-  ];
+  
 
   @override
-  Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
+  _CupertinoAlertDemoState createState() => _CupertinoAlertDemoState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Column(
-          children: [
-            Text(localizations.demoFadeThroughTitle),
-            Text(
-              '(${localizations.demoFadeThroughDemoInstructions})',
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2
-                  .copyWith(color: Colors.white),
+class _CupertinoAlertDemoState extends State<CupertinoAlertDemo> {
+  String lastSelectedValue;
+
+  String _title(BuildContext context) {
+    switch (AlertDemoType.alert) {
+      case AlertDemoType.alert:
+        return GalleryLocalizations.of(context).demoCupertinoAlertTitle;
+      case AlertDemoType.alertTitle:
+        return GalleryLocalizations.of(context)
+            .demoCupertinoAlertWithTitleTitle;
+      case AlertDemoType.alertButtons:
+        return GalleryLocalizations.of(context).demoCupertinoAlertButtonsTitle;
+      case AlertDemoType.alertButtonsOnly:
+        return GalleryLocalizations.of(context)
+            .demoCupertinoAlertButtonsOnlyTitle;
+      case AlertDemoType.actionSheet:
+        return GalleryLocalizations.of(context).demoCupertinoActionSheetTitle;
+    }
+    return '';
+  }
+
+  void _showDemoDialog({BuildContext context, Widget child}) {
+    showCupertinoDialog<String>(
+      context: context,
+      builder: (context) => ApplyTextOptions(child: child),
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          lastSelectedValue = value;
+        });
+      }
+    });
+  }
+
+  void _showDemoActionSheet({BuildContext context, Widget child}) {
+    child = ApplyTextOptions(
+      child: CupertinoTheme(
+        data: CupertinoTheme.of(context),
+        child: child,
+      ),
+    );
+    showCupertinoModalPopup<String>(
+      context: context,
+      builder: (context) => child,
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          lastSelectedValue = value;
+        });
+      }
+    });
+  }
+
+  void _onAlertPress(BuildContext context) {
+    _showDemoDialog(
+      context: context,
+      child: CupertinoAlertDialog(
+        title: Text(GalleryLocalizations.of(context).dialogDiscardTitle),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertDiscard,
             ),
-          ],
-        ),
-      ),
-      body: PageTransitionSwitcher(
-        transitionBuilder: (
-          child,
-          animation,
-          secondaryAnimation,
-        ) {
-          return FadeThroughTransition(
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            child: child,
-          );
-        },
-        child: _pageList[_pageIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageIndex,
-        onTap: (selectedIndex) {
-          setState(() {
-            _pageIndex = selectedIndex;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.photo_library),
-            label: localizations.demoFadeThroughAlbumsDestination,
+            isDestructiveAction: true,
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertDiscard,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.photo),
-            label: localizations.demoFadeThroughPhotosDestination,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: localizations.demoFadeThroughSearchDestination,
+          CupertinoDialogAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertCancel,
+            ),
+            isDefaultAction: true,
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertCancel,
+            ),
           ),
         ],
       ),
     );
   }
-}
 
-class _ExampleCard extends StatelessWidget {
+  void _onAlertWithTitlePress(BuildContext context) {
+    _showDemoDialog(
+      context: context,
+      child: CupertinoAlertDialog(
+        title: Text(
+          GalleryLocalizations.of(context).cupertinoAlertLocationTitle,
+        ),
+        content: Text(
+          GalleryLocalizations.of(context).cupertinoAlertLocationDescription,
+        ),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertDontAllow,
+            ),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertDontAllow,
+            ),
+          ),
+          CupertinoDialogAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertAllow,
+            ),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertAllow,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onAlertWithButtonsPress(BuildContext context) {
+    _showDemoDialog(
+      context: context,
+      child: CupertinoDessertDialog(
+        title: Text(
+          GalleryLocalizations.of(context).cupertinoAlertFavoriteDessert,
+        ),
+        content: Text(
+          GalleryLocalizations.of(context).cupertinoAlertDessertDescription,
+        ),
+      ),
+    );
+  }
+
+  void _onAlertButtonsOnlyPress(BuildContext context) {
+    _showDemoDialog(
+      context: context,
+      child: const CupertinoDessertDialog(),
+    );
+  }
+
+  void _onActionSheetPress(BuildContext context) {
+    _showDemoActionSheet(
+      context: context,
+      child: CupertinoActionSheet(
+        title: Text(
+          GalleryLocalizations.of(context).cupertinoAlertFavoriteDessert,
+        ),
+        message: Text(
+          GalleryLocalizations.of(context).cupertinoAlertDessertDescription,
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertCheesecake,
+            ),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertCheesecake,
+            ),
+          ),
+          CupertinoActionSheetAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertTiramisu,
+            ),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertTiramisu,
+            ),
+          ),
+          CupertinoActionSheetAction(
+            child: Text(
+              GalleryLocalizations.of(context).cupertinoAlertApplePie,
+            ),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertApplePie,
+            ),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertCancel,
+          ),
+          isDefaultAction: true,
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(
+            GalleryLocalizations.of(context).cupertinoAlertCancel,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
-    final textTheme = Theme.of(context).textTheme;
-
-    return Expanded(
-      child: Card(
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.black26,
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Ink.image(
-                        image: const AssetImage(
-                          'placeholders/placeholder_image.png',
-                          package: 'flutter_gallery_assets',
-                        ),
-                      ),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        middle: Text(_title(context)),
+      ),
+      child: Builder(
+        builder: (context) {
+          return Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: CupertinoButton.filled(
+                    child: Text(
+                      GalleryLocalizations.of(context).cupertinoShowAlert,
                     ),
+                    onPressed: () {
+                      switch (AlertDemoType.alert) {
+                        case AlertDemoType.alert:
+                          _onAlertPress(context);
+                          break;
+                        case AlertDemoType.alertTitle:
+                          _onAlertWithTitlePress(context);
+                          break;
+                        case AlertDemoType.alertButtons:
+                          _onAlertWithButtonsPress(context);
+                          break;
+                        case AlertDemoType.alertButtonsOnly:
+                          _onAlertButtonsOnlyPress(context);
+                          break;
+                        case AlertDemoType.actionSheet:
+                          _onActionSheetPress(context);
+                          break;
+                      }
+                    },
                   ),
                 ),
+              ),
+              if (lastSelectedValue != null)
                 Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        localizations.demoFadeThroughTextPlaceholder,
-                        style: textTheme.bodyText1,
-                      ),
-                      Text(
-                        localizations.demoFadeThroughTextPlaceholder,
-                        style: textTheme.caption,
-                      ),
-                    ],
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    GalleryLocalizations.of(context)
+                        .dialogSelectedOption(lastSelectedValue),
+                    style: CupertinoTheme.of(context).textTheme.textStyle,
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            ),
-            InkWell(
-              splashColor: Colors.black38,
-              onTap: () {},
-            ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
-class _AlbumsPage extends StatelessWidget {
+class CupertinoDessertDialog extends StatelessWidget {
+  const CupertinoDessertDialog({Key key, this.title, this.content})
+      : super(key: key);
+
+  final Widget title;
+  final Widget content;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...List.generate(
-          3,
-          (index) => Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _ExampleCard(),
-                _ExampleCard(),
-              ],
-            ),
+    return CupertinoAlertDialog(
+      title: title,
+      content: content,
+      actions: [
+        CupertinoDialogAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertCheesecake,
           ),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertCheesecake,
+            );
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertTiramisu,
+          ),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertTiramisu,
+            );
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertApplePie,
+          ),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertApplePie,
+            );
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertChocolateBrownie,
+          ),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertChocolateBrownie,
+            );
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            GalleryLocalizations.of(context).cupertinoAlertCancel,
+          ),
+          isDestructiveAction: true,
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop(
+              GalleryLocalizations.of(context).cupertinoAlertCancel,
+            );
+          },
         ),
       ],
     );
   }
 }
 
-class _PhotosPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _ExampleCard(),
-        _ExampleCard(),
-      ],
-    );
-  }
-}
-
-class _SearchPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context);
-
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: Image.asset(
-            'placeholders/avatar_logo.png',
-            package: 'flutter_gallery_assets',
-            width: 40,
-          ),
-          title: Text(localizations.demoMotionListTileTitle + ' ${index + 1}'),
-          subtitle: Text(localizations.demoMotionPlaceholderSubtitle),
-        );
-      },
-      itemCount: 10,
-    );
-  }
-}
-
-// END fadeThroughTransitionDemo
+// END

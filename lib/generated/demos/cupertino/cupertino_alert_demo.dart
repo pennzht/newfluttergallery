@@ -20,7 +20,7 @@ enum AlertDemoType {
 class CupertinoAlertDemo extends StatefulWidget {
   const CupertinoAlertDemo({
     Key key,
-    ,
+    
   }) : super(key: key);
 
   
