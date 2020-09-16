@@ -65,22 +65,18 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
     visitor: L10nReplacementVisitor(l10ns: l10ns),
   );
 
-  if (pass.demoNames.isNotEmpty) {
-    await pass.appendPass(
-      sourcePath: '$galleryPath/lib/generated/gen3.dart',
-      outputPath: targetPath,
-      append: pass.boilerplate(
+  final append = pass.demoNames.isNotEmpty
+      ? pass.boilerplate(
         generateAppClassName(sourcePath),
         generateClassName(sourcePath, pass.demoNames),
-      ),
-    );
-  } else {
-    await pass.appendPass(
-      sourcePath: '$galleryPath/lib/generated/gen3.dart',
-      outputPath: targetPath,
-      append: ''
-    );
-  }
+      )
+      : '';
+
+  await pass.appendPass(
+    sourcePath: '$galleryPath/lib/generated/gen3.dart',
+    outputPath: targetPath,
+    append: append,
+  );
 }
 
 String generateAppClassName(String sourcePath) {
