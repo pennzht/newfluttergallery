@@ -5,6 +5,70 @@ import 'pass.dart';
 
 const l10nVariables = ['GalleryLocalizations.of(context)', 'localizations'];
 
+ReplacementCommand _computeReplacementCommand(Map<String, L10nPattern> l10ns, AstNode node) {
+  final collection = <String, String> {};
+
+  node.accept(_RecursiveL10nReplacementVisitor(
+    l10ns: l10ns,
+    collection: collection,
+  ));
+
+  var string = node.toString();
+
+  while (true) {
+    var replaced = false;
+    for (final l10nString in collection.keys) {
+      if (string.contains(l10nString)) {
+        string = string.replaceFirst(l10nString, collection[l10nString]);
+        replaced = true;
+      }
+    }
+
+    if (!replaced) {
+      break;
+    }
+  }
+
+  return ReplacementCommand(node, string);
+}
+
+class _RecursiveL10nReplacementVisitor extends GeneralizingAstVisitor<void> {
+  const _RecursiveL10nReplacementVisitor({this.l10ns, this.collection});
+
+  final Map<String, L10nPattern> l10ns;
+  final Map<String, String> collection;
+
+  @override
+  void visitPropertyAccess(PropertyAccess node) {
+    final name = node.propertyName.toString();
+
+    collection[node.toString()] = l10ns[name].replace([]);
+
+    node.visitChildren(this);
+  }
+
+  @override
+  void visitPrefixedIdentifier(PrefixedIdentifier node) {
+    final name = node.identifier.toString();
+
+    collection[node.toString()] = l10ns[name].replace([]);
+
+    node.visitChildren(this);
+  }
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    final name = node.methodName.toString();
+    final arguments = node.argumentList.arguments.map(
+          (argument) => argument.toString(),
+    ).toList();
+
+    collection[node.toString()] = l10ns[name].replace(arguments);
+
+    node.visitChildren(this);
+  }
+}
+
 class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   const L10nReplacementVisitor({this.l10ns});
 
@@ -21,20 +85,15 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       final name = node.propertyName.toString();
 
       replacements.add(
-        ReplacementCommand(
-          node,
-          l10ns[name].replace([]),
-        ),
+        _computeReplacementCommand(l10ns, node),
       );
+    } else {
+      node.visitChildren(this);
     }
-
-    node.visitChildren(this);
   }
 
   @override
   void visitPrefixedIdentifier(PrefixedIdentifier node) {
-    print('prefix: ${node.prefix.toString()}');
-
     if (l10nVariables.contains(node.prefix.toString())) {
       //print('PropertyAccess => target: ${node.realTarget}, property: ${node
       //    .propertyName}');
@@ -42,10 +101,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       final name = node.identifier.toString();
 
       replacements.add(
-        ReplacementCommand(
-          node,
-          l10ns[name].replace([]),
-        ),
+        _computeReplacementCommand(l10ns, node),
       );
     } else {
       node.visitChildren(this);
@@ -61,14 +117,11 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
       ).toList();
 
       replacements.add(
-        ReplacementCommand(
-          node,
-          l10ns[name].replace(arguments),
-        ),
+        _computeReplacementCommand(l10ns, node),
       );
+    } else {
+      node.visitChildren(this);
     }
-
-    node.visitChildren(this);
   }
 
   @override
