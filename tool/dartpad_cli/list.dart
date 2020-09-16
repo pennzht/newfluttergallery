@@ -69,8 +69,16 @@ Future<void> replace (String sourcePath, String targetPath, Map<String, pass.L10
     await pass.appendPass(
       sourcePath: '$galleryPath/lib/generated/gen3.dart',
       outputPath: targetPath,
-      appClassName: generateAppClassName(sourcePath),
-      demoClassName: generateClassName(sourcePath, pass.demoNames),
+      append: pass.boilerplate(
+        generateAppClassName(sourcePath),
+        generateClassName(sourcePath, pass.demoNames),
+      ),
+    );
+  } else {
+    await pass.appendPass(
+      sourcePath: '$galleryPath/lib/generated/gen3.dart',
+      outputPath: targetPath,
+      append: ''
     );
   }
 }

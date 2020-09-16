@@ -99,11 +99,10 @@ Future<void> replacePass ({
 Future<void> appendPass({
   String sourcePath,
   String outputPath,
-  String appClassName,
-  String demoClassName,
+  String append,
 }) async {
   final sourceContents = await io.File(sourcePath).readAsString();
-  await io.File(outputPath).writeAsString(sourceContents + boilerplate(appClassName, demoClassName));
+  await io.File(outputPath).writeAsString(sourceContents + append);
 }
 
 Future<String> handleReplacements (String sourceContents) async {
