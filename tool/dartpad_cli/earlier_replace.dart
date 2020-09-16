@@ -5,10 +5,9 @@ import 'dart:io' as io;
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
 
-//const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
-const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/menu_demo.dart';
+String get galleryPath => io.Directory.current.absolute.path;
+String get filePath => '$galleryPath/lib/demos/material/menu_demo.dart';
 const indent = '  ';
 
 class ReplacementCommand {
