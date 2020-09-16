@@ -1,10 +1,13 @@
 // Experimental.
 
+import 'dart:io';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
-const filePath = '/Users/tianguang/Documents/dev/gallery2/gallery/lib/demos/material/button_demo.dart';
+String get galleryPath => Directory.current.absolute.path;
+String get filePath => '$galleryPath/lib/demos/material/button_demo.dart';
+
 const indent = '  ';
 
 Future<void> main () async {

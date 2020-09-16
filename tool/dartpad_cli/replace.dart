@@ -1,5 +1,6 @@
 // Experimental: Replacement.
 
+import 'dart:io';
 import 'pass.dart' as pass;
 
 import 'collect_l10n.dart' show collectL10ns;
@@ -7,15 +8,14 @@ import 'replace_widget_type.dart' show WidgetTypeReplacementVisitor;
 import 'replace_switch_statement.dart' show SwitchStatementReplacementVisitor;
 import 'replace_l10n.dart' show L10nReplacementVisitor;
 
-const galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
-const menuDemoPath = '$galleryPath/lib/demos/material/menu_demo.dart';
-const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
-const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
-const cardsDemoPath = '$galleryPath/lib/demos/material/cards_demo.dart';
-const cupertinoActivityDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_activity_indicator_demo.dart';
-const cupertinoSegmentedDemoPath = '$galleryPath/lib/demos/cupertino/cupertino_segmented_control_demo.dart';
-
-const enL10nsPath = '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
+String get galleryPath => Directory.current.absolute.path;
+String get menuDemoPath => '$galleryPath/lib/demos/material/menu_demo.dart';
+String get buttonDemoPath => '$galleryPath/lib/demos/material/button_demo.dart';
+String get chipDemoPath => '$galleryPath/lib/demos/material/chip_demo.dart';
+String get cardsDemoPath => '$galleryPath/lib/demos/material/cards_demo.dart';
+String get cupertinoActivityDemoPath => '$galleryPath/lib/demos/cupertino/cupertino_activity_indicator_demo.dart';
+String get cupertinoSegmentedDemoPath => '$galleryPath/lib/demos/cupertino/cupertino_segmented_control_demo.dart';
+String get enL10nsPath => '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
 Future<void> main () async {
   final l10ns = await collectL10ns(
