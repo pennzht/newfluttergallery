@@ -13,6 +13,8 @@ String get galleryPath => Directory.current.absolute.path;
 String get enL10nsPath => '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
 Future<void> main() async {
+  // TODO: add filtering mechanism.
+
   final l10ns = await collectL10ns(
     l10nsPath: enL10nsPath,
   );
