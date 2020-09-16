@@ -40,6 +40,33 @@ class ReplacementCommand {
   String toString() {
     return 'ReplacementCommand ($node, $target)';
   }
+
+  int get start {
+    return node.offset;
+  }
+
+  int get end {
+    return node.end;
+  }
+
+  int findEnd(String sourceContents) {
+    // TODO: add support for non-BMP languages.
+
+    if (removeTrailingComma) {
+      var seeker = end;
+      while (seeker < sourceContents.length) {
+        if ([' ', '\t', '\n', '\r'].contains(sourceContents[seeker])) {
+          seeker ++;
+        } else if (sourceContents[seeker] == ','){
+          return seeker + 1;
+        } else {
+          return end;
+        }
+      }
+    } else {
+      return end;
+    }
+  }
 }
 
 final replacements = <ReplacementCommand>[];
@@ -121,8 +148,8 @@ Future<String> handleReplacements (String sourceContents) async {
     var replacement = replacements[i];
     contents = replaceOnce(
       contents,
-      replacement.node.offset,
-      replacement.node.end,
+      replacement.start,
+      replacement.findEnd(sourceContents),
       replacement.target,
     );
   }
