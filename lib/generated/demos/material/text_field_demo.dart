@@ -71,7 +71,6 @@ class _PasswordFieldState extends State<PasswordField> {
     return TextFormField(
       key: widget.fieldKey,
       obscureText: _obscureText,
-      cursorColor: Theme.of(context).cursorColor,
       maxLength: 8,
       onSaved: widget.onSaved,
       validator: widget.validator,
@@ -166,7 +165,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final cursorColor = Theme.of(context).cursorColor;
     const sizedBoxSpace = SizedBox(height: 24);
 
     return Scaffold(
@@ -184,7 +182,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 sizedBoxSpace,
                 TextFormField(
                   textCapitalization: TextCapitalization.words,
-                  cursorColor: cursorColor,
                   decoration: InputDecoration(
                     filled: true,
                     icon: const Icon(Icons.person),
@@ -199,7 +196,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 ),
                 sizedBoxSpace,
                 TextFormField(
-                  cursorColor: cursorColor,
                   decoration: InputDecoration(
                     filled: true,
                     icon: const Icon(Icons.phone),
@@ -223,7 +219,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 ),
                 sizedBoxSpace,
                 TextFormField(
-                  cursorColor: cursorColor,
                   decoration: InputDecoration(
                     filled: true,
                     icon: const Icon(Icons.email),
@@ -238,7 +233,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 ),
                 sizedBoxSpace,
                 TextFormField(
-                  cursorColor: cursorColor,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Tell us about yourself (e.g. write down what you do or what hobbies you have)',
@@ -250,7 +244,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 ),
                 sizedBoxSpace,
                 TextFormField(
-                  cursorColor: cursorColor,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -276,7 +269,6 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
                 ),
                 sizedBoxSpace,
                 TextFormField(
-                  cursorColor: cursorColor,
                   decoration: InputDecoration(
                     filled: true,
                     labelText: 'Re-type password*',

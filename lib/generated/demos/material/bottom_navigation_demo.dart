@@ -39,38 +39,23 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> {
     var bottomNavigationBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: const Icon(Icons.add_comment),
-        // ignore: deprecated_member_use
-        title: Text(
-          'Comments',
-        ),
+        label: 'Comments',
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.calendar_today),
-        // ignore: deprecated_member_use
-        title: Text(
-          'Calendar',
-        ),
+        label: 'Calendar',
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.account_circle),
-        // ignore: deprecated_member_use
-        title: Text(
-          'Account',
-        ),
+        label: 'Account',
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.alarm_on),
-        // ignore: deprecated_member_use
-        title: Text(
-          'Alarm',
-        ),
+        label: 'Alarm',
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.camera_enhance),
-        // ignore: deprecated_member_use
-        title: Text(
-          'Camera',
-        ),
+        label: 'Camera',
       ),
     ];
 
