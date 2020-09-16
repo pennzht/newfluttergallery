@@ -79,14 +79,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitPropertyAccess(PropertyAccess node) {
     if (l10nVariables.contains(node.realTarget.toString())) {
-      //print('PropertyAccess => target: ${node.realTarget}, property: ${node
-      //    .propertyName}');
-
-      final name = node.propertyName.toString();
-
-      replacements.add(
-        _computeReplacementCommand(l10ns, node),
-      );
+      replacements.add(_computeReplacementCommand(l10ns, node));
     } else {
       node.visitChildren(this);
     }
@@ -95,14 +88,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitPrefixedIdentifier(PrefixedIdentifier node) {
     if (l10nVariables.contains(node.prefix.toString())) {
-      //print('PropertyAccess => target: ${node.realTarget}, property: ${node
-      //    .propertyName}');
-
-      final name = node.identifier.toString();
-
-      replacements.add(
-        _computeReplacementCommand(l10ns, node),
-      );
+      replacements.add(_computeReplacementCommand(l10ns, node));
     } else {
       node.visitChildren(this);
     }
@@ -111,19 +97,13 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitMethodInvocation(MethodInvocation node) {
     if (l10nVariables.contains(node.realTarget.toString())) {
-      final name = node.methodName.toString();
-      final arguments = node.argumentList.arguments.map(
-            (argument) => argument.toString(),
-      ).toList();
-
-      replacements.add(
-        _computeReplacementCommand(l10ns, node),
-      );
+      replacements.add(_computeReplacementCommand(l10ns, node));
     } else {
       node.visitChildren(this);
     }
   }
 
+  /// Removes assignment expression for all occurrences of `localizations`.
   @override
   void visitAssignmentExpression(AssignmentExpression node) {
     if (node.leftHandSide.toString() == 'localizations') {
@@ -141,6 +121,7 @@ class L10nReplacementVisitor extends GeneralizingAstVisitor<void> {
     node.visitChildren(this);
   }
 
+  /// Removes assignment expression for all occurrences of `localizations`.
   @override
   void visitVariableDeclaration(VariableDeclaration node) {
     if (node.name.toString() == 'localizations') {
