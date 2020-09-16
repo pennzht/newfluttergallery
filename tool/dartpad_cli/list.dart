@@ -9,12 +9,8 @@ import 'replace_widget_type.dart' show WidgetTypeReplacementVisitor;
 import 'replace_switch_statement.dart' show SwitchStatementReplacementVisitor;
 import 'replace_l10n.dart' show L10nReplacementVisitor;
 
-const galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
-const menuDemoPath = '$galleryPath/lib/demos/material/menu_demo.dart';
-const buttonDemoPath = '$galleryPath/lib/demos/material/button_demo.dart';
-const chipDemoPath = '$galleryPath/lib/demos/material/chip_demo.dart';
-
-const enL10nsPath = '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
+String galleryPath = '/Users/tianguang/Documents/dev/gallery2/gallery';
+String get enL10nsPath => '$galleryPath/.dart_tool/flutter_gen/gen_l10n/gallery_localizations_en.dart';
 
 Future<void> main() async {
   final l10ns = await collectL10ns(
