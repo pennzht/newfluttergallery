@@ -33,8 +33,6 @@ Future<void> main() async {
   }
 
   for (final file in files) {
-    if (! file.contains('cupertino_navigation_bar_demo.dart')) continue;
-
     final parts = path.split(file);
     final directoryName = parts[parts.length - 2];
 
