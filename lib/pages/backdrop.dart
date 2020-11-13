@@ -2,10 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flare_dart/math/mat2d.dart';
-import 'package:flare_flutter/flare.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -34,15 +30,12 @@ class Backdrop extends StatefulWidget {
 }
 
 class _BackdropState extends State<Backdrop>
-    with SingleTickerProviderStateMixin, FlareController {
+    with SingleTickerProviderStateMixin {
   AnimationController _settingsPanelController;
   FocusNode _settingsPageFocusNode;
   ValueNotifier<bool> _isSettingsOpenNotifier;
   Widget _settingsPage;
   Widget _homePage;
-
-  FlutterActorArtboard _artboard;
-  FlareAnimationLayer _animationLayer;
 
   @override
   void initState() {
@@ -68,47 +61,11 @@ class _BackdropState extends State<Backdrop>
     super.dispose();
   }
 
-  @override
-  void initialize(FlutterActorArtboard artboard) {
-    _artboard = artboard;
-    initAnimationLayer();
-  }
-
-  @override
-  void setViewTransform(Mat2D viewTransform) {
-    // This is a necessary override for the [FlareController] mixin.
-  }
-
-  @override
-  bool advance(FlutterActorArtboard artboard, double elapsed) {
-    if (_animationLayer != null) {
-      final layer = _animationLayer;
-      layer.time = _settingsPanelController.value * layer.duration;
-      layer.animation.apply(layer.time, _artboard, 1);
-      if (layer.isDone || layer.time == 0) {
-        _animationLayer = null;
-      }
-    }
-    return _animationLayer != null;
-  }
-
-  void initAnimationLayer() {
-    if (_artboard != null) {
-      final animationName = 'Animations';
-      final animation = _artboard.getAnimation(animationName);
-      _animationLayer = FlareAnimationLayer()
-        ..name = animationName
-        ..animation = animation;
-    }
-  }
-
   void _toggleSettings() {
-    initAnimationLayer();
     // Animate the settings panel to open or close.
     _settingsPanelController.fling(
         velocity: _isSettingsOpenNotifier.value ? -1 : 1);
     _isSettingsOpenNotifier.value = !_isSettingsOpenNotifier.value;
-    isActive.value = true;
   }
 
   Animation<RelativeRect> _slideDownSettingsPageAnimation(
@@ -253,7 +210,6 @@ class _BackdropState extends State<Backdrop>
           _SettingsIcon(
             animationController: _settingsPanelController,
             toggleSettings: _toggleSettings,
-            flareController: this,
             isSettingsOpenNotifier: _isSettingsOpenNotifier,
           ),
         ],
@@ -272,13 +228,11 @@ class _BackdropState extends State<Backdrop>
 class _SettingsIcon extends AnimatedWidget {
   _SettingsIcon(
       {this.animationController,
-      this.flareController,
       this.toggleSettings,
       this.isSettingsOpenNotifier})
       : super(listenable: animationController);
 
   final AnimationController animationController;
-  final FlareController flareController;
   final VoidCallback toggleSettings;
   final ValueNotifier<bool> isSettingsOpenNotifier;
 
@@ -322,18 +276,9 @@ class _SettingsIcon extends AnimatedWidget {
                   GalleryOptions.of(context).resolvedTextDirection(),
                 );
               },
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 3, end: 18),
-                child: FlareActor(
-                  Theme.of(context).colorScheme.brightness == Brightness.light
-                      ? 'packages/flutter_gallery_assets/assets/icons/settings/settings_light.flr'
-                      : 'packages/flutter_gallery_assets/assets/icons/settings/settings_dark.flr',
-                  alignment: Directionality.of(context) == TextDirection.ltr
-                      ? Alignment.bottomLeft
-                      : Alignment.bottomRight,
-                  fit: BoxFit.contain,
-                  controller: flareController,
-                ),
+              child: const Padding(
+                padding: EdgeInsetsDirectional.only(start: 3, end: 18),
+                child: Icon(Icons.close),
               ),
             ),
           ),
